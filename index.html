@@ -189,7 +189,6 @@
       </div>
     </div>
   </div>
-  </div>
 
 
   <!-- ==================== 2. TENANT (PENYEWA) SECTION ==================== -->
@@ -1021,7 +1020,7 @@
   </div>
 
 
-  <!-- ==================== 4. MODALS & POPUPS ==================== -->
+  <!-- ==================== 4. MODALS & POPUPS (DI LUAR SEMUA SECTION) ==================== -->
 
   <!-- Modal 4A: Tambah / Edit Mobil -->
   <div id="tambah-mobil-modal" class="custom-modal-overlay">
@@ -1288,225 +1287,224 @@
           </div>
         </div>
 
-      <div class="d-flex justify-content-end mt-2">
-  <button type="button" class="btn btn-success px-4 py-2 fw-bold" id="btn-complete-checkout" style="font-size: 0.85rem; border-radius: 8px;">
-    Selesai
-  </button>
-</div>
-      </div>
-    </div>
-
-
-    <!-- Modal 4C: Pembayaran Berhasil! -->
-    <div id="success-modal" class="custom-modal-overlay">
-      <div class="custom-modal-content text-center"
-        style="max-width: 400px; padding: 1.75rem 1.75rem; border-radius: 14px; position: relative;">
-        <button type="button" class="btn p-0 border-0 bg-transparent text-dark position-absolute"
-          style="top: 1rem; right: 1rem;" id="btn-close-success" aria-label="Close">
-          <iconify-icon icon="ph:x" style="font-size: 1.5rem; color: #1E293B;"></iconify-icon>
-        </button>
-
-        <div class="d-flex justify-content-center mb-3 mt-1">
-          <div class="d-flex align-items-center justify-content-center rounded-circle"
-            style="width: 80px; height: 80px; background-color: #22C55E;">
-            <iconify-icon icon="ph:check-bold" style="font-size: 2.5rem; color: #ffffff;"></iconify-icon>
-          </div>
-        </div>
-
-        <h4 class="fw-bold text-dark mb-1" style="font-size: 1.4rem; font-family: 'Plus Jakarta Sans', sans-serif;">
-          Pembayaran Berhasil!</h4>
-        <p class="text-secondary small mb-4" style="font-size: 0.88rem; line-height: 1.4; color: #475569 !important;">
-          Terima kasih, pembayaran Anda telah berhasil diproses.
-        </p>
-
-        <!-- Hidden elements to avoid Javascript reference errors -->
-        <span id="success-booking-code" class="d-none"></span>
-        <button id="btn-copy-code" class="d-none"></button>
-
-        <button class="btn btn-primary w-100 py-2.5 fw-bold shadow-none" id="btn-go-to-history"
-          style="background-color: #0084FF; border-color: #0084FF; border-radius: 8px; font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">
-          Lihat Detail Pesanan
-        </button>
-      </div>
-    </div>
-
-
-    <!-- Modal 4D: Verifikasi Pengambilan -->
-    <div id="verifikasi-pengambilan-modal" class="custom-modal-overlay">
-      <div class="custom-modal-content" style="max-width: 480px; border-radius: 14px; padding: 1.25rem 1.5rem;">
-        <div class="d-flex justify-content-between align-items-start mb-2">
-          <div>
-            <h4 class="fw-bold m-0 text-dark" style="font-size: 1.35rem; font-family: 'Plus Jakarta Sans', sans-serif;">
-              Verifikasi Pengambilan</h4>
-            <p class="text-muted small mt-0.5 mb-0" style="font-size: 0.82rem;">Periksa identitas penyewa sebelum
-              konfirmasi</p>
-          </div>
-          <button type="button" class="btn p-0 border-0 bg-transparent text-dark animate-fade-in"
-            id="btn-close-verifikasi-modal">
-            <iconify-icon icon="ph:x" class="fs-4"></iconify-icon>
+        <div class="d-flex justify-content-end mt-2">
+          <button type="button" class="btn btn-success px-4 py-2 fw-bold" id="btn-complete-checkout"
+            style="font-size: 0.85rem; border-radius: 8px;">
+            Selesai
           </button>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="mt-2">
-          <div class="d-flex align-items-center gap-1.5 mb-2">
-            <iconify-icon icon="ph:user-circle" class="fs-5 text-dark" style="color: #1E293B;"></iconify-icon>
-            <h6 class="fw-bold m-0 text-dark" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">
-              Data Penyewa</h6>
+
+  <!-- Modal 4C: Pembayaran Berhasil! -->
+  <div id="success-modal" class="custom-modal-overlay">
+    <div class="custom-modal-content text-center"
+      style="max-width: 400px; padding: 1.75rem 1.75rem; border-radius: 14px; position: relative;">
+      <button type="button" class="btn p-0 border-0 bg-transparent text-dark position-absolute"
+        style="top: 1rem; right: 1rem;" id="btn-close-success" aria-label="Close">
+        <iconify-icon icon="ph:x" style="font-size: 1.5rem; color: #1E293B;"></iconify-icon>
+      </button>
+
+      <div class="d-flex justify-content-center mb-3 mt-1">
+        <div class="d-flex align-items-center justify-content-center rounded-circle"
+          style="width: 80px; height: 80px; background-color: #22C55E;">
+          <iconify-icon icon="ph:check-bold" style="font-size: 2.5rem; color: #ffffff;"></iconify-icon>
+        </div>
+      </div>
+
+      <h4 class="fw-bold text-dark mb-1" style="font-size: 1.4rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+        Pembayaran Berhasil!</h4>
+      <p class="text-secondary small mb-4" style="font-size: 0.88rem; line-height: 1.4; color: #475569 !important;">
+        Terima kasih, pembayaran Anda telah berhasil diproses.
+      </p>
+
+      <!-- Hidden elements to avoid Javascript reference errors -->
+      <span id="success-booking-code" class="d-none"></span>
+      <button id="btn-copy-code" class="d-none"></button>
+
+      <button class="btn btn-primary w-100 py-2.5 fw-bold shadow-none" id="btn-go-to-history"
+        style="background-color: #0084FF; border-color: #0084FF; border-radius: 8px; font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+        Lihat Detail Pesanan
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Modal 4D: Verifikasi Pengambilan -->
+  <div id="verifikasi-pengambilan-modal" class="custom-modal-overlay">
+    <div class="custom-modal-content" style="max-width: 480px; border-radius: 14px; padding: 1.25rem 1.5rem;">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <div>
+          <h4 class="fw-bold m-0 text-dark" style="font-size: 1.35rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+            Verifikasi Pengambilan</h4>
+          <p class="text-muted small mt-0.5 mb-0" style="font-size: 0.82rem;">Periksa identitas penyewa sebelum
+            konfirmasi</p>
+        </div>
+        <button type="button" class="btn p-0 border-0 bg-transparent text-dark animate-fade-in"
+          id="btn-close-verifikasi-modal">
+          <iconify-icon icon="ph:x" class="fs-4"></iconify-icon>
+        </button>
+      </div>
+
+      <div class="mt-2">
+        <div class="d-flex align-items-center gap-1.5 mb-2">
+          <iconify-icon icon="ph:user-circle" class="fs-5 text-dark" style="color: #1E293B;"></iconify-icon>
+          <h6 class="fw-bold m-0 text-dark" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+            Data Penyewa</h6>
+        </div>
+
+        <div class="d-flex flex-column gap-1.5 mb-3"
+          style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: #1E293B;">
+          <div class="row align-items-center g-0">
+            <div class="col-5 text-secondary" style="font-weight: 500;">Nama Lengkap</div>
+            <div class="col-7 text-dark fw-bold">: <span id="verif-nama-lengkap">Tiffany Abel</span></div>
           </div>
-
-          <div class="d-flex flex-column gap-1.5 mb-3"
-            style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: #1E293B;">
-            <div class="row align-items-center g-0">
-              <div class="col-5 text-secondary" style="font-weight: 500;">Nama Lengkap</div>
-              <div class="col-7 text-dark fw-bold">: <span id="verif-nama-lengkap">Tiffany Abel</span></div>
-            </div>
-            <div class="row align-items-center g-0">
-              <div class="col-5 text-secondary" style="font-weight: 500;">Tempat, Tanggal Lahir</div>
-              <div class="col-7 text-dark fw-bold">: <span id="verif-ttl">Sleman, 17 Mei 2005</span></div>
-            </div>
-            <div class="row align-items-center g-0">
-              <div class="col-5 text-secondary" style="font-weight: 500;">Alamat</div>
-              <div class="col-7 text-dark fw-bold">: <span id="verif-alamat">Jl. Kabupaten</span></div>
-            </div>
-            <div class="row align-items-center g-0">
-              <div class="col-5 text-secondary" style="font-weight: 500;">No. Telepon</div>
-              <div class="col-7 text-dark fw-bold">: <span id="verif-telpon">08123456789</span></div>
-            </div>
-            <div class="row align-items-center g-0">
-              <div class="col-5 text-secondary" style="font-weight: 500;">Jenis Kelamin</div>
-              <div class="col-7 text-dark fw-bold">: <span id="verif-gender">Perempuan</span></div>
-            </div>
+          <div class="row align-items-center g-0">
+            <div class="col-5 text-secondary" style="font-weight: 500;">Tempat, Tanggal Lahir</div>
+            <div class="col-7 text-dark fw-bold">: <span id="verif-ttl">Sleman, 17 Mei 2005</span></div>
           </div>
+          <div class="row align-items-center g-0">
+            <div class="col-5 text-secondary" style="font-weight: 500;">Alamat</div>
+            <div class="col-7 text-dark fw-bold">: <span id="verif-alamat">Jl. Kabupaten</span></div>
+          </div>
+          <div class="row align-items-center g-0">
+            <div class="col-5 text-secondary" style="font-weight: 500;">No. Telepon</div>
+            <div class="col-7 text-dark fw-bold">: <span id="verif-telpon">08123456789</span></div>
+          </div>
+          <div class="row align-items-center g-0">
+            <div class="col-5 text-secondary" style="font-weight: 500;">Jenis Kelamin</div>
+            <div class="col-7 text-dark fw-bold">: <span id="verif-gender">Perempuan</span></div>
+          </div>
+        </div>
 
-          <!-- Two Document Cards with Mockup Images & Zoom Trigger -->
-          <div class="row g-2 mb-3">
-            <div class="col-6">
-              <div class="p-2 border bg-white text-center cursor-pointer position-relative shadow-sm doc-card-hover"
-                id="btn-zoom-ktp"
-                style="border-radius: 10px !important; border-color: #CBD5E1 !important; overflow: hidden; transition: all 0.2s;"
-                title="Klik untuk memperbesar foto KTP">
-                <img src="/src/assets/images/indonesia_ktp_mockup_1784629847316.jpg" id="verif-ktp-img" alt="KTP"
-                  class="img-fluid rounded"
-                  style="border-radius: 6px; max-height: 85px; width: 100%; object-fit: cover;"
-                  referrerPolicy="no-referrer">
-                <div class="mt-1.5 d-flex align-items-center justify-content-center gap-1 text-primary fw-bold"
-                  style="font-size: 0.72rem; color: #0084FF !important;">
-                  <iconify-icon icon="ph:magnifying-glass-plus-fill"></iconify-icon> <span>Klik Perbesar KTP</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="p-2 border bg-white text-center cursor-pointer position-relative shadow-sm doc-card-hover"
-                id="btn-zoom-sim"
-                style="border-radius: 10px !important; border-color: #CBD5E1 !important; overflow: hidden; transition: all 0.2s;"
-                title="Klik untuk memperbesar foto SIM">
-                <img src="/src/assets/images/indonesia_sim_mockup_1784629865756.jpg" id="verif-sim-img" alt="SIM A"
-                  class="img-fluid rounded"
-                  style="border-radius: 6px; max-height: 85px; width: 100%; object-fit: cover;"
-                  referrerPolicy="no-referrer">
-                <div class="mt-1.5 d-flex align-items-center justify-content-center gap-1 text-primary fw-bold"
-                  style="font-size: 0.72rem; color: #0084FF !important;">
-                  <iconify-icon icon="ph:magnifying-glass-plus-fill"></iconify-icon> <span>Klik Perbesar SIM</span>
-                </div>
+        <!-- Two Document Cards with Mockup Images & Zoom Trigger -->
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <div class="p-2 border bg-white text-center cursor-pointer position-relative shadow-sm doc-card-hover"
+              id="btn-zoom-ktp"
+              style="border-radius: 10px !important; border-color: #CBD5E1 !important; overflow: hidden; transition: all 0.2s;"
+              title="Klik untuk memperbesar foto KTP">
+              <img src="/src/assets/images/indonesia_ktp_mockup_1784629847316.jpg" id="verif-ktp-img" alt="KTP"
+                class="img-fluid rounded" style="border-radius: 6px; max-height: 85px; width: 100%; object-fit: cover;"
+                referrerPolicy="no-referrer">
+              <div class="mt-1.5 d-flex align-items-center justify-content-center gap-1 text-primary fw-bold"
+                style="font-size: 0.72rem; color: #0084FF !important;">
+                <iconify-icon icon="ph:magnifying-glass-plus-fill"></iconify-icon> <span>Klik Perbesar KTP</span>
               </div>
             </div>
           </div>
-
-          <!-- Action buttons -->
-          <div class="d-flex align-items-center gap-2">
-            <button type="button" class="btn w-50 py-2 fw-semibold text-primary bg-white border"
-              id="btn-cancel-verifikasi"
-              style="border-radius: 8px; font-size: 0.95rem; border-color: #0084FF !important; color: #0084FF !important;">
-              Batal
-            </button>
-            <button type="button" class="btn btn-primary w-50 py-2 fw-bold text-white" id="btn-submit-verifikasi"
-              style="border-radius: 8px; font-size: 0.95rem; background-color: #0084FF; border: none;">
-              Konfirmasi
-            </button>
+          <div class="col-6">
+            <div class="p-2 border bg-white text-center cursor-pointer position-relative shadow-sm doc-card-hover"
+              id="btn-zoom-sim"
+              style="border-radius: 10px !important; border-color: #CBD5E1 !important; overflow: hidden; transition: all 0.2s;"
+              title="Klik untuk memperbesar foto SIM">
+              <img src="/src/assets/images/indonesia_sim_mockup_1784629865756.jpg" id="verif-sim-img" alt="SIM A"
+                class="img-fluid rounded" style="border-radius: 6px; max-height: 85px; width: 100%; object-fit: cover;"
+                referrerPolicy="no-referrer">
+              <div class="mt-1.5 d-flex align-items-center justify-content-center gap-1 text-primary fw-bold"
+                style="font-size: 0.72rem; color: #0084FF !important;">
+                <iconify-icon icon="ph:magnifying-glass-plus-fill"></iconify-icon> <span>Klik Perbesar SIM</span>
+              </div>
+            </div>
           </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- Toast: Konfirmasi Kode Berhasil -->
-    <div id="toast-konfirmasi" class="position-fixed d-none"
-      style="top: 1.5rem; right: 1.5rem; z-index: 2000; min-width: 320px;">
-      <div class="d-flex align-items-center justify-content-between text-white px-4 py-3 rounded-3 shadow-lg"
-        style="background-color: #0084FF; border-radius: 8px !important;">
-        <span class="fw-semibold" style="font-family: 'Plus Jakarta Sans', sans-serif;" id="toast-message">Konfirmasi
-          kode
-          berhasil!</span>
-        <button type="button" class="btn-close btn-close-white ms-3" id="btn-close-toast" aria-label="Close"
-          style="font-size: 0.85rem; opacity: 1;"></button>
-      </div>
-    </div>
-
-    <!-- Modal 4E: Simulasi Cetak Laporan & Bukti -->
-    <div id="print-preview-modal" class="custom-modal-overlay">
-      <div class="custom-modal-content"
-        style="max-width: 720px; border-radius: 12px; padding: 2.5rem; background-color: #ffffff;">
-        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
-          <h5 class="fw-bold m-0 text-dark d-flex align-items-center gap-2">
-            <iconify-icon icon="ph:printer" class="text-primary fs-4"></iconify-icon> Pratinjau Cetakan
-          </h5>
-          <button type="button" class="btn-close" id="btn-close-print-modal" aria-label="Close"></button>
         </div>
 
-        <!-- The printable sheet area -->
-        <div id="print-sheet-area" class="border p-4 bg-white shadow-sm mb-4"
-          style="font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; color: #1E293B; max-height: 400px; overflow-y: auto;">
-          <!-- Content injected via JS -->
-        </div>
-
-        <div class="d-flex justify-content-end gap-2">
-          <button type="button" class="btn btn-outline-secondary px-4 py-2 fw-semibold"
-            id="btn-cancel-print">Batal</button>
-          <button type="button" class="btn btn-primary px-4 py-2 fw-bold d-flex align-items-center gap-2"
-            id="btn-trigger-actual-print" style="background-color: #0084FF; border-color: #0084FF;">
-            <iconify-icon icon="ph:printer"></iconify-icon> Cetak Dokumen
+        <!-- Action buttons -->
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="btn w-50 py-2 fw-semibold text-primary bg-white border"
+            id="btn-cancel-verifikasi"
+            style="border-radius: 8px; font-size: 0.95rem; border-color: #0084FF !important; color: #0084FF !important;">
+            Batal
+          </button>
+          <button type="button" class="btn btn-primary w-50 py-2 fw-bold text-white" id="btn-submit-verifikasi"
+            style="border-radius: 8px; font-size: 0.95rem; background-color: #0084FF; border: none;">
+            Konfirmasi
           </button>
         </div>
+
       </div>
     </div>
+  </div>
 
-    <!-- Modal 4F: Perbesar Dokumen Verifikasi (KTP / SIM) -->
-    <div id="doc-zoom-modal" class="custom-modal-overlay">
-      <div class="custom-modal-content"
-        style="max-width: 620px; border-radius: 16px; padding: 1.5rem; background-color: #ffffff;">
-        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-          <h5 class="fw-bold m-0 text-dark d-flex align-items-center gap-2" id="doc-zoom-title"
-            style="font-size: 1.1rem; font-family: 'Plus Jakarta Sans', sans-serif;">
-            <iconify-icon icon="ph:identification-card-fill" class="text-primary fs-4"
-              style="color: #0084FF !important;"></iconify-icon> <span id="doc-zoom-title-text">Detail Dokumen
-              Identitas</span>
-          </h5>
-          <button type="button" class="btn-close" id="btn-close-doc-zoom" aria-label="Close"></button>
-        </div>
-        <div class="text-center p-2 bg-light rounded-3 border mb-3"
-          style="border-color: #CBD5E1 !important; background-color: #F8FAFC !important;">
-          <img src="/src/assets/images/indonesia_ktp_mockup_1784629847316.jpg" id="doc-zoom-img"
-            alt="Dokumen Verifikasi" class="img-fluid rounded shadow-sm"
-            style="max-height: 70vh; width: 100%; object-fit: contain; border-radius: 8px;"
-            referrerPolicy="no-referrer">
-        </div>
-        <div class="d-flex justify-content-between align-items-center">
-          <span class="text-muted small" style="font-size: 0.8rem;"><iconify-icon icon="ph:info-fill"
-              class="text-primary me-1" style="color: #0084FF !important;"></iconify-icon>Foto dokumen beresolusi tinggi
-            untuk verifikasi identitas</span>
-          <button type="button" class="btn btn-primary px-4 py-1.5 fw-bold text-white" id="btn-ok-doc-zoom"
-            style="border-radius: 8px; background-color: #0084FF; border: none;">
-            Tutup
-          </button>
-        </div>
+  <!-- Toast: Konfirmasi Kode Berhasil -->
+  <div id="toast-konfirmasi" class="position-fixed d-none"
+    style="top: 1.5rem; right: 1.5rem; z-index: 2000; min-width: 320px;">
+    <div class="d-flex align-items-center justify-content-between text-white px-4 py-3 rounded-3 shadow-lg"
+      style="background-color: #0084FF; border-radius: 8px !important;">
+      <span class="fw-semibold" style="font-family: 'Plus Jakarta Sans', sans-serif;" id="toast-message">Konfirmasi
+        kode
+        berhasil!</span>
+      <button type="button" class="btn-close btn-close-white ms-3" id="btn-close-toast" aria-label="Close"
+        style="font-size: 0.85rem; opacity: 1;"></button>
+    </div>
+  </div>
+
+  <!-- Modal 4E: Simulasi Cetak Laporan & Bukti -->
+  <div id="print-preview-modal" class="custom-modal-overlay">
+    <div class="custom-modal-content"
+      style="max-width: 720px; border-radius: 12px; padding: 2.5rem; background-color: #ffffff;">
+      <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <h5 class="fw-bold m-0 text-dark d-flex align-items-center gap-2">
+          <iconify-icon icon="ph:printer" class="text-primary fs-4"></iconify-icon> Pratinjau Cetakan
+        </h5>
+        <button type="button" class="btn-close" id="btn-close-print-modal" aria-label="Close"></button>
+      </div>
+
+      <!-- The printable sheet area -->
+      <div id="print-sheet-area" class="border p-4 bg-white shadow-sm mb-4"
+        style="font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; color: #1E293B; max-height: 400px; overflow-y: auto;">
+        <!-- Content injected via JS -->
+      </div>
+
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary px-4 py-2 fw-semibold"
+          id="btn-cancel-print">Batal</button>
+        <button type="button" class="btn btn-primary px-4 py-2 fw-bold d-flex align-items-center gap-2"
+          id="btn-trigger-actual-print" style="background-color: #0084FF; border-color: #0084FF;">
+          <iconify-icon icon="ph:printer"></iconify-icon> Cetak Dokumen
+        </button>
       </div>
     </div>
+  </div>
 
-    <!-- Bootstrap 5.3.3 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Modal 4F: Perbesar Dokumen Verifikasi (KTP / SIM) -->
+  <div id="doc-zoom-modal" class="custom-modal-overlay">
+    <div class="custom-modal-content"
+      style="max-width: 620px; border-radius: 16px; padding: 1.5rem; background-color: #ffffff;">
+      <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+        <h5 class="fw-bold m-0 text-dark d-flex align-items-center gap-2" id="doc-zoom-title"
+          style="font-size: 1.1rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+          <iconify-icon icon="ph:identification-card-fill" class="text-primary fs-4"
+            style="color: #0084FF !important;"></iconify-icon> <span id="doc-zoom-title-text">Detail Dokumen
+            Identitas</span>
+        </h5>
+        <button type="button" class="btn-close" id="btn-close-doc-zoom" aria-label="Close"></button>
+      </div>
+      <div class="text-center p-2 bg-light rounded-3 border mb-3"
+        style="border-color: #CBD5E1 !important; background-color: #F8FAFC !important;">
+        <img src="/src/assets/images/indonesia_ktp_mockup_1784629847316.jpg" id="doc-zoom-img" alt="Dokumen Verifikasi"
+          class="img-fluid rounded shadow-sm"
+          style="max-height: 70vh; width: 100%; object-fit: contain; border-radius: 8px;" referrerPolicy="no-referrer">
+      </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <span class="text-muted small" style="font-size: 0.8rem;"><iconify-icon icon="ph:info-fill"
+            class="text-primary me-1" style="color: #0084FF !important;"></iconify-icon>Foto dokumen beresolusi tinggi
+          untuk verifikasi identitas</span>
+        <button type="button" class="btn btn-primary px-4 py-1.5 fw-bold text-white" id="btn-ok-doc-zoom"
+          style="border-radius: 8px; background-color: #0084FF; border: none;">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
 
-    <!-- TypeScript Vanilla Logic -->
-    <script type="module" src="/src/main.ts"></script>
+  <!-- Bootstrap 5.3.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- TypeScript Vanilla Logic -->
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>
