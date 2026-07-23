@@ -806,3 +806,21 @@ button:not(:disabled):active,
   }
 }
 
+/* ==================== SEMBUNYIKAN MODAL SAAT LOGIN ==================== */
+/* Saat login section terlihat, semua modal dan toast disembunyikan */
+body:has(#login-section:not(.d-none)) .custom-modal-overlay {
+  display: none !important;
+}
+
+body:has(#login-section:not(.d-none)) #toast-konfirmasi {
+  display: none !important;
+}
+
+/* Sembunyikan juga jika login section tidak memiliki class d-none */
+body:has(#login-section[style*="display: flex"]) .custom-modal-overlay {
+  display: none !important;
+}
+
+body:has(#login-section[style*="display: flex"]) #toast-konfirmasi {
+  display: none !important;
+}
