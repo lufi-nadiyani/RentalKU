@@ -1,0 +1,1512 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rentalku - Aplikasi Sewa Mobil Terlengkap</title>
+
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Phosphor Icons -->
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/style.css">
+
+  <!-- Iconify Script -->
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+  <!-- Custom CSS Stylesheet -->
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+
+<body>
+
+  <!-- ==================== 1. LOGIN SECTION ==================== -->
+  <div id="login-section" class="login-bg d-flex align-items-center justify-content-center min-vh-100 w-100 p-3 p-md-4"
+    style="background-color: #F8FAFC; background-image: radial-gradient(#E2E8F0 1.2px, transparent 1.2px); background-size: 24px 24px;">
+
+    <div class="card p-4 p-sm-5 border-0 shadow-lg" id="login-card"
+      style="width: 100%; max-width: 460px; border-radius: 20px; background-color: #FFFFFF; box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08) !important;">
+
+      <div class="text-center mb-4">
+        <div class="d-inline-flex align-items-center justify-content-center gap-2 mb-1">
+          <iconify-icon icon="mingcute:car-fill" style="font-size: 3.2rem; color: #0084FF !important;"></iconify-icon>
+          <h2 class="fw-bold mb-0 text-dark" id="login-app-title"
+            style="font-size: 2.2rem; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.5px; color: #000000 !important;">
+            RentalKu</h2>
+        </div>
+        <p class="text-secondary small mt-1" style="font-size: 0.9rem;">Platform Penyewaan Mobil Modern & Terpercaya</p>
+      </div>
+
+      <!-- Elegant Tabs for Masuk / Daftar Akun -->
+      <div class="d-flex p-1 bg-light rounded-3 mb-4" style="border: 1px solid #E2E8F0;">
+        <button type="button" id="tab-login"
+          class="btn w-50 py-2 fw-bold rounded-2 bg-white text-primary shadow-sm border-0"
+          style="font-size: 0.9rem; transition: all 0.2s;">
+          Masuk
+        </button>
+        <button type="button" id="tab-register"
+          class="btn w-50 py-2 fw-semibold rounded-2 text-muted border-0 bg-transparent"
+          style="font-size: 0.9rem; transition: all 0.2s;">
+          Daftar Akun
+        </button>
+      </div>
+
+      <!-- Form Fields for LOGIN -->
+      <div id="login-form-container">
+        <div class="mb-3">
+          <label for="login-email" class="form-label small fw-semibold text-secondary">Alamat Email</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;"><iconify-icon
+                icon="ph:envelope" class="text-muted"></iconify-icon></span>
+            <input type="email" id="login-email" class="form-control bg-white border-start-0"
+              style="border-color: #CBD5E1; font-size: 0.9rem;" placeholder="nama@email.com" value="ana@rentalku.com">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <label for="login-password" class="form-label small fw-semibold text-secondary mb-0">Kata Sandi</label>
+            <a href="#" class="small text-decoration-none text-primary fw-medium" style="font-size: 0.8rem;">Lupa
+              Password?</a>
+          </div>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;"><iconify-icon
+                icon="ph:lock" class="text-muted"></iconify-icon></span>
+            <input type="password" id="login-password" class="form-control bg-white border-start-0"
+              style="border-color: #CBD5E1; font-size: 0.9rem;" placeholder="••••••••" value="password123">
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 mb-4">
+          <button type="button" id="btn-login-submit"
+            class="btn btn-primary py-2.5 fw-bold d-flex align-items-center justify-content-center gap-2"
+            style="border-radius: 10px; font-size: 0.95rem; background-color: #0084FF; border-color: #0084FF; box-shadow: 0 4px 12px rgba(0, 132, 255, 0.15);">
+            <iconify-icon icon="ph:sign-in-fill"></iconify-icon> Masuk ke Akun
+          </button>
+        </div>
+
+        <!-- Quick Fill Demo Accounts -->
+        <div class="p-3 bg-light rounded-3 border mb-3" style="border-color: #E2E8F0 !important;">
+          <div class="fw-bold text-dark d-flex align-items-center gap-1.5 mb-2" style="font-size: 0.8rem;">
+            <iconify-icon icon="ph:lightning-fill" class="text-warning"
+              style="color: #F59E0B !important;"></iconify-icon>
+            <span>Uji Coba Demo Akun (Klik untuk isi cepat)</span>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="button"
+              class="btn btn-sm btn-white border flex-fill py-1.5 d-flex align-items-center justify-content-center gap-1"
+              id="quick-fill-tenant"
+              style="font-size: 0.75rem; border-color: #CBD5E1 !important; border-radius: 6px; background-color: #ffffff; font-weight: 600;">
+              <iconify-icon icon="ph:user"></iconify-icon> Akun Penyewa
+            </button>
+            <button type="button"
+              class="btn btn-sm btn-white border flex-fill py-1.5 d-flex align-items-center justify-content-center gap-1"
+              id="quick-fill-admin"
+              style="font-size: 0.75rem; border-color: #CBD5E1 !important; border-radius: 6px; background-color: #ffffff; font-weight: 600;">
+              <iconify-icon icon="ph:shield-check"></iconify-icon> Akun Pemilik
+            </button>
+          </div>
+        </div>
+
+        <div class="text-center mt-3">
+          <p class="small text-muted mb-0">Belum punya akun? <a href="#" id="link-to-register"
+              class="text-primary text-decoration-none fw-bold">Daftar Sekarang</a></p>
+        </div>
+      </div>
+
+      <!-- Form Fields for REGISTER -->
+      <div id="register-form-container" class="d-none">
+        <!-- Role Selector for Register -->
+        <div class="mb-3">
+          <label class="form-label small fw-semibold text-secondary">Daftar Sebagai</label>
+          <div class="d-flex gap-2">
+            <button type="button" id="register-role-tenant"
+              class="btn w-50 py-2 d-flex align-items-center justify-content-center gap-2 border fw-semibold text-primary border-primary"
+              style="font-size: 0.85rem; border-radius: 8px; background-color: rgba(0, 132, 255, 0.05); transition: all 0.2s;">
+              <iconify-icon icon="ph:user-fill"></iconify-icon> Penyewa
+            </button>
+            <button type="button" id="register-role-admin"
+              class="btn w-50 py-2 d-flex align-items-center justify-content-center gap-2 border fw-semibold text-muted"
+              style="font-size: 0.85rem; border-radius: 8px; background: transparent; border-color: #dee2e6; transition: all 0.2s;">
+              <iconify-icon icon="ph:shield-check"></iconify-icon> Admin / Pemilik
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="register-name" class="form-label small fw-semibold text-secondary">Nama Lengkap</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;"><iconify-icon
+                icon="ph:user" class="text-muted"></iconify-icon></span>
+            <input type="text" id="register-name" class="form-control bg-white border-start-0"
+              style="border-color: #CBD5E1; font-size: 0.9rem;" placeholder="Nama Lengkap Anda" value="Budi Santoso">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="register-email" class="form-label small fw-semibold text-secondary">Alamat Email</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;"><iconify-icon
+                icon="ph:envelope" class="text-muted"></iconify-icon></span>
+            <input type="email" id="register-email" class="form-control bg-white border-start-0"
+              style="border-color: #CBD5E1; font-size: 0.9rem;" placeholder="nama@email.com" value="budi@email.com">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="register-phone" class="form-label small fw-semibold text-secondary">Nomor Telepon</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;"><iconify-icon
+                icon="ph:phone" class="text-muted"></iconify-icon></span>
+            <input type="text" id="register-phone" class="form-control bg-white border-start-0"
+              style="border-color: #CBD5E1; font-size: 0.9rem;" placeholder="08xxxxxxxxxx" value="08123456789">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="register-password" class="form-label small fw-semibold text-secondary">Kata Sandi</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;"><iconify-icon
+                icon="ph:lock" class="text-muted"></iconify-icon></span>
+            <input type="password" id="register-password" class="form-control bg-white border-start-0"
+              style="border-color: #CBD5E1; font-size: 0.9rem;" placeholder="Min. 6 karakter" value="password123">
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 mb-4">
+          <button type="button" id="btn-register-submit"
+            class="btn btn-primary py-2.5 fw-bold d-flex align-items-center justify-content-center gap-2"
+            style="border-radius: 10px; font-size: 0.95rem; background-color: #0084FF; border-color: #0084FF; box-shadow: 0 4px 12px rgba(0, 132, 255, 0.15);">
+            <iconify-icon icon="ph:user-plus-fill"></iconify-icon> Daftar Sekarang
+          </button>
+        </div>
+
+        <div class="text-center mt-3">
+          <p class="small text-muted mb-0">Sudah punya akun? <a href="#" id="link-to-login"
+              class="text-primary text-decoration-none fw-bold">Masuk Sekarang</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- ==================== 2. TENANT (PENYEWA) SECTION ==================== -->
+  <div id="tenant-section" class="d-none bg-light"
+    style="height: 100vh; overflow: hidden; display: flex; flex-direction: column;">
+
+    <!-- Tenant Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-white bg-white border-bottom py-3 sticky-top" id="tenant-navbar"
+      style="box-shadow: none; border-color: #E2E8F0; flex-shrink: 0;">
+      <div class="container px-4">
+        <!-- Brand / Logo -->
+        <div class="d-flex align-items-center gap-2" id="penyewa-logo">
+          <iconify-icon icon="mingcute:car-fill" style="font-size: 2.8rem; color: #0084FF !important;"></iconify-icon>
+          <span class="fs-4 fw-bold text-dark"
+            style="color: #000000 !important; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.3px; font-size: 1.6rem;">RentalKu</span>
+        </div>
+
+        <!-- Toggle Button (Mobile) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#tenantNavContent"
+          aria-controls="tenantNavContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Content -->
+        <div class="collapse navbar-collapse" id="tenantNavContent">
+          <!-- Main Navigation -->
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4">
+            <li class="nav-item">
+              <a class="nav-link text-muted fw-medium" href="#" id="tenant-nav-home"
+                style="color: #64748B !important; font-size: 0.95rem; font-weight: 500;">Beranda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-primary fw-semibold active" href="#" id="tenant-nav-catalog"
+                style="color: #0084FF !important; font-size: 0.95rem; font-weight: 600;">Katalog Mobil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-muted fw-medium" href="#" id="tenant-nav-history"
+                style="color: #64748B !important; font-size: 0.95rem; font-weight: 500;">Riwayat Transaksi</a>
+            </li>
+          </ul>
+
+          <!-- Right Side: Profile, Notifications, Logout -->
+          <div class="d-flex align-items-center gap-2">
+            <!-- Profile Box -->
+            <div
+              class="d-flex align-items-center gap-2.5 border px-4 py-2 bg-white shadow-sm fw-semibold cursor-pointer"
+              id="tenant-profile-box"
+              style="border-color: #E2E8F0 !important; border-radius: 8px; font-size: 0.92rem; height: 42px; min-width: 130px; white-space: nowrap;">
+              <img
+                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120&h=120"
+                alt="Ana Profile" class="rounded-circle" style="width: 28px; height: 28px; object-fit: cover;"
+                id="tenant-profile-img">
+              <span class="fw-semibold text-dark" id="tenant-profile-name"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">Ana</span>
+            </div>
+
+            <!-- Notification Bell -->
+            <div class="position-relative cursor-pointer ms-1 me-1" style="padding: 6px;">
+              <iconify-icon icon="ph:bell" class="fs-4 text-dark" style="color: #475569 !important;"></iconify-icon>
+            </div>
+
+            <!-- Logout Button -->
+            <button class="btn btn-outline-danger d-flex align-items-center gap-2 px-3.5 py-2 fw-semibold"
+              id="tenant-btn-logout"
+              style="border-color: #F87171; color: #EF4444; border-radius: 8px; font-size: 0.92rem; height: 42px;">
+              <iconify-icon icon="ph:sign-out"></iconify-icon> Keluar
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container for Tenant Views -->
+    <div class="container px-4"
+      style="flex: 1; overflow: hidden; height: calc(100vh - 70px); display: flex; flex-direction: column; padding-top: 0.5rem; padding-bottom: 0.5rem;">
+
+      <!-- === View 2A: Catalog Mobil Grid === -->
+      <div id="tenant-catalog-view" class="fade-in"
+        style="flex: 1; overflow: hidden; display: flex; flex-direction: column;">
+        <div class="row g-3" style="flex: 1; overflow: hidden; height: 100%;">
+
+          <!-- Left Side Filter Section -->
+          <div class="col-lg-3" style="height: 100%; overflow: hidden;">
+            <div class="filter-card shadow-sm" id="tenant-filter-sidebar"
+              style="max-height: 100%; overflow-y: auto; padding: 1rem; height: 100%;">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold m-0" id="filter-title-label" style="font-size: 0.95rem;">Filter</h5>
+              </div>
+
+              <!-- Kapasitas Penumpang Filter -->
+              <div class="mb-3">
+                <h6 class="filter-section-title" id="filter-passenger-title"
+                  style="font-size: 0.8rem; margin-bottom: 0.5rem;">Kapasitas Penumpang</h6>
+                <div class="form-check mb-1">
+                  <input class="form-check-input capacity-checkbox" type="checkbox" id="cap-all" value="all" checked>
+                  <label class="form-check-label small" for="cap-all" style="font-size: 0.78rem;">Semua</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input capacity-checkbox" type="checkbox" id="cap-4" value="4">
+                  <label class="form-check-label small" for="cap-4" style="font-size: 0.78rem;">4 Orang</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input capacity-checkbox" type="checkbox" id="cap-5" value="5-6">
+                  <label class="form-check-label small" for="cap-5" style="font-size: 0.78rem;">5-6 Orang</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input capacity-checkbox" type="checkbox" id="cap-6" value="7">
+                  <label class="form-check-label small" for="cap-6" style="font-size: 0.78rem;">> 6 Orang</label>
+                </div>
+              </div>
+
+              <!-- Tipe Mobil (Brand) Filter -->
+              <div class="mb-3">
+                <h6 class="filter-section-title" id="filter-brand-title"
+                  style="font-size: 0.8rem; margin-bottom: 0.5rem;">Tipe Mobil</h6>
+                <div class="form-check mb-1">
+                  <input class="form-check-input brand-checkbox" type="checkbox" id="brand-toyota" value="Toyota">
+                  <label class="form-check-label small" for="brand-toyota" style="font-size: 0.78rem;">Toyota</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input brand-checkbox" type="checkbox" id="brand-mitsubishi"
+                    value="Mitsubishi">
+                  <label class="form-check-label small" for="brand-mitsubishi"
+                    style="font-size: 0.78rem;">Mitsubishi</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input brand-checkbox" type="checkbox" id="brand-daihatsu" value="Daihatsu">
+                  <label class="form-check-label small" for="brand-daihatsu"
+                    style="font-size: 0.78rem;">Daihatsu</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input brand-checkbox" type="checkbox" id="brand-hyundai" value="Hyundai">
+                  <label class="form-check-label small" for="brand-hyundai" style="font-size: 0.78rem;">Hyundai</label>
+                </div>
+              </div>
+
+              <!-- Transmisi Filter -->
+              <div class="mb-3">
+                <h6 class="filter-section-title" id="filter-trans-title"
+                  style="font-size: 0.8rem; margin-bottom: 0.5rem;">Transmisi</h6>
+                <div class="form-check mb-1">
+                  <input class="form-check-input transmission-checkbox" type="checkbox" id="trans-all" value="all"
+                    checked>
+                  <label class="form-check-label small" for="trans-all" style="font-size: 0.78rem;">Semua</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input transmission-checkbox" type="checkbox" id="trans-manual"
+                    value="Manual">
+                  <label class="form-check-label small" for="trans-manual" style="font-size: 0.78rem;">Manual</label>
+                </div>
+                <div class="form-check mb-1">
+                  <input class="form-check-input transmission-checkbox" type="checkbox" id="trans-matic"
+                    value="Automatic">
+                  <label class="form-check-label small" for="trans-matic" style="font-size: 0.78rem;">Matic</label>
+                </div>
+              </div>
+
+              <button class="btn btn-primary w-100 fw-semibold mt-1 py-1.5" id="btn-apply-filters"
+                style="font-size: 0.82rem;">Terapkan Filter</button>
+            </div>
+          </div>
+
+          <!-- Right Side Main Catalog Search & Grid -->
+          <div class="col-lg-9" style="display: flex; flex-direction: column; height: 100%; overflow: hidden;">
+
+            <!-- Search & Sorter Selection Row -->
+            <div class="card p-2 shadow-sm mb-2 border-0" id="search-row-card"
+              style="border-radius: 12px; background-color: transparent; flex-shrink: 0;">
+              <div class="row g-2 align-items-center">
+                <!-- Date Inputs with Custom Popover -->
+                <div class="col-md-3 position-relative">
+                  <div class="input-group cursor-pointer" id="dates-trigger"
+                    style="border-radius: 8px; overflow: hidden;">
+                    <input type="text" id="rent-dates" class="form-control border-end-0 small bg-white px-2"
+                      style="font-size: 0.7rem; cursor: pointer; height: 32px;" placeholder="12-10-2026 -> 13-10-2026"
+                      value="12-10-2026 -> 13-10-2026" readonly>
+                    <span class="input-group-text d-flex align-items-center justify-content-center"
+                      style="background-color: #D6F3FF; color: #0088FF; border-color: #dee2e6; cursor: pointer; width: 34px;">
+                      <iconify-icon icon="ph:calendar-fill" style="font-size: 0.85rem;"></iconify-icon>
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Time Inputs with Custom Popover -->
+                <div class="col-md-3 position-relative">
+                  <div class="input-group cursor-pointer" id="time-trigger"
+                    style="border-radius: 8px; overflow: hidden;">
+                    <input type="text" id="rent-time" class="form-control border-end-0 small bg-white px-2"
+                      style="font-size: 0.7rem; cursor: pointer; height: 32px;" placeholder="12:00 -> 10:00"
+                      value="12:00 -> 10:00" readonly>
+                    <span class="input-group-text d-flex align-items-center justify-content-center"
+                      style="background-color: #D6F3FF; color: #0088FF; border-color: #dee2e6; cursor: pointer; width: 34px;">
+                      <iconify-icon icon="ph:clock-fill" style="font-size: 0.85rem;"></iconify-icon>
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Location Input with Custom Dropdown -->
+                <div class="col-md-3 position-relative">
+                  <div class="input-group cursor-pointer" id="location-trigger"
+                    style="border-radius: 8px; overflow: hidden;">
+                    <input type="text" id="rent-location" class="form-control border-end-0 small bg-white px-2"
+                      style="font-size: 0.7rem; cursor: pointer; height: 32px;" placeholder="Yogyakarta"
+                      value="Yogyakarta" readonly>
+                    <span class="input-group-text d-flex align-items-center justify-content-center"
+                      style="background-color: #D6F3FF; color: #0088FF; border-color: #dee2e6; cursor: pointer; width: 34px;">
+                      <iconify-icon icon="ph:map-pin-fill" style="font-size: 0.85rem;"></iconify-icon>
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Sorting Select -->
+                <div class="col-md-3">
+                  <select id="sort-price" class="form-select small bg-white"
+                    style="font-size: 0.78rem; height: 32px; border-radius: 8px;">
+                    <option value="lowest">Harga Terendah</option>
+                    <option value="highest">Harga Tertinggi</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cars Cards Grid container -->
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2" id="tenant-cars-grid"
+              style="flex: 1; overflow-y: auto; padding-bottom: 0.5rem; align-content: flex-start;">
+              <!-- Dynamically populated from JS -->
+            </div>
+
+            <!-- Empty state fallback -->
+            <div id="catalog-empty-state" class="text-center py-5 d-none">
+              <i class="ph ph-smiley-sad fs-1 text-muted d-block mb-3"></i>
+              <h5 class="fw-bold">Mobil Tidak Ditemukan</h5>
+              <p class="text-muted">Coba ubah pengaturan filter Anda atau hapus filter untuk melihat semua mobil.</p>
+              <button class="btn btn-outline-primary btn-sm mt-2" id="btn-reset-empty-filters">Reset Filter</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- === View 2B: Detail Mobil Page === -->
+      <div id="tenant-detail-view" class="fade-in d-none bg-white"
+        style="flex: 1; overflow: hidden; display: flex; flex-direction: column; min-height: 0; padding-top: 0;">
+
+        <div class="row g-0" id="detail-car-container"
+          style="flex: 1; overflow: hidden; height: 100%; border-top: none; margin-top: 0; padding-top: 0.5rem;">
+
+          <!-- Left Side Details & T&C -->
+          <div class="col-lg-6 pe-lg-4"
+            style="border-right: 1px solid #E2E8F0; overflow-y: auto; max-height: calc(100vh - 90px); padding-bottom: 0.5rem;">
+
+            <!-- Breadcrumb navigation -->
+            <div class="d-flex align-items-center gap-2 mb-2"
+              style="font-size: 0.85rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+              <a href="#" id="breadcrumb-catalog-btn" class="text-decoration-none text-muted"
+                style="color: #64748B !important; font-weight: 500;">Katalog Mobil</a>
+              <span class="text-muted" style="font-size: 0.7rem;"><iconify-icon
+                  icon="ph:caret-right"></iconify-icon></span>
+              <span class="fw-bold text-dark" style="color: #1E293B !important;">Detail Mobil</span>
+            </div>
+
+            <!-- Car Image -->
+            <div class="text-center p-2 mb-2"
+              style="height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: transparent;">
+              <img src="" id="detail-car-img" class="img-fluid"
+                style="max-height: 160px; width: auto; object-fit: contain;" alt="Detail Car">
+            </div>
+
+            <!-- Syarat dan Ketentuan Card -->
+            <div class="card p-2 border mb-2 bg-white" style="border-radius: 12px; border-color: #E2E8F0 !important;">
+              <h5 class="fw-bold mb-1 text-dark" id="detail-syarat-title"
+                style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">Syarat dan Ketentuan</h5>
+              <div class="d-flex flex-column gap-1">
+                <div class="d-flex gap-2 align-items-start">
+                  <iconify-icon icon="ph:warning-circle" class="fs-5 text-dark mt-0 flex-shrink-0"
+                    style="color: #1E293B !important;"></iconify-icon>
+                  <span class="small-text" style="font-size: 0.75rem; color: #475569; line-height: 1.4;">Penggunaan
+                    mobil selama 24 jam terhitung sejak waktu mulai penyewaan.</span>
+                </div>
+                <div class="d-flex gap-2 align-items-start">
+                  <iconify-icon icon="ph:warning-circle" class="fs-5 text-dark mt-0 flex-shrink-0"
+                    style="color: #1E293B !important;"></iconify-icon>
+                  <span class="small-text" style="font-size: 0.75rem; color: #475569; line-height: 1.4;">Pembayaran
+                    harus diselesaikan dalam waktu 1 jam.</span>
+                </div>
+                <div class="d-flex gap-2 align-items-start">
+                  <iconify-icon icon="ph:warning-circle" class="fs-5 text-dark mt-0 flex-shrink-0"
+                    style="color: #1E293B !important;"></iconify-icon>
+                  <span class="small-text" style="font-size: 0.75rem; color: #475569; line-height: 1.4;">Pembayaran
+                    dilakukan secara online melalui metode pembayaran yang tersedia.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dokumen yang Perlu Disiapkan Card -->
+            <div class="card p-2 border bg-white" style="border-radius: 12px; border-color: #E2E8F0 !important;">
+              <h5 class="fw-bold mb-1 text-dark" id="detail-dokumen-title"
+                style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">Dokumen yang Perlu Disiapkan
+              </h5>
+              <div class="d-flex flex-column gap-1">
+                <div class="p-1.5 border rounded-3 d-flex align-items-center gap-2 bg-white"
+                  style="border-radius: 10px !important; border-color: #E2E8F0 !important;">
+                  <iconify-icon icon="ph:identification-card" class="fs-5 text-dark"></iconify-icon>
+                  <span class="fw-semibold text-dark" style="font-size: 0.8rem;">SIM A</span>
+                </div>
+                <div class="p-1.5 border rounded-3 d-flex align-items-center gap-2 bg-white"
+                  style="border-radius: 10px !important; border-color: #E2E8F0 !important;">
+                  <iconify-icon icon="ph:identification-card" class="fs-5 text-dark"></iconify-icon>
+                  <span class="fw-semibold text-dark" style="font-size: 0.8rem;">Kartu Tanda Penduduk (KTP)</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Side Purchase Panel -->
+          <div class="col-lg-6 ps-lg-4"
+            style="overflow-y: auto; max-height: calc(100vh - 90px); padding-bottom: 0.5rem;">
+            <div class="ps-lg-2">
+
+              <!-- Title & Price -->
+              <h1 class="fw-bold text-dark" id="detail-car-name"
+                style="font-size: 1.5rem; font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 0.2rem; margin-top: 0;">
+                Toyota Avanza</h1>
+
+              <div class="mb-2">
+                <span class="fw-bold" style="color: #FF5C00; font-size: 1.4rem;" id="detail-car-price">Rp350.000</span>
+                <span class="text-muted" style="font-size: 0.95rem; font-weight: 500;">/ hari</span>
+              </div>
+
+              <!-- 3 Specs Row -->
+              <div class="row g-2 mb-2">
+                <div class="col-4">
+                  <div
+                    class="p-1.5 border rounded-3 text-center bg-white d-flex flex-column align-items-center justify-content-center"
+                    style="border-radius: 12px !important; border-color: #E2E8F0 !important; min-height: 60px;">
+                    <iconify-icon icon="ph:user" class="fs-4 text-dark mb-0"></iconify-icon>
+                    <span class="fw-bold text-dark d-block" id="detail-spec-cap-val" style="font-size: 0.8rem;">7</span>
+                    <span class="text-muted" style="font-size: 0.6rem; font-weight: 500;">Penumpang</span>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div
+                    class="p-1.5 border rounded-3 text-center bg-white d-flex flex-column align-items-center justify-content-center"
+                    style="border-radius: 12px !important; border-color: #E2E8F0 !important; min-height: 60px;">
+                    <iconify-icon icon="ph:steering-wheel" class="fs-4 text-dark mb-0"></iconify-icon>
+                    <span class="fw-semibold text-dark d-block" id="detail-spec-trans-val"
+                      style="font-size: 0.7rem;">Automatic</span>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div
+                    class="p-1.5 border rounded-3 text-center bg-white d-flex flex-column align-items-center justify-content-center"
+                    style="border-radius: 12px !important; border-color: #E2E8F0 !important; min-height: 60px;">
+                    <iconify-icon icon="ph:briefcase" class="fs-4 text-dark mb-0"></iconify-icon>
+                    <span class="fw-bold text-dark d-block" id="detail-spec-lug-val" style="font-size: 0.8rem;">2</span>
+                    <span class="text-muted" style="font-size: 0.6rem; font-weight: 500;">Bagasi</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Ringkasan Sewa Card -->
+              <div class="card p-2 border bg-white mb-2" style="border-radius: 12px; border-color: #E2E8F0 !important;">
+                <h5 class="fw-bold text-dark mb-1"
+                  style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">Ringkasan Sewa</h5>
+                <div class="d-flex flex-column gap-0.5">
+                  <div class="d-flex justify-content-between align-items-center py-0">
+                    <span class="text-muted" style="font-size: 0.75rem; font-weight: 500;">Tanggal ambil</span>
+                    <span class="fw-semibold text-dark" id="sum-pickup-date" style="font-size: 0.75rem;">12 Juli
+                      2026</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center py-0">
+                    <span class="text-muted" style="font-size: 0.75rem; font-weight: 500;">Jam ambil</span>
+                    <span class="fw-semibold text-dark" id="sum-pickup-time" style="font-size: 0.75rem;">12:00</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center py-0">
+                    <span class="text-muted" style="font-size: 0.75rem; font-weight: 500;">Tanggal kembali</span>
+                    <span class="fw-semibold text-dark" id="sum-return-date" style="font-size: 0.75rem;">14 Juli
+                      2026</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center py-0">
+                    <span class="text-muted" style="font-size: 0.75rem; font-weight: 500;">Jam kembali</span>
+                    <span class="fw-semibold text-dark" id="sum-return-time" style="font-size: 0.75rem;">10:00</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center py-0">
+                    <span class="text-muted" style="font-size: 0.75rem; font-weight: 500;">Durasi</span>
+                    <span class="fw-semibold text-dark" id="sum-duration" style="font-size: 0.75rem;">2 hari</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Rincian Harga Card -->
+              <div class="card p-2 border bg-white mb-2" style="border-radius: 12px; border-color: #E2E8F0 !important;">
+                <h5 class="fw-bold text-dark mb-1"
+                  style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">Rincian Harga</h5>
+                <div class="d-flex flex-column gap-0.5">
+                  <div class="d-flex justify-content-between align-items-center py-0">
+                    <span class="text-muted" id="price-breakdown-label"
+                      style="font-size: 0.75rem; font-weight: 500;">Harga per hari</span>
+                    <span class="fw-semibold text-dark" id="price-breakdown-val"
+                      style="font-size: 0.75rem;">Rp350.000</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center py-0">
+                    <span class="text-muted" id="duration-breakdown-label"
+                      style="font-size: 0.75rem; font-weight: 500;">Durasi (2 Hari)</span>
+                    <span class="fw-semibold text-dark" id="duration-breakdown-val"
+                      style="font-size: 0.75rem;">Rp700.000</span>
+                  </div>
+                  <hr class="my-0.5" style="border-color: #F1F5F9; opacity: 1;">
+                  <div class="d-flex justify-content-between align-items-center pt-0">
+                    <span class="fw-bold text-dark" style="font-size: 0.85rem;">Total Pembayaran</span>
+                    <span class="fw-bold" id="detail-total-payment"
+                      style="color: #FF5C00; font-size: 0.95rem;">Rp700.000</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Black Checkout Button -->
+              <button class="btn btn-black w-100 py-1.5 fw-semibold shadow-sm text-center" id="btn-checkout-car"
+                style="border-radius: 10px; font-size: 0.85rem; background-color: #000000; border: none;">
+                Konfirmasi Pembayaran
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- === View 2C: Riwayat Transaksi Page === -->
+      <div id="tenant-history-view" class="fade-in d-none">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h2 class="fw-bold m-0" id="history-header-title">Riwayat Transaksi</h2>
+            <p class="text-muted mb-0 small">Pantau status pemesanan dan bukti pembayaran Anda</p>
+          </div>
+        </div>
+
+        <div class="card shadow-sm border-0 p-4" style="border-radius: 12px;" id="history-table-card">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" id="history-table">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" style="border-top-left-radius: 8px;">ID Pesanan</th>
+                  <th scope="col">Nama Mobil</th>
+                  <th scope="col">Plat Nomor</th>
+                  <th scope="col">Durasi</th>
+                  <th scope="col">Total Biaya</th>
+                  <th scope="col">Status</th>
+                  <th scope="col" style="border-top-right-radius: 8px;" class="text-end">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="history-orders-tbody">
+                <!-- Programmatically populated with transactions -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="history-empty-state" class="text-center py-5 d-none">
+            <iconify-icon icon="ph:receipt" class="fs-1 text-muted d-block mb-3"></iconify-icon>
+            <h5 class="fw-bold">Belum Ada Transaksi</h5>
+            <p class="text-muted">Anda belum melakukan pemesanan mobil apapun.</p>
+            <button class="btn btn-primary btn-sm mt-2" id="btn-history-book-now">Pesan Mobil Sekarang</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ==================== 3. ADMIN / OWNER SECTION ==================== -->
+  <div id="admin-section" class="d-none">
+
+    <!-- Top Global Admin Header -->
+    <header class="d-flex justify-content-between align-items-center bg-white border-bottom px-4"
+      style="height: 75px; position: fixed; top: 0; left: 0; right: 0; z-index: 1010;">
+      <div class="d-flex align-items-center gap-2" id="admin-logo">
+        <iconify-icon icon="mingcute:car-fill" style="font-size: 2.8rem; color: #0084FF !important;"></iconify-icon>
+        <span class="fs-4 fw-bold text-dark"
+          style="color: #000000 !important; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.3px; font-size: 1.6rem;">RentalKu</span>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center gap-2.5 border px-4 py-2 bg-white shadow-sm fw-semibold cursor-pointer"
+          id="admin-profile-box"
+          style="border-color: #E2E8F0 !important; border-radius: 8px; font-size: 0.92rem; height: 42px; min-width: 170px; white-space: nowrap;">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120&h=120"
+            alt="Rifqy Profile" class="rounded-circle border" style="width: 28px; height: 28px; object-fit: cover;"
+            id="admin-profile-img">
+          <span class="fw-semibold text-dark" id="admin-profile-name"
+            style="font-family: 'Plus Jakarta Sans', sans-serif;">Rifqy Affandi</span>
+        </div>
+        <div class="position-relative cursor-pointer ms-1 me-1" style="padding: 6px;">
+          <iconify-icon icon="ph:bell" class="fs-4 text-dark" style="color: #475569 !important;"></iconify-icon>
+        </div>
+        <button class="btn btn-outline-danger d-flex align-items-center gap-2 px-3.5 py-2 fw-semibold"
+          id="admin-header-btn-logout"
+          style="border-color: #F87171; color: #EF4444; border-radius: 8px; font-size: 0.92rem; height: 42px;">
+          <iconify-icon icon="ph:sign-out"></iconify-icon> Keluar
+        </button>
+      </div>
+    </header>
+
+    <!-- Left Fixed Admin Sidebar -->
+    <aside class="admin-sidebar" id="admin-sidebar-menu">
+      <nav class="nav flex-column flex-grow-1" id="admin-nav-links">
+        <a class="nav-link" href="#" id="admin-nav-dashboard">
+          <iconify-icon icon="ph:house"></iconify-icon> Dashboard
+        </a>
+        <a class="nav-link active" href="#" id="admin-nav-cars">
+          <iconify-icon icon="ph:car"></iconify-icon> Data Mobil
+        </a>
+        <a class="nav-link" href="#" id="admin-nav-orders">
+          <iconify-icon icon="ph:article"></iconify-icon> Pemesanan
+        </a>
+        <a class="nav-link" href="#" id="admin-nav-finance">
+          <iconify-icon icon="ph:chart-line"></iconify-icon> Laporan Keuangan
+        </a>
+        <a class="nav-link" href="#" id="admin-nav-settings">
+          <iconify-icon icon="ph:gear"></iconify-icon> Pengaturan
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-link w-100 text-start d-flex align-items-center" id="admin-btn-logout">
+          <iconify-icon icon="ph:sign-out"></iconify-icon> Keluar
+        </button>
+      </div>
+    </aside>
+
+    <!-- Admin Main Content Area -->
+    <main class="admin-main-content">
+
+      <!-- === Admin Sub-view 1: Dashboard === -->
+      <div id="admin-dashboard-view" class="fade-in d-none">
+        <div class="d-flex justify-content-between align-items-center mb-4" id="dashboard-header-row"
+          style="margin-top: -10px; padding-right: 10px;">
+          <h2 class="fw-bold m-0 text-dark" style="font-size: 2.2rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+            Dashboard</h2>
+        </div>
+
+        <div class="row g-4 mb-4">
+          <div class="col-xl-3 col-md-6 col-12">
+            <div class="card p-4 bg-white shadow-none border h-100 d-flex flex-column justify-content-between"
+              style="border-radius: 16px; border-color: #E2E8F0 !important;">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <span class="text-muted small fw-semibold text-nowrap"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">Total Unit Mobil</span>
+                  <div class="text-primary p-2 rounded d-inline-flex" style="background-color: #EFF6FF;"><iconify-icon
+                      icon="ph:car" class="fs-5"></iconify-icon></div>
+                </div>
+                <h3 class="fw-bold mb-1 text-dark text-nowrap" id="dash-total-cars"
+                  style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.65rem;">6</h3>
+              </div>
+              <span class="text-success small d-flex align-items-center gap-1 mt-2 text-nowrap"><iconify-icon
+                  icon="ph:arrow-up"></iconify-icon> +1 baru bulan ini</span>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 col-12">
+            <div class="card p-4 bg-white shadow-none border h-100 d-flex flex-column justify-content-between"
+              style="border-radius: 16px; border-color: #E2E8F0 !important;">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <span class="text-muted small fw-semibold text-nowrap"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">Pesanan Aktif</span>
+                  <div class="text-success p-2 rounded d-inline-flex" style="background-color: #F0FDF4;"><iconify-icon
+                      icon="ph:check-square" class="fs-5"></iconify-icon></div>
+                </div>
+                <h3 class="fw-bold mb-1 text-dark text-nowrap" id="dash-active-orders"
+                  style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.65rem;">3</h3>
+              </div>
+              <span class="text-muted small d-flex align-items-center gap-1 mt-2 text-nowrap"><span
+                  class="d-inline-block rounded-circle bg-success" style="width: 6px; height: 6px;"></span> Sedang
+                berjalan</span>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 col-12">
+            <div class="card p-4 bg-white shadow-none border h-100 d-flex flex-column justify-content-between"
+              style="border-radius: 16px; border-color: #E2E8F0 !important;">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <span class="text-muted small fw-semibold text-nowrap"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">Menunggu Konfirmasi</span>
+                  <div class="text-warning p-2 rounded d-inline-flex" style="background-color: #FFFBEB;"><iconify-icon
+                      icon="ph:hourglass-medium" class="fs-5"></iconify-icon></div>
+                </div>
+                <h3 class="fw-bold mb-1 text-dark text-nowrap" id="dash-pending-orders"
+                  style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.65rem;">2</h3>
+              </div>
+              <span class="text-warning small d-flex align-items-center gap-1 mt-2 text-nowrap"><iconify-icon
+                  icon="ph:warning-circle"></iconify-icon> Butuh persetujuan</span>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 col-12">
+            <div class="card p-4 bg-white shadow-none border h-100 d-flex flex-column justify-content-between"
+              style="border-radius: 16px; border-color: #E2E8F0 !important;">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <span class="text-muted small fw-semibold text-nowrap"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">Total Pendapatan</span>
+                  <div class="text-danger p-2 rounded d-inline-flex" style="background-color: #FEF2F2;"><iconify-icon
+                      icon="ph:coins" class="fs-5"></iconify-icon></div>
+                </div>
+                <h3 class="fw-bold mb-1 text-dark text-nowrap" id="dash-total-earnings"
+                  style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.65rem;">Rp4.850.000</h3>
+              </div>
+              <span class="text-success small d-flex align-items-center gap-1 mt-2 text-nowrap"><iconify-icon
+                  icon="ph:arrow-up"></iconify-icon> +12.4% dari minggu lalu</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <!-- Active Orders Log -->
+          <div class="col-lg-12">
+            <div class="card p-3 bg-white shadow-sm border"
+              style="border-radius: 16px; border-color: #E2E8F0 !important;">
+              <div class="d-flex justify-content-between align-items-center mb-3 px-1">
+                <h5 class="fw-bold m-0 text-dark" style="font-family: 'Plus Jakarta Sans', sans-serif;">Aktivitas
+                  Penyewaan Terbaru</h5>
+                <button class="btn btn-sm btn-outline-primary fw-semibold px-3 py-1.5" id="btn-dash-view-all-orders"
+                  style="border-radius: 8px; font-size: 0.85rem;">
+                  Lihat Semua &rarr;
+                </button>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 text-nowrap w-100" id="dash-orders-table">
+                  <thead>
+                    <tr class="bg-light" style="border-bottom: 2px solid #E2E8F0;">
+                      <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                        style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Invoice</th>
+                      <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                        style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Penyewa</th>
+                      <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                        style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Mobil</th>
+                      <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                        style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Durasi</th>
+                      <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                        style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Total</th>
+                      <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                        style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dash-orders-tbody">
+                    <!-- Populated from JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === Admin Sub-view 2: Data Mobil (Active by Default) === -->
+      <div id="admin-cars-view" class="fade-in">
+        <div class="d-flex justify-content-between align-items-center mb-4" id="data-mobil-header-row"
+          style="margin-top: -10px; padding-right: 10px;">
+          <h2 class="fw-bold m-0 text-dark" style="font-size: 2.2rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+            Data Mobil</h2>
+          <button class="btn btn-primary fw-bold px-4 py-2.5 shadow-sm" id="btn-show-tambah-mobil"
+            style="background-color: #0084FF; border-color: #0084FF; border-radius: 8px; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            + Tambah Mobil
+          </button>
+        </div>
+
+        <div class="card border border-light-subtle p-3 shadow-sm"
+          style="border-radius: 16px; background-color: #FFFFFF;" id="data-mobil-table-card">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 text-nowrap w-100" id="admin-cars-table">
+              <thead>
+                <tr class="bg-light" style="border-bottom: 2px solid #E2E8F0;">
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">No</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Nama Mobil</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Transmisi</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Plat Mobil</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Harga/Hari</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Status</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3 text-center"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; width: 120px;">Aksi
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="admin-cars-tbody">
+                <!-- Dynamically populated from JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- === Admin Sub-view 3: Pemesanan === -->
+      <div id="admin-orders-view" class="fade-in d-none">
+        <div class="d-flex justify-content-between align-items-center mb-4" id="pemesanan-header-row"
+          style="margin-top: -10px; padding-right: 10px;">
+          <h2 class="fw-bold m-0 text-dark" style="font-size: 2.2rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+            Pemesanan</h2>
+        </div>
+
+        <div class="card border p-3 bg-white shadow-sm" style="border-radius: 16px; border-color: #E2E8F0 !important;">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 text-nowrap w-100" id="admin-orders-table">
+              <thead>
+                <tr class="bg-light" style="border-bottom: 2px solid #E2E8F0;">
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Invoice</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Penyewa</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Mobil</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Durasi</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Total</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Status</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-tbody">
+                <!-- Programmatically populated from JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- === Admin Sub-view 4: Laporan Keuangan === -->
+      <div id="admin-finance-view" class="fade-in d-none">
+        <div class="d-flex justify-content-between align-items-center mb-4" id="laporan-keuangan-header-row"
+          style="margin-top: -10px; padding-right: 10px;">
+          <h2 class="fw-bold m-0 text-dark" style="font-size: 2.2rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+            Laporan Keuangan</h2>
+          <div class="d-flex align-items-center gap-3">
+            <!-- Date picker box -->
+            <div class="d-flex align-items-center border bg-white"
+              style="border-color: #E2E8F0 !important; overflow: hidden; border-radius: 8px !important;">
+              <span class="px-3 py-2 text-dark small fw-medium" id="finance-date-range">12-10-2026 &nbsp;&rarr;&nbsp;
+                13-10-2026</span>
+              <button class="btn border-0 py-2 px-3 d-flex align-items-center justify-content-center"
+                id="btn-finance-calendar" style="background-color: #E0F2FE; color: #0284C7; border-radius: 0;">
+                <iconify-icon icon="ph:calendar-blank" class="fs-5"></iconify-icon>
+              </button>
+            </div>
+            <!-- Cetak button -->
+            <button class="btn btn-primary fw-bold px-4 py-2.5 shadow-sm" id="btn-print-finance"
+              style="background-color: #0084FF; border-color: #0084FF; border-radius: 8px; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              Cetak <iconify-icon icon="ph:printer"></iconify-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="card border p-3 bg-white shadow-sm" style="border-radius: 16px; border-color: #E2E8F0 !important;">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 text-nowrap w-100" id="admin-finance-table">
+              <thead>
+                <tr class="bg-light" style="border-bottom: 2px solid #E2E8F0;">
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Tanggal</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Invoice</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Penyewa</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Mobil</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Durasi</th>
+                  <th scope="col" class="fw-bold text-secondary py-3 px-3"
+                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Total</th>
+                </tr>
+              </thead>
+              <tbody id="finance-tbody">
+                <!-- Populated from JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- === Admin Sub-view 5: Pengaturan === -->
+      <div id="admin-settings-view" class="fade-in d-none">
+        <div class="mb-4" id="pengaturan-header-row" style="margin-top: -10px; padding-right: 10px;">
+          <h2 class="fw-bold m-0 text-dark" style="font-size: 2.2rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+            Pengaturan</h2>
+          <p class="text-muted small mb-0 mt-1">Konfigurasi profile rental, jam operasional, dan metode pembayaran</p>
+        </div>
+
+        <div class="card shadow-sm border-0 p-4 rounded-3" style="max-width: 650px;">
+          <h5 class="fw-bold mb-4">Informasi Profil Rental</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Nama Rental</label>
+              <input type="text" class="form-control" id="settings-rental-name" value="RentalKu">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Nomor Telepon</label>
+              <input type="text" class="form-control" id="settings-rental-phone" value="+62 812-3456-7890">
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Alamat Rental</label>
+              <textarea class="form-control" id="settings-rental-address"
+                rows="3">Jl. Malioboro No. 45, Gedongtengen, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55271</textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Email Kontak</label>
+              <input type="email" class="form-control" id="settings-rental-email" value="support@rentalku.com">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Zona Waktu</label>
+              <select class="form-select" id="settings-rental-timezone">
+                <option value="WIB" selected>WIB (Asia/Jakarta)</option>
+                <option value="WITA">WITA (Asia/Makassar)</option>
+                <option value="WIT">WIT (Asia/Jayapura)</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary fw-semibold mt-4 py-2 px-4 align-self-start" id="btn-save-settings">Simpan
+            Perubahan</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+
+  <!-- ==================== 4. MODALS & POPUPS ==================== -->
+
+  <!-- Modal 4A: Tambah / Edit Mobil -->
+  <div id="tambah-mobil-modal" class="custom-modal-overlay">
+    <div class="custom-modal-content" style="max-width: 460px; padding: 1.25rem 1.5rem; border-radius: 14px;">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold m-0" id="tambah-mobil-modal-title">Tambah Mobil</h5>
+        <button type="button" class="btn-close" id="btn-close-tambah-mobil" aria-label="Close"></button>
+      </div>
+
+      <form id="tambah-mobil-form">
+        <input type="hidden" id="car-form-index" value=""> <!-- Holds index if editing -->
+
+        <div class="mb-2">
+          <label for="car-name" class="form-label text-muted fw-semibold"
+            style="font-size: 0.8rem; margin-bottom: 0.2rem;">Nama Mobil</label>
+          <input type="text" class="form-control form-control-sm" id="car-name" placeholder="Contoh: Toyota Avanza"
+            required style="padding: 0.4rem 0.75rem;">
+        </div>
+
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <label for="car-transmission" class="form-label text-muted fw-semibold"
+              style="font-size: 0.8rem; margin-bottom: 0.2rem;">Transmisi</label>
+            <select class="form-select form-select-sm" id="car-transmission" required style="padding: 0.4rem 0.75rem;">
+              <option value="" disabled selected>Pilih Transmisi</option>
+              <option value="Automatic">Automatic (Matic)</option>
+              <option value="Manual">Manual</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label for="car-plate" class="form-label text-muted fw-semibold"
+              style="font-size: 0.8rem; margin-bottom: 0.2rem;">Plat Nomor</label>
+            <input type="text" class="form-control form-control-sm" id="car-plate" placeholder="Contoh: AB 3017 GI"
+              required style="padding: 0.4rem 0.75rem;">
+          </div>
+        </div>
+
+        <div class="mb-2.5">
+          <label for="car-price" class="form-label text-muted fw-semibold"
+            style="font-size: 0.8rem; margin-bottom: 0.2rem;">Harga Sewa per Hari (Rp)</label>
+          <div class="input-group input-group-sm">
+            <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
+            <input type="number" class="form-control form-control-sm" id="car-price" placeholder="Contoh: 450000"
+              min="50000" required style="padding: 0.4rem 0.75rem;">
+          </div>
+        </div>
+
+        <div class="mb-2.5 d-none" id="car-status-group">
+          <label for="car-status" class="form-label text-muted fw-semibold"
+            style="font-size: 0.8rem; margin-bottom: 0.2rem;">Status Mobil</label>
+          <select class="form-select form-select-sm" id="car-status" style="padding: 0.4rem 0.75rem;">
+            <option value="Tersedia">Tersedia</option>
+            <option value="Disewa">Disewa</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-muted fw-semibold" style="font-size: 0.8rem; margin-bottom: 0.2rem;">Foto
+            Mobil</label>
+          <div id="car-photo-upload-container" class="upload-drag-container py-2.5 px-3">
+            <iconify-icon icon="ph:cloud-arrow-up" class="fs-4 text-primary d-block mb-1"></iconify-icon>
+            <span class="fw-semibold text-xs d-block mb-0.5">Seret foto ke sini atau <span class="text-primary">pilih
+                file</span></span>
+            <span class="text-muted text-xs d-block" style="font-size: 0.72rem;">Format JPG/PNG, maks 5MB</span>
+            <input type="file" id="car-photo-input" class="d-none" accept="image/png, image/jpeg">
+          </div>
+          <div id="car-photo-preview-wrapper" class="mt-2 p-2 border rounded-3 bg-light text-center d-none">
+            <img src="" id="car-photo-preview" class="img-fluid rounded" style="max-height: 90px; object-fit: contain;">
+            <button type="button"
+              class="btn btn-sm btn-outline-danger mt-1 py-0.5 px-2 mx-auto d-flex align-items-center gap-1 justify-content-center"
+              id="btn-remove-photo" style="font-size: 0.75rem;"><iconify-icon icon="ph:trash"></iconify-icon> Hapus
+              Foto</button>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 pt-1">
+          <button type="button" class="btn btn-sm btn-outline-secondary px-3 py-1.5 fw-semibold"
+            id="btn-cancel-tambah-mobil">Batal</button>
+          <button type="submit" class="btn btn-sm btn-primary px-4 py-1.5 fw-bold" id="btn-submit-car">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Modal 4B: Konfirmasi Pembayaran -->
+  <div id="payment-modal" class="custom-modal-overlay">
+    <div class="custom-modal-content"
+      style="max-width: 480px; padding: 1.25rem 1.5rem; border-radius: 14px; position: relative;">
+
+      <!-- Sticky Header Container (Title, Close 'X' button, and Timer stay fixed at top when scrolling) -->
+      <div class="payment-modal-sticky-header shadow-xs"
+        style="position: sticky; top: -1.25rem; z-index: 105; background-color: #ffffff; margin: -1.25rem -1.5rem 0.75rem -1.5rem; padding: 1.25rem 1.5rem 0.75rem 1.5rem; border-bottom: 1px solid #E2E8F0; border-top-left-radius: 14px; border-top-right-radius: 14px;">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="fw-bold m-0 text-dark" style="font-family: 'Plus Jakarta Sans', sans-serif;">Konfirmasi Pembayaran
+          </h5>
+          <button type="button" class="btn-close" id="btn-close-payment-modal" aria-label="Close"></button>
+        </div>
+
+        <!-- Timer Banner -->
+        <div
+          class="bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-3 d-flex justify-content-between align-items-center">
+          <div class="small fw-semibold d-flex align-items-center gap-1" style="font-size: 0.82rem;"><iconify-icon
+              icon="ph:clock-fill" class="me-1 fs-5"></iconify-icon>Selesaikan Pembayaran Sebelum</div>
+          <div class="fw-bold fs-6" id="payment-timer-countdown"
+            style="font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.5px;">01:00:00</div>
+        </div>
+      </div>
+
+      <!-- Upload Dokumen Section -->
+      <div class="mb-2.5">
+        <h6 class="fw-bold mb-2 text-muted text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Upload
+          Dokumen Verifikasi</h6>
+        <div class="d-flex flex-column gap-2">
+          <!-- KTP upload row -->
+          <div class="uploaded-doc-box py-1.5 px-2.5" id="doc-ktp-box">
+            <div class="d-flex align-items-center gap-2">
+              <iconify-icon icon="ph:identification-card" class="fs-4 text-muted" id="icon-ktp-doc"></iconify-icon>
+              <div>
+                <div class="fw-bold small" style="font-size: 0.82rem;">Kartu Tanda Penduduk (KTP)</div>
+                <div class="text-muted text-xs" style="font-size: 0.72rem;" id="txt-ktp-status">Unggah foto KTP Anda.
+                  Format JPG, PNG. Maks 1 MB</div>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm px-2.5 py-1 fw-semibold d-flex align-items-center gap-1"
+              id="btn-upload-ktp" style="font-size: 0.78rem;">
+              <iconify-icon icon="ph:upload-simple"></iconify-icon> Unggah
+            </button>
+            <input type="file" id="input-ktp-file" class="d-none" accept="image/*">
+          </div>
+
+          <!-- SIM A upload row -->
+          <div class="uploaded-doc-box py-1.5 px-2.5" id="doc-sim-box">
+            <div class="d-flex align-items-center gap-2">
+              <iconify-icon icon="ph:identification-card" class="fs-4 text-muted" id="icon-sim-doc"></iconify-icon>
+              <div>
+                <div class="fw-bold small" style="font-size: 0.82rem;">Surat Izin Mengemudi (SIM A)</div>
+                <div class="text-muted text-xs" style="font-size: 0.72rem;" id="txt-sim-status">Unggah foto SIM A Anda.
+                  Format JPG, PNG. Maks 1 MB</div>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm px-2.5 py-1 fw-semibold d-flex align-items-center gap-1"
+              id="btn-upload-sim" style="font-size: 0.78rem;">
+              <iconify-icon icon="ph:upload-simple"></iconify-icon> Unggah
+            </button>
+            <input type="file" id="input-sim-file" class="d-none" accept="image/*">
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Price -->
+      <div class="d-flex justify-content-between align-items-center mb-2.5 px-3 py-2 bg-light rounded-3">
+        <span class="fw-semibold text-muted small">Total Pembayaran:</span>
+        <span class="price-tag fs-5" id="payment-modal-price">Rp700.000</span>
+      </div>
+
+      <!-- Metode Pembayaran Section -->
+      <div class="mb-3">
+        <h6 class="fw-bold mb-2 text-muted text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Pilih
+          Metode Pembayaran</h6>
+
+        <div class="accordion" id="paymentMethodsAccordion">
+          <!-- Virtual Account -->
+          <div class="accordion-item mb-1 border-0 shadow-sm rounded-3 overflow-hidden">
+            <h2 class="accordion-header">
+              <button class="accordion-button bg-light fw-bold py-1.5 px-2 style-accordion-btn collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#collapseVA"
+                style="font-size: 0.75rem; padding: 0.3rem 0.6rem !important; min-height: 30px;">
+                <iconify-icon icon="ph:bank" class="me-1" style="font-size: 0.85rem;"></iconify-icon> Virtual Account
+                (Transfer
+                Bank)
+              </button>
+            </h2>
+            <div id="collapseVA" class="accordion-collapse collapse show" data-bs-parent="#paymentMethodsAccordion">
+              <div class="accordion-body bg-white p-1.5">
+                <div class="row g-1" id="va-selection-container">
+                  <div class="col-3">
+                    <div
+                      class="bank-option-btn selected p-1 d-flex align-items-center justify-content-center bg-white border rounded-2"
+                      data-bank="BCA" style="height: 32px; cursor: pointer;" title="Pilih BCA Virtual Account">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg"
+                        alt="BCA Logo" style="max-height: 18px; max-width: 80%; object-fit: contain;"
+                        referrerPolicy="no-referrer">
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div
+                      class="bank-option-btn p-1 d-flex align-items-center justify-content-center bg-white border rounded-2"
+                      data-bank="Mandiri" style="height: 32px; cursor: pointer;" title="Pilih Mandiri Virtual Account">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg"
+                        alt="Mandiri Logo" style="max-height: 18px; max-width: 80%; object-fit: contain;"
+                        referrerPolicy="no-referrer">
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div
+                      class="bank-option-btn p-1 d-flex align-items-center justify-content-center bg-white border rounded-2"
+                      data-bank="BRI" style="height: 32px; cursor: pointer;" title="Pilih BRI Virtual Account">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/BRI_2020.svg" alt="BRI Logo"
+                        style="max-height: 18px; max-width: 80%; object-fit: contain;" referrerPolicy="no-referrer">
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div
+                      class="bank-option-btn p-1 d-flex align-items-center justify-content-center bg-white border rounded-2"
+                      data-bank="BNI" style="height: 32px; cursor: pointer;" title="Pilih BNI Virtual Account">
+                      <img src="src/assets/images/bni.jpg" alt="BNI"
+                        style="height: 22px; width: auto; max-width: 70px; object-fit: contain;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- E-Wallet -->
+          <div class="accordion-item border-0 shadow-sm rounded-3 overflow-hidden">
+            <h2 class="accordion-header">
+              <button class="accordion-button bg-light fw-bold py-1.5 px-2 style-accordion-btn" type="button"
+                data-bs-toggle="collapse" data-bs-target="#collapseWallet"
+                style="font-size: 0.75rem; padding: 0.3rem 0.6rem !important; min-height: 30px;">
+                <iconify-icon icon="ph:wallet-fill" class="me-1" style="font-size: 0.85rem;"></iconify-icon> Dompet
+                Digital /
+                E-Wallet
+              </button>
+            </h2>
+            <div id="collapseWallet" class="accordion-collapse collapse" data-bs-parent="#paymentMethodsAccordion">
+              <div class="accordion-body bg-white p-1.5">
+                <div class="row g-1" id="wallet-selection-container">
+                  <div class="col-4">
+                    <div
+                      class="bank-option-btn p-1 d-flex align-items-center justify-content-center bg-white border rounded-2"
+                      data-bank="GOPAY" style="height: 32px; cursor: pointer;" title="Pilih GoPay">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" alt="GoPay Logo"
+                        style="max-height: 18px; max-width: 80%; object-fit: contain;" referrerPolicy="no-referrer">
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div
+                      class="bank-option-btn p-1 d-flex align-items-center justify-content-center bg-white border rounded-2"
+                      data-bank="OVO" style="height: 32px; cursor: pointer;" title="Pilih OVO">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_ovo_purple.svg" alt="OVO Logo"
+                        style="max-height: 16px; max-width: 80%; object-fit: contain;" referrerPolicy="no-referrer">
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div
+                      class="bank-option-btn p-1 d-flex align-items-center justify-content-center bg-white border rounded-2"
+                      data-bank="DANA" style="height: 32px; cursor: pointer;" title="Pilih DANA">
+                      <svg width="60" height="18" viewBox="0 0 130 38" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="max-height: 18px;">
+                        <circle cx="19" cy="19" r="17" fill="#108EE9" />
+                        <path
+                          d="M11 15C13.5 13.5 17 14 19.5 15.5C22 17 25.5 16.5 27 15V21C25 22.5 21.5 22 19 20.5C16.5 19 13 19.5 11 21V15Z"
+                          fill="white" />
+                        <text x="43" y="27" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800"
+                          font-size="26" fill="#108EE9" letter-spacing="1.5">DANA</text>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="d-flex justify-content-end mt-2">
+  <button type="button" class="btn btn-success px-4 py-2 fw-bold" id="btn-complete-checkout" style="font-size: 0.85rem; border-radius: 8px;">
+    Selesai
+  </button>
+</div>
+      </div>
+    </div>
+
+
+    <!-- Modal 4C: Pembayaran Berhasil! -->
+    <div id="success-modal" class="custom-modal-overlay">
+      <div class="custom-modal-content text-center"
+        style="max-width: 400px; padding: 1.75rem 1.75rem; border-radius: 14px; position: relative;">
+        <button type="button" class="btn p-0 border-0 bg-transparent text-dark position-absolute"
+          style="top: 1rem; right: 1rem;" id="btn-close-success" aria-label="Close">
+          <iconify-icon icon="ph:x" style="font-size: 1.5rem; color: #1E293B;"></iconify-icon>
+        </button>
+
+        <div class="d-flex justify-content-center mb-3 mt-1">
+          <div class="d-flex align-items-center justify-content-center rounded-circle"
+            style="width: 80px; height: 80px; background-color: #22C55E;">
+            <iconify-icon icon="ph:check-bold" style="font-size: 2.5rem; color: #ffffff;"></iconify-icon>
+          </div>
+        </div>
+
+        <h4 class="fw-bold text-dark mb-1" style="font-size: 1.4rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+          Pembayaran Berhasil!</h4>
+        <p class="text-secondary small mb-4" style="font-size: 0.88rem; line-height: 1.4; color: #475569 !important;">
+          Terima kasih, pembayaran Anda telah berhasil diproses.
+        </p>
+
+        <!-- Hidden elements to avoid Javascript reference errors -->
+        <span id="success-booking-code" class="d-none"></span>
+        <button id="btn-copy-code" class="d-none"></button>
+
+        <button class="btn btn-primary w-100 py-2.5 fw-bold shadow-none" id="btn-go-to-history"
+          style="background-color: #0084FF; border-color: #0084FF; border-radius: 8px; font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+          Lihat Detail Pesanan
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Modal 4D: Verifikasi Pengambilan -->
+    <div id="verifikasi-pengambilan-modal" class="custom-modal-overlay">
+      <div class="custom-modal-content" style="max-width: 480px; border-radius: 14px; padding: 1.25rem 1.5rem;">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <h4 class="fw-bold m-0 text-dark" style="font-size: 1.35rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+              Verifikasi Pengambilan</h4>
+            <p class="text-muted small mt-0.5 mb-0" style="font-size: 0.82rem;">Periksa identitas penyewa sebelum
+              konfirmasi</p>
+          </div>
+          <button type="button" class="btn p-0 border-0 bg-transparent text-dark animate-fade-in"
+            id="btn-close-verifikasi-modal">
+            <iconify-icon icon="ph:x" class="fs-4"></iconify-icon>
+          </button>
+        </div>
+
+        <div class="mt-2">
+          <div class="d-flex align-items-center gap-1.5 mb-2">
+            <iconify-icon icon="ph:user-circle" class="fs-5 text-dark" style="color: #1E293B;"></iconify-icon>
+            <h6 class="fw-bold m-0 text-dark" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+              Data Penyewa</h6>
+          </div>
+
+          <div class="d-flex flex-column gap-1.5 mb-3"
+            style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: #1E293B;">
+            <div class="row align-items-center g-0">
+              <div class="col-5 text-secondary" style="font-weight: 500;">Nama Lengkap</div>
+              <div class="col-7 text-dark fw-bold">: <span id="verif-nama-lengkap">Tiffany Abel</span></div>
+            </div>
+            <div class="row align-items-center g-0">
+              <div class="col-5 text-secondary" style="font-weight: 500;">Tempat, Tanggal Lahir</div>
+              <div class="col-7 text-dark fw-bold">: <span id="verif-ttl">Sleman, 17 Mei 2005</span></div>
+            </div>
+            <div class="row align-items-center g-0">
+              <div class="col-5 text-secondary" style="font-weight: 500;">Alamat</div>
+              <div class="col-7 text-dark fw-bold">: <span id="verif-alamat">Jl. Kabupaten</span></div>
+            </div>
+            <div class="row align-items-center g-0">
+              <div class="col-5 text-secondary" style="font-weight: 500;">No. Telepon</div>
+              <div class="col-7 text-dark fw-bold">: <span id="verif-telpon">08123456789</span></div>
+            </div>
+            <div class="row align-items-center g-0">
+              <div class="col-5 text-secondary" style="font-weight: 500;">Jenis Kelamin</div>
+              <div class="col-7 text-dark fw-bold">: <span id="verif-gender">Perempuan</span></div>
+            </div>
+          </div>
+
+          <!-- Two Document Cards with Mockup Images & Zoom Trigger -->
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <div class="p-2 border bg-white text-center cursor-pointer position-relative shadow-sm doc-card-hover"
+                id="btn-zoom-ktp"
+                style="border-radius: 10px !important; border-color: #CBD5E1 !important; overflow: hidden; transition: all 0.2s;"
+                title="Klik untuk memperbesar foto KTP">
+                <img src="/src/assets/images/indonesia_ktp_mockup_1784629847316.jpg" id="verif-ktp-img" alt="KTP"
+                  class="img-fluid rounded"
+                  style="border-radius: 6px; max-height: 85px; width: 100%; object-fit: cover;"
+                  referrerPolicy="no-referrer">
+                <div class="mt-1.5 d-flex align-items-center justify-content-center gap-1 text-primary fw-bold"
+                  style="font-size: 0.72rem; color: #0084FF !important;">
+                  <iconify-icon icon="ph:magnifying-glass-plus-fill"></iconify-icon> <span>Klik Perbesar KTP</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-2 border bg-white text-center cursor-pointer position-relative shadow-sm doc-card-hover"
+                id="btn-zoom-sim"
+                style="border-radius: 10px !important; border-color: #CBD5E1 !important; overflow: hidden; transition: all 0.2s;"
+                title="Klik untuk memperbesar foto SIM">
+                <img src="/src/assets/images/indonesia_sim_mockup_1784629865756.jpg" id="verif-sim-img" alt="SIM A"
+                  class="img-fluid rounded"
+                  style="border-radius: 6px; max-height: 85px; width: 100%; object-fit: cover;"
+                  referrerPolicy="no-referrer">
+                <div class="mt-1.5 d-flex align-items-center justify-content-center gap-1 text-primary fw-bold"
+                  style="font-size: 0.72rem; color: #0084FF !important;">
+                  <iconify-icon icon="ph:magnifying-glass-plus-fill"></iconify-icon> <span>Klik Perbesar SIM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="d-flex align-items-center gap-2">
+            <button type="button" class="btn w-50 py-2 fw-semibold text-primary bg-white border"
+              id="btn-cancel-verifikasi"
+              style="border-radius: 8px; font-size: 0.95rem; border-color: #0084FF !important; color: #0084FF !important;">
+              Batal
+            </button>
+            <button type="button" class="btn btn-primary w-50 py-2 fw-bold text-white" id="btn-submit-verifikasi"
+              style="border-radius: 8px; font-size: 0.95rem; background-color: #0084FF; border: none;">
+              Konfirmasi
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast: Konfirmasi Kode Berhasil -->
+    <div id="toast-konfirmasi" class="position-fixed d-none"
+      style="top: 1.5rem; right: 1.5rem; z-index: 2000; min-width: 320px;">
+      <div class="d-flex align-items-center justify-content-between text-white px-4 py-3 rounded-3 shadow-lg"
+        style="background-color: #0084FF; border-radius: 8px !important;">
+        <span class="fw-semibold" style="font-family: 'Plus Jakarta Sans', sans-serif;" id="toast-message">Konfirmasi
+          kode
+          berhasil!</span>
+        <button type="button" class="btn-close btn-close-white ms-3" id="btn-close-toast" aria-label="Close"
+          style="font-size: 0.85rem; opacity: 1;"></button>
+      </div>
+    </div>
+
+    <!-- Modal 4E: Simulasi Cetak Laporan & Bukti -->
+    <div id="print-preview-modal" class="custom-modal-overlay">
+      <div class="custom-modal-content"
+        style="max-width: 720px; border-radius: 12px; padding: 2.5rem; background-color: #ffffff;">
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+          <h5 class="fw-bold m-0 text-dark d-flex align-items-center gap-2">
+            <iconify-icon icon="ph:printer" class="text-primary fs-4"></iconify-icon> Pratinjau Cetakan
+          </h5>
+          <button type="button" class="btn-close" id="btn-close-print-modal" aria-label="Close"></button>
+        </div>
+
+        <!-- The printable sheet area -->
+        <div id="print-sheet-area" class="border p-4 bg-white shadow-sm mb-4"
+          style="font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; color: #1E293B; max-height: 400px; overflow-y: auto;">
+          <!-- Content injected via JS -->
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-outline-secondary px-4 py-2 fw-semibold"
+            id="btn-cancel-print">Batal</button>
+          <button type="button" class="btn btn-primary px-4 py-2 fw-bold d-flex align-items-center gap-2"
+            id="btn-trigger-actual-print" style="background-color: #0084FF; border-color: #0084FF;">
+            <iconify-icon icon="ph:printer"></iconify-icon> Cetak Dokumen
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 4F: Perbesar Dokumen Verifikasi (KTP / SIM) -->
+    <div id="doc-zoom-modal" class="custom-modal-overlay">
+      <div class="custom-modal-content"
+        style="max-width: 620px; border-radius: 16px; padding: 1.5rem; background-color: #ffffff;">
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+          <h5 class="fw-bold m-0 text-dark d-flex align-items-center gap-2" id="doc-zoom-title"
+            style="font-size: 1.1rem; font-family: 'Plus Jakarta Sans', sans-serif;">
+            <iconify-icon icon="ph:identification-card-fill" class="text-primary fs-4"
+              style="color: #0084FF !important;"></iconify-icon> <span id="doc-zoom-title-text">Detail Dokumen
+              Identitas</span>
+          </h5>
+          <button type="button" class="btn-close" id="btn-close-doc-zoom" aria-label="Close"></button>
+        </div>
+        <div class="text-center p-2 bg-light rounded-3 border mb-3"
+          style="border-color: #CBD5E1 !important; background-color: #F8FAFC !important;">
+          <img src="/src/assets/images/indonesia_ktp_mockup_1784629847316.jpg" id="doc-zoom-img"
+            alt="Dokumen Verifikasi" class="img-fluid rounded shadow-sm"
+            style="max-height: 70vh; width: 100%; object-fit: contain; border-radius: 8px;"
+            referrerPolicy="no-referrer">
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="text-muted small" style="font-size: 0.8rem;"><iconify-icon icon="ph:info-fill"
+              class="text-primary me-1" style="color: #0084FF !important;"></iconify-icon>Foto dokumen beresolusi tinggi
+            untuk verifikasi identitas</span>
+          <button type="button" class="btn btn-primary px-4 py-1.5 fw-bold text-white" id="btn-ok-doc-zoom"
+            style="border-radius: 8px; background-color: #0084FF; border: none;">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap 5.3.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- TypeScript Vanilla Logic -->
+    <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
