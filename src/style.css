@@ -816,6 +816,42 @@ body:has(#login-section:not(.d-none)) #toast-konfirmasi {
   display: none !important;
 }
 
+/* ==================== SEMBUNYIKAN MODAL SAAT LOGIN ==================== */
+/* Cara 1: Sembunyikan semua modal secara default jika login section terlihat */
+#login-section:not(.d-none)~.custom-modal-overlay,
+#login-section:not(.d-none)~div .custom-modal-overlay,
+#login-section:not(.d-none)~#tambah-mobil-modal,
+#login-section:not(.d-none)~#payment-modal,
+#login-section:not(.d-none)~#success-modal,
+#login-section:not(.d-none)~#verifikasi-pengambilan-modal,
+#login-section:not(.d-none)~#print-preview-modal,
+#login-section:not(.d-none)~#doc-zoom-modal,
+#login-section:not(.d-none)~#toast-konfirmasi {
+  display: none !important;
+}
+
+/* Cara 2: Sembunyikan semua modal jika login tidak punya class d-none */
+#login-section[style*="display: flex"]~.custom-modal-overlay,
+#login-section[style*="display: flex"]~div .custom-modal-overlay,
+#login-section[style*="display: flex"]~#tambah-mobil-modal,
+#login-section[style*="display: flex"]~#payment-modal,
+#login-section[style*="display: flex"]~#success-modal,
+#login-section[style*="display: flex"]~#verifikasi-pengambilan-modal,
+#login-section[style*="display: flex"]~#print-preview-modal,
+#login-section[style*="display: flex"]~#doc-zoom-modal,
+#login-section[style*="display: flex"]~#toast-konfirmasi {
+  display: none !important;
+}
+
+/* Cara 3: Sembunyikan semua modal jika ada di dalam body saat login aktif */
+body:not(:has(#tenant-section:not(.d-none))) .custom-modal-overlay {
+  display: none !important;
+}
+
+body:not(:has(#tenant-section:not(.d-none))) #toast-konfirmasi {
+  display: none !important;
+}
+
 /* Sembunyikan juga jika login section tidak memiliki class d-none */
 body:has(#login-section[style*="display: flex"]) .custom-modal-overlay {
   display: none !important;
