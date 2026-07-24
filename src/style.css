@@ -22,20 +22,24 @@ body {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #F1F5F9;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #CBD5E1;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
 }
 
 /* Sidebar Styling (Admin) */
 .admin-sidebar {
-  background-color: #24285B; /* Deep Indigo Navy */
+  background-color: #24285B;
+  /* Deep Indigo Navy */
   color: #FFFFFF;
   height: calc(100vh - 75px);
   width: 240px;
@@ -94,8 +98,10 @@ body {
 .table-hover tbody tr {
   transition: background-color 0.15s ease;
 }
+
 .table-hover tbody tr:hover {
-  background-color: #F1F5F9 !important; /* Soft grey Bootstrap-like hover */
+  background-color: #F1F5F9 !important;
+  /* Soft grey Bootstrap-like hover */
 }
 
 /* Main Content Area Adjustments */
@@ -122,7 +128,8 @@ body {
   border: none;
   border-radius: 16px;
   overflow: hidden;
-  background-color: #D9F1FF; /* Light blue/cyan background */
+  background-color: #D9F1FF;
+  /* Light blue/cyan background */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
   padding: 0.75rem;
@@ -140,7 +147,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FFFFFF; /* White rounded background for images */
+  background-color: #FFFFFF;
+  /* White rounded background for images */
   border-radius: 12px;
   padding: 1rem;
   overflow: hidden;
@@ -190,10 +198,14 @@ body {
 /* .filter-card {
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 16px;
+  padding: 1.25rem;
   position: sticky;
-  top: 2rem;
+  top: 85px;
+  z-index: 10;
+  overflow: hidden;
+  height: auto;
+  max-height: none;
 } */
 
 .filter-section-title {
@@ -203,6 +215,41 @@ body {
   margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* Custom Filter Chips UI */
+.filter-chip-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  line-height: 1.25;
+}
+
+.filter-chip-label:hover {
+  background-color: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #0084FF;
+}
+
+.btn-check:checked+.filter-chip-label {
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 6px rgba(0, 132, 255, 0.25);
+}
+
+.btn-check:focus+.filter-chip-label {
+  box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.25);
 }
 
 /* Soft & Gentle Logout Button Hover (Not harsh/dark red) */
@@ -217,9 +264,12 @@ body {
 .btn-outline-danger:hover,
 .btn-outline-danger:focus,
 .btn-outline-danger:active {
-  background-color: #FEF2F2 !important; /* Soft pastel pink/red tint */
-  color: #DC2626 !important; /* Gentle medium red text */
-  border-color: #FCA5A5 !important; /* Soft light red border */
+  background-color: #FEF2F2 !important;
+  /* Soft pastel pink/red tint */
+  color: #DC2626 !important;
+  /* Gentle medium red text */
+  border-color: #FCA5A5 !important;
+  /* Soft light red border */
   box-shadow: 0 2px 8px rgba(239, 68, 68, 0.08) !important;
   transform: translateY(-1px);
 }
@@ -233,7 +283,8 @@ body {
 #admin-btn-logout:hover,
 #admin-btn-logout:focus,
 #admin-btn-logout:active {
-  background-color: rgba(239, 68, 68, 0.15) !important; /* Soft transparent red tint */
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  /* Soft transparent red tint */
   color: #FCA5A5 !important;
   border-color: rgba(252, 165, 165, 0.6) !important;
 }
@@ -267,7 +318,8 @@ body {
   border-radius: 18px;
   box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.18), 0 8px 16px -4px rgba(15, 23, 42, 0.08);
   width: 100%;
-  max-width: 500px; /* Medium compact size centered on screen */
+  max-width: 500px;
+  /* Medium compact size centered on screen */
   padding: 1.75rem 2rem;
   transform: scale(0.96);
   transition: transform 0.2s ease-in-out;
@@ -401,6 +453,12 @@ button:not(:disabled):hover,
   box-shadow: 0 6px 16px rgba(0, 132, 255, 0.15) !important;
 }
 
+.btn-konfirmasi-order:hover {
+  background-color: #E05A00 !important;
+  /* Oranye lebih gelap */
+  border-color: #E05A00 !important;
+}
+
 /* OnClick (Active) State */
 .btn:active,
 button:not(:disabled):active,
@@ -524,14 +582,14 @@ button:not(:disabled):active,
 .bank-option-btn {
   border: 1.5px solid #CBD5E1 !important;
   background-color: #FFFFFF !important;
-  border-radius: 6px !important;
-  padding: 0.15rem 0.2rem !important;
+  border-radius: 10px !important;
+  padding: 0.5rem !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
   transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease !important;
-  height: 30px !important;
+  height: 52px !important;
   user-select: none !important;
 }
 
@@ -558,25 +616,9 @@ button:not(:disabled):active,
 }
 
 .bank-logo {
-  max-height: 18px;
+  max-height: 25px;
   max-width: 100%;
   object-fit: contain;
-}
-
-/* Bank option images - ukuran kecil */
-.bank-option-btn img {
-  max-height: 16px !important;
-  max-width: 80% !important;
-  object-fit: contain;
-}
-
-.bank-option-btn svg {
-  max-height: 14px !important;
-  max-width: 80% !important;
-}
-
-.bank-option-btn.selected {
-  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.3) !important;
 }
 
 /* Utility Animations */
@@ -589,6 +631,7 @@ button:not(:disabled):active,
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -608,7 +651,7 @@ button:not(:disabled):active,
 /* Black Pesan/Konfirmasi button style */
 .btn-black {
   background-color: #000000;
-  color: #FFFFFF !important;
+  color: #FFFFFF;
   font-weight: 600;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
@@ -618,7 +661,7 @@ button:not(:disabled):active,
 
 .btn-black:hover {
   background-color: #222222;
-  color: #FFFFFF !important;
+  color: #FFFFFF;
 }
 
 /* Breadcrumbs */
@@ -637,16 +680,105 @@ button:not(:disabled):active,
 }
 
 /* Custom Dropdown Popovers */
-#calendar-popover, #time-popover, #location-popover {
+#calendar-popover,
+#time-popover,
+#location-popover {
   border-radius: 12px;
   border: 1px solid #E2E8F0 !important;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
   background-color: #FFFFFF;
 }
 
+/* ==================== CALENDAR STYLING ==================== */
+
+#calendar-popover {
+  border-radius: 12px !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+  background-color: #FFFFFF !important;
+  width: 320px !important;
+  z-index: 1050 !important;
+}
+
 #calendar-popover button:hover {
   background-color: #F1F5F9;
   border-radius: 6px;
+}
+
+/* Styling untuk hari-hari di kalender */
+#calendar-days .col {
+  cursor: pointer !important;
+}
+
+#calendar-days .col.text-muted {
+  cursor: default !important;
+  opacity: 0.3 !important;
+}
+
+/* Calendar navigation buttons */
+.calendar-nav-btn {
+  border-radius: 6px !important;
+  padding: 4px 10px !important;
+  font-size: 0.75rem !important;
+}
+
+/* Legend untuk kalender */
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #E2E8F0;
+  font-size: 0.65rem;
+  color: #475569;
+}
+
+.calendar-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.calendar-legend-dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.calendar-legend-dot-today {
+  background-color: #0084FF;
+}
+
+.calendar-legend-dot-start {
+  border: 2px solid #0084FF;
+  background-color: transparent;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.calendar-legend-dot-end {
+  border: 2px solid #0EA5E9;
+  background-color: transparent;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.calendar-legend-dot-between {
+  background-color: #E0F2FE;
+  border: none;
+}
+
+/* Responsive calendar */
+@media (max-width: 575px) {
+  #calendar-popover {
+    width: calc(100vw - 32px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
 }
 
 .location-option {
@@ -674,24 +806,29 @@ button:not(:disabled):active,
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
+
   #tenant-navbar .container {
     height: 100% !important;
     display: flex !important;
     align-items: center !important;
   }
+
   #tenant-navbar .navbar-collapse {
     height: 100% !important;
   }
+
   #tenant-navbar .navbar-nav {
     height: 100% !important;
     align-items: stretch !important;
     margin-bottom: 0 !important;
   }
+
   #tenant-navbar .nav-item {
     display: flex !important;
     align-items: stretch !important;
     height: 100% !important;
   }
+
   #tenant-navbar .nav-link {
     display: flex !important;
     align-items: center !important;
@@ -703,6 +840,7 @@ button:not(:disabled):active,
     position: relative !important;
     border-radius: 0 !important;
   }
+
   #tenant-navbar .nav-link.active::after {
     content: '';
     position: absolute;
@@ -729,6 +867,7 @@ button:not(:disabled):active,
     left: 50% !important;
     transform: translateX(-50%) !important;
   }
+
   #time-popover {
     width: calc(100vw - 32px) !important;
     left: 50% !important;
@@ -744,10 +883,12 @@ button:not(:disabled):active,
     gap: 12px !important;
     text-align: center;
   }
+
   .uploaded-doc-box .d-flex {
     flex-direction: column !important;
     gap: 10px !important;
   }
+
   .uploaded-doc-box .btn {
     width: 100% !important;
     justify-content: center !important;
@@ -756,14 +897,15 @@ button:not(:disabled):active,
 
 /* Car Detail Container Mobile Responsiveness */
 @media (max-width: 991px) {
-  #detail-car-container > div:first-child {
+  #detail-car-container>div:first-child {
     border-right: none !important;
     border-bottom: 1px solid #E2E8F0 !important;
     padding-right: 0 !important;
     padding-bottom: 2.5rem !important;
     margin-bottom: 2rem !important;
   }
-  #detail-car-container > div:last-child {
+
+  #detail-car-container>div:last-child {
     padding-left: 0 !important;
   }
 }
@@ -779,11 +921,13 @@ button:not(:disabled):active,
     border-bottom: 1px solid #E2E8F0 !important;
     margin-top: 75px !important;
   }
+
   .admin-sidebar #admin-nav-links {
     flex-direction: row !important;
     flex-wrap: wrap !important;
     gap: 8px !important;
   }
+
   .admin-sidebar .nav-link {
     margin-bottom: 0 !important;
     flex: 1 1 auto !important;
@@ -791,14 +935,17 @@ button:not(:disabled):active,
     font-size: 0.85rem !important;
     padding: 0.5rem 0.75rem !important;
   }
+
   .admin-sidebar .sidebar-footer {
     margin-top: 1rem !important;
     padding-top: 0 !important;
     width: 100% !important;
   }
+
   .admin-sidebar .sidebar-footer .nav-link {
     width: 100% !important;
   }
+
   .admin-main-content {
     margin-left: 0 !important;
     padding: 1.5rem !important;
@@ -806,57 +953,547 @@ button:not(:disabled):active,
   }
 }
 
-/* ==================== SEMBUNYIKAN MODAL SAAT LOGIN ==================== */
-/* Saat login section terlihat, semua modal dan toast disembunyikan */
-body:has(#login-section:not(.d-none)) .custom-modal-overlay {
-  display: none !important;
+/* Bank option buttons - ukuran seperti btn Unggah */
+.bank-option-btn {
+  height: 28px !important;
+  padding: 2px 4px !important;
+  border-radius: 6px !important;
+  border: 1.5px solid #CBD5E1 !important;
+  background-color: #FFFFFF !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  user-select: none !important;
+  min-width: 0 !important;
 }
 
-body:has(#login-section:not(.d-none)) #toast-konfirmasi {
-  display: none !important;
+.bank-option-btn * {
+  pointer-events: none !important;
 }
 
-/* ==================== SEMBUNYIKAN MODAL SAAT LOGIN ==================== */
-/* Cara 1: Sembunyikan semua modal secara default jika login section terlihat */
-#login-section:not(.d-none)~.custom-modal-overlay,
-#login-section:not(.d-none)~div .custom-modal-overlay,
-#login-section:not(.d-none)~#tambah-mobil-modal,
-#login-section:not(.d-none)~#payment-modal,
-#login-section:not(.d-none)~#success-modal,
-#login-section:not(.d-none)~#verifikasi-pengambilan-modal,
-#login-section:not(.d-none)~#print-preview-modal,
-#login-section:not(.d-none)~#doc-zoom-modal,
-#login-section:not(.d-none)~#toast-konfirmasi {
-  display: none !important;
+.bank-option-btn:hover {
+  border-color: #0084FF !important;
+  background-color: #F8FAFC !important;
 }
 
-/* Cara 2: Sembunyikan semua modal jika login tidak punya class d-none */
-#login-section[style*="display: flex"]~.custom-modal-overlay,
-#login-section[style*="display: flex"]~div .custom-modal-overlay,
-#login-section[style*="display: flex"]~#tambah-mobil-modal,
-#login-section[style*="display: flex"]~#payment-modal,
-#login-section[style*="display: flex"]~#success-modal,
-#login-section[style*="display: flex"]~#verifikasi-pengambilan-modal,
-#login-section[style*="display: flex"]~#print-preview-modal,
-#login-section[style*="display: flex"]~#doc-zoom-modal,
-#login-section[style*="display: flex"]~#toast-konfirmasi {
-  display: none !important;
+.bank-option-btn.selected {
+  border-color: #0084FF !important;
+  background-color: #EFF6FF !important;
+  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.25) !important;
 }
 
-/* Cara 3: Sembunyikan semua modal jika ada di dalam body saat login aktif */
-body:not(:has(#tenant-section:not(.d-none))) .custom-modal-overlay {
-  display: none !important;
+/* Logo bank */
+.bank-option-btn img {
+  max-height: 18px !important;
+  max-width: 75% !important;
+  object-fit: contain !important;
 }
 
-body:not(:has(#tenant-section:not(.d-none))) #toast-konfirmasi {
-  display: none !important;
+/* Teks BRI dan DANA - ukuran kecil seperti btn Unggah */
+.bank-option-btn span {
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+  line-height: 1 !important;
 }
 
-/* Sembunyikan juga jika login section tidak memiliki class d-none */
-body:has(#login-section[style*="display: flex"]) .custom-modal-overlay {
-  display: none !important;
+/* ==================== FINANCE CALENDAR POPOVER ==================== */
+
+/* Container filter tanggal - position relative */
+#laporan-keuangan-header-row .d-flex.align-items-center.border.bg-white {
+  position: relative !important;
 }
 
-body:has(#login-section[style*="display: flex"]) #toast-konfirmasi {
-  display: none !important;
+/* Finance calendar popover - muncul di bawah tombol */
+#finance-calendar-popover {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  margin-top: 5px !important;
+  z-index: 1060 !important;
+  width: 320px !important;
+  max-width: 90vw !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  padding: 16px !important;
+}
+
+/* Finance calendar days */
+#finance-calendar-days .col {
+  cursor: pointer !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 4px 0 !important;
+  flex: 0 0 14.28% !important;
+  max-width: 14.28% !important;
+}
+
+#finance-calendar-days .finance-calendar-day {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.8rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#finance-calendar-days .finance-calendar-day:hover {
+  background-color: #F1F5F9 !important;
+}
+
+#finance-calendar-days .finance-calendar-day.today {
+  border: 2px solid #0084FF !important;
+  color: #0084FF !important;
+  font-weight: 700 !important;
+}
+
+#finance-calendar-days .finance-calendar-day.selected {
+  background-color: #0084FF !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+}
+
+/* Reset button */
+#btn-finance-reset-filter {
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  padding: 4px 12px !important;
+  font-size: 0.75rem !important;
+}
+
+#btn-finance-reset-filter:hover {
+  background-color: #0076E5 !important;
+}
+
+/* Responsive mobile */
+@media (max-width: 575px) {
+  #finance-calendar-popover {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: calc(100vw - 32px) !important;
+    max-width: 400px !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    margin-top: 0 !important;
+    border-radius: 16px !important;
+  }
+}
+
+/* ==================== UNIFORM BUTTON STYLES ==================== */
+
+/* Base button styles - semua tombol seragam */
+.btn-uniform {
+  height: 38px !important;
+  padding: 0.5rem 1.25rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+}
+
+/* Hover effect untuk semua tombol */
+.btn-uniform:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-uniform:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Pesan di card */
+.btn-pesan-mobil {
+  height: 42px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  width: 100% !important;
+}
+
+.btn-pesan-mobil:hover {
+  background-color: #222222 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-pesan-mobil:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Konfirmasi Pembayaran */
+#btn-checkout-car {
+  height: 42px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  width: 100% !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#btn-checkout-car:hover {
+  background-color: #222222 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+}
+
+#btn-checkout-car:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Keluar di navbar */
+#tenant-btn-logout {
+  height: 38px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  border-color: #F87171 !important;
+  color: #EF4444 !important;
+  background-color: transparent !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#tenant-btn-logout:hover {
+  background-color: #FEF2F2 !important;
+  color: #DC2626 !important;
+  border-color: #FCA5A5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.08) !important;
+}
+
+#tenant-btn-logout:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Tambah Mobil di admin */
+#btn-show-tambah-mobil {
+  height: 38px !important;
+  padding: 0.5rem 1.25rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+}
+
+#btn-show-tambah-mobil:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 132, 255, 0.25) !important;
+}
+
+#btn-show-tambah-mobil:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Cetak di laporan keuangan */
+#btn-print-finance {
+  height: 38px !important;
+  padding: 0.5rem 1.25rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+}
+
+#btn-print-finance:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 132, 255, 0.25) !important;
+}
+
+#btn-print-finance:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Konfirmasi di tabel admin */
+.btn-konfirmasi-order {
+  height: 32px !important;
+  padding: 0.25rem 0.75rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  background-color: #FF5C00 !important;
+  border-color: #FF5C00 !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-konfirmasi-order:hover {
+  background-color: #E05A00 !important;
+  border-color: #E05A00 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(255, 92, 0, 0.3) !important;
+}
+
+.btn-konfirmasi-order:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Edit & Hapus di admin */
+.btn-edit-car,
+.btn-delete-car {
+  height: 32px !important;
+  width: 32px !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border: 1px solid #E2E8F0 !important;
+  background-color: #FFFFFF !important;
+}
+
+.btn-edit-car:hover {
+  background-color: #EFF6FF !important;
+  border-color: #0084FF !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.15) !important;
+}
+
+.btn-delete-car:hover {
+  background-color: #FEF2F2 !important;
+  border-color: #FCA5A5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15) !important;
+}
+
+/* Tombol Terapkan Filter */
+#btn-apply-filters {
+  height: 38px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  width: 100% !important;
+}
+
+#btn-apply-filters:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 132, 255, 0.25) !important;
+}
+
+#btn-apply-filters:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Unggah di payment modal */
+.btn-upload-doc {
+  height: 32px !important;
+  padding: 0.25rem 0.75rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-upload-doc:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.2) !important;
+}
+
+.btn-upload-doc:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Selesai di payment modal */
+#btn-complete-checkout {
+  height: 38px !important;
+  padding: 0.5rem 1.25rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #22C55E !important;
+  border-color: #22C55E !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#btn-complete-checkout:hover {
+  background-color: #16A34A !important;
+  border-color: #16A34A !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25) !important;
+}
+
+#btn-complete-checkout:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Simpan di modal tambah mobil */
+#btn-submit-car {
+  height: 34px !important;
+  padding: 0.375rem 1rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#btn-submit-car:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.2) !important;
+}
+
+#btn-submit-car:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Tombol Batal di modal */
+.btn-cancel-modal {
+  height: 34px !important;
+  padding: 0.375rem 1rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  background-color: transparent !important;
+  border: 1px solid #CBD5E1 !important;
+  color: #475569 !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-cancel-modal:hover {
+  background-color: #F1F5F9 !important;
+  border-color: #94A3B8 !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn-cancel-modal:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Toast Notification */
+#liveToast {
+  border-radius: 12px !important;
+  padding: 0.5rem 1rem !important;
+  min-width: 350px;
+  animation: slideDown 0.4s ease forwards;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================== SCROLLBAR CUSTOM ==================== */
+
+/* Untuk semua elemen dengan scroll */
+.filter-card::-webkit-scrollbar {
+  width: 4px;
+  /* Lebar scrollbar vertikal */
+  height: 4px;
+  /* Tinggi scrollbar horizontal */
+}
+
+.filter-card::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 10px;
+}
+
+.filter-card::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.filter-card::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Untuk Firefox */
+.filter-card {
+  scrollbar-width: thin;
+  /* thin, auto, atau none */
+  scrollbar-color: #CBD5E1 #F1F5F9;
+}
+
+/* ==================== ATAU SEMUA SCROLLBAR ==================== */
+
+/* Untuk semua scrollbar di halaman */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Untuk Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 #F1F5F9;
 }

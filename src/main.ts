@@ -1,18 +1,18 @@
 /**
  * Rentalku - Application State & Logic
  * Framework: Bootstrap 5.3.3
- * Separated HTML, CSS, and TS/JS
  */
 
-// Define interfaces for Type-Safety
+// ==================== INTERFACES ====================
 interface Car {
+  id?: string;
   name: string;
   brand: 'Toyota' | 'Honda' | 'Mitsubishi' | 'Daihatsu' | 'Hyundai';
   transmission: 'Automatic' | 'Manual';
   plate: string;
   price: number;
-  capacity: number; // Passenger count
-  luggage: number;  // Bags count
+  capacity: number;
+  luggage: number;
   status: 'Tersedia' | 'Disewa';
   image: string;
 }
@@ -24,19 +24,56 @@ interface Order {
   plate: string;
   startDate: string;
   endDate: string;
-  duration: number; // Days
+  duration: number;
   total: number;
   ktpUploaded: boolean;
   simUploaded: boolean;
-  status: 'Menunggu Pembayaran' | 'Menunggu Konfirmasi' | 'Disetujui' | 'Ditolak' | 'Selesai' | 'Disewa' | 'Konfirmasi';
+  status: 'Menunggu Pembayaran' | 'Menunggu Konfirmasi' | 'Disetujui' | 'Ditolak' | 'Selesai' | 'Disewa' | 'getElementById(';
   paymentMethod: string;
   timestamp: string;
   dateRangeStr?: string;
+  location?: string;
+  startTime?: string;
+  endTime?: string;
 }
 
-// 1. Core Database / Application State (Seeded with high-quality models)
+interface AppUser {
+  name: string;
+  email: string;
+  password?: string;
+  role: 'tenant' | 'admin';
+  phone?: string;
+}
+
+// ==================== HELPER FUNCTIONS ====================
+function getTodayDateString(): string {
+  const today = new Date();
+  return String(today.getDate()).padStart(2, '0') + '-' +
+    String(today.getMonth() + 1).padStart(2, '0') + '-' +
+    today.getFullYear();
+}
+
+function getTomorrowDateString(): string {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return String(tomorrow.getDate()).padStart(2, '0') + '-' +
+    String(tomorrow.getMonth() + 1).padStart(2, '0') + '-' +
+    tomorrow.getFullYear();
+}
+
+function formatRupiah(amount: number): string {
+  const formatted = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    maximumFractionDigits: 0
+  }).format(amount);
+  return formatted.replace(/\s+/g, '');
+}
+
+// ==================== DATA DEFAULT ====================
 let cars: Car[] = [
   {
+    id: 'car-1',
     name: 'Toyota Yaris',
     brand: 'Toyota',
     transmission: 'Automatic',
@@ -48,6 +85,7 @@ let cars: Car[] = [
     image: '/src/assets/images/toyota_yaris_1784287820376.jpg'
   },
   {
+    id: 'car-2',
     name: 'Honda Brio',
     brand: 'Honda',
     transmission: 'Automatic',
@@ -59,6 +97,7 @@ let cars: Car[] = [
     image: '/src/assets/images/honda_brio_1784288042224.jpg'
   },
   {
+    id: 'car-3',
     name: 'Toyota Avanza',
     brand: 'Toyota',
     transmission: 'Automatic',
@@ -70,6 +109,7 @@ let cars: Car[] = [
     image: '/src/assets/images/toyota_avanza_1784287804405.jpg'
   },
   {
+    id: 'car-4',
     name: 'Toyota Innova',
     brand: 'Toyota',
     transmission: 'Automatic',
@@ -81,6 +121,7 @@ let cars: Car[] = [
     image: '/src/assets/images/toyota_innova_1784288062873.jpg'
   },
   {
+    id: 'car-5',
     name: 'Mitsubishi Xpander',
     brand: 'Mitsubishi',
     transmission: 'Automatic',
@@ -92,6 +133,7 @@ let cars: Car[] = [
     image: '/src/assets/images/mitsubishi_xpander_1784288080930.jpg'
   },
   {
+    id: 'car-6',
     name: 'Toyota Fortuner',
     brand: 'Toyota',
     transmission: 'Automatic',
@@ -106,7 +148,7 @@ let cars: Car[] = [
 
 let orders: Order[] = [
   {
-    id: 'INV-098765-01',
+    id: 'INV-902345-01',
     tenantName: 'Rifqy Affandi',
     carName: 'Toyota Innova',
     plate: 'AB 3107 HI',
@@ -119,10 +161,13 @@ let orders: Order[] = [
     status: 'Selesai',
     paymentMethod: 'BCA Virtual Account',
     timestamp: '03/08/2026',
-    dateRangeStr: '02-04 Juli 2026'
+    dateRangeStr: '02-04 Juli 2026',
+    location: 'Yogyakarta',
+    startTime: '12:00',
+    endTime: '10:00'
   },
   {
-    id: 'INV-098765-02',
+    id: 'INV-902345-02',
     tenantName: 'Tiffany Abel',
     carName: 'Mitsubishi Xpander',
     plate: 'AB 2910 JK',
@@ -135,10 +180,13 @@ let orders: Order[] = [
     status: 'Selesai',
     paymentMethod: 'Mandiri Virtual Account',
     timestamp: '17/08/2026',
-    dateRangeStr: '04-05 Juli 2026'
+    dateRangeStr: '04-05 Juli 2026',
+    location: 'Jakarta',
+    startTime: '12:00',
+    endTime: '10:00'
   },
   {
-    id: 'INV-876532-03',
+    id: 'INV-902345-03',
     tenantName: 'Syera Anjani',
     carName: 'Toyota Fortuner',
     plate: 'AB 0607 NK',
@@ -151,10 +199,13 @@ let orders: Order[] = [
     status: 'Selesai',
     paymentMethod: 'GoPay',
     timestamp: '10/09/2026',
-    dateRangeStr: '06-08 Juli 2026'
+    dateRangeStr: '06-08 Juli 2026',
+    location: 'Yogyakarta',
+    startTime: '12:00',
+    endTime: '10:00'
   },
   {
-    id: 'INV-934723-04',
+    id: 'INV-902345-04',
     tenantName: 'Zaura Allysa',
     carName: 'Honda Brio',
     plate: 'AB 2502 DE',
@@ -167,18 +218,19 @@ let orders: Order[] = [
     status: 'Konfirmasi',
     paymentMethod: 'OVO',
     timestamp: '30/09/2026',
-    dateRangeStr: '09-10 Juli 2026'
+    dateRangeStr: '09-10 Juli 2026',
+    location: 'Bandung',
+    startTime: '12:00',
+    endTime: '10:00'
   }
 ];
 
-// Active State Variables
+// ==================== STATE ====================
 let currentUser: 'guest' | 'tenant' | 'admin' = 'guest';
 let selectedCarIndex: number | null = null;
-let editingCarIndex: number | null = null;
-let verifOrderIndex: number | null = null;
+let editingCarId: string | null = null;
+let verifOrderId: string | null = null;
 
-
-// Global Settings State
 let settings = {
   rentalName: 'RentalKu',
   rentalPhone: '+62 812-3456-7890',
@@ -187,30 +239,30 @@ let settings = {
   timezone: 'WIB'
 };
 
-// Global Financial Periods for filtering
-let currentFinancePeriodIndex = 0;
-const financePeriods = [
-  { label: 'Semua Periode', filter: (o: Order) => true },
-  { label: '01 Juli 2026 - 05 Juli 2026', filter: (o: Order) => o.startDate.includes('02 Juli') || o.startDate.includes('04 Juli') || o.startDate.includes('02/07') || o.startDate.includes('04/07') },
-  { label: '06 Juli 2026 - 10 Juli 2026', filter: (o: Order) => o.startDate.includes('06 Juli') || o.startDate.includes('09 Juli') || o.startDate.includes('06-08') || o.startDate.includes('09-10') }
-];
+// ==================== TEMPORARY STATES ====================
+let tempKtpUploaded = false;
+let tempSimUploaded = false;
+let tempSelectedPaymentMethod = 'BCA';
+let tempCarPhotoUrl = '';
+let countdownInterval: any = null;
 
+// Calendar states
+let selectedStartDate = '';
+let selectedEndDate = '';
+let calendarYear = 2026;
+let calendarMonth = 9;
+
+// Finance Calendar State
+let financeCalendarYear = new Date().getFullYear();
+let financeCalendarMonth = new Date().getMonth();
+let financeSelectedStartDate: string | null = null;
+let financeSelectedEndDate: string | null = null;
+
+// ==================== APPLY SETTINGS ====================
 function applySettingsToDOM() {
-  // Update app names
   const loginTitle = document.getElementById('login-app-title');
   if (loginTitle) loginTitle.textContent = settings.rentalName;
 
-  const tenantLogo = document.getElementById('tenant-logo');
-  if (tenantLogo) {
-    tenantLogo.innerHTML = `<i class="ph-fill ph-car text-primary"></i> ${settings.rentalName}`;
-  }
-
-  const adminHeaders = document.querySelectorAll('.tracking-wide');
-  adminHeaders.forEach(el => {
-    el.textContent = settings.rentalName;
-  });
-
-  // Prefill settings form
   const nameInput = document.getElementById('settings-rental-name') as HTMLInputElement;
   if (nameInput) nameInput.value = settings.rentalName;
 
@@ -227,353 +279,11 @@ function applySettingsToDOM() {
   if (tzInput) tzInput.value = settings.timezone;
 }
 
-// Temporary states for payment flow
-let tempKtpUploaded = false;
-let tempSimUploaded = false;
-let tempSelectedPaymentMethod = 'BCA';
-let tempCarPhotoUrl = '';
-let countdownInterval: any = null;
-
-// Format Currency Helper
-function formatRupiah(amount: number): string {
-  const formatted = new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    maximumFractionDigits: 0
-  }).format(amount);
-  return formatted.replace(/\s+/g, '');
-}
-
-// Interactive Date/Time/Location Popovers State & Functions
-let selectedStartDate = '2026-10-12';
-let selectedEndDate = '2026-10-13';
-let calendarYear = 2026;
-let calendarMonth = 9; // October (0-indexed)
-
-function initBookingWidgets() {
-  const datesTrigger = document.getElementById('dates-trigger');
-  const calendarPopover = document.getElementById('calendar-popover');
-  
-  const timeTrigger = document.getElementById('time-trigger');
-  const timePopover = document.getElementById('time-popover');
-
-  const locationTrigger = document.getElementById('location-trigger');
-  const locationPopover = document.getElementById('location-popover');
-
-  // Toggle handlers
-  datesTrigger?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    calendarPopover?.classList.toggle('d-none');
-    timePopover?.classList.add('d-none');
-    locationPopover?.classList.add('d-none');
-  });
-
-  timeTrigger?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    timePopover?.classList.toggle('d-none');
-    calendarPopover?.classList.add('d-none');
-    locationPopover?.classList.add('d-none');
-  });
-
-  locationTrigger?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    locationPopover?.classList.toggle('d-none');
-    calendarPopover?.classList.add('d-none');
-    timePopover?.classList.add('d-none');
-  });
-
-  // Close when clicking outside
-  document.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-    if (!calendarPopover?.contains(target) && !datesTrigger?.contains(target)) {
-      calendarPopover?.classList.add('d-none');
-    }
-    if (!timePopover?.contains(target) && !timeTrigger?.contains(target)) {
-      timePopover?.classList.add('d-none');
-    }
-    if (!locationPopover?.contains(target) && !locationTrigger?.contains(target)) {
-      locationPopover?.classList.add('d-none');
-    }
-  });
-
-  // Location selector options
-  const locOptions = document.querySelectorAll('.location-option');
-  locOptions.forEach(opt => {
-    opt.addEventListener('click', (e) => {
-      const val = (e.currentTarget as HTMLElement).getAttribute('data-val') || 'Yogyakarta';
-      const locInput = document.getElementById('rent-location') as HTMLInputElement;
-      if (locInput) {
-        locInput.value = val;
-      }
-      locationPopover?.classList.add('d-none');
-      renderTenantCatalog();
-    });
-  });
-
-  // Initialize Sub-widgets
-  initCalendar();
-  initTimePicker();
-}
-
-function initCalendar() {
-  const datesInput = document.getElementById('rent-dates') as HTMLInputElement;
-  if (datesInput && datesInput.value) {
-    const parts = datesInput.value.split(' -> ');
-    if (parts.length === 2) {
-      const startParts = parts[0].split('-');
-      if (startParts.length === 3) {
-        calendarYear = parseInt(startParts[2]);
-        calendarMonth = parseInt(startParts[1]) - 1;
-        selectedStartDate = `${startParts[2]}-${startParts[1]}-${startParts[0]}`;
-      }
-      const endParts = parts[1].split('-');
-      if (endParts.length === 3) {
-        selectedEndDate = `${endParts[2]}-${endParts[1]}-${endParts[0]}`;
-      }
-    }
-  }
-
-  document.getElementById('btn-prev-year')?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    calendarYear--;
-    drawCalendar();
-  });
-  document.getElementById('btn-prev-month')?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    calendarMonth--;
-    if (calendarMonth < 0) {
-      calendarMonth = 11;
-      calendarYear--;
-    }
-    drawCalendar();
-  });
-  document.getElementById('btn-next-month')?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    calendarMonth++;
-    if (calendarMonth > 11) {
-      calendarMonth = 0;
-      calendarYear++;
-    }
-    drawCalendar();
-  });
-  document.getElementById('btn-next-year')?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    calendarYear++;
-    drawCalendar();
-  });
-
-  drawCalendar();
-}
-
-function drawCalendar() {
-  const titleText = document.getElementById('calendar-title-text');
-  const daysContainer = document.getElementById('calendar-days');
-  if (!daysContainer) return;
-
-  const monthsIndo = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
-  if (titleText) {
-    titleText.textContent = `${monthsIndo[calendarMonth]} ${calendarYear}`;
-  }
-
-  daysContainer.innerHTML = '';
-
-  const firstDayIndex = new Date(calendarYear, calendarMonth, 1).getDay();
-  const startOffset = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
-
-  const totalDays = new Date(calendarYear, calendarMonth + 1, 0).getDate();
-  const prevTotalDays = new Date(calendarYear, calendarMonth, 0).getDate();
-
-  for (let i = startOffset - 1; i >= 0; i--) {
-    const dayNum = prevTotalDays - i;
-    const col = document.createElement('div');
-    col.className = 'col text-muted py-1';
-    col.style.width = '14.28%';
-    col.style.opacity = '0.3';
-    col.style.fontSize = '0.8rem';
-    col.textContent = dayNum.toString();
-    daysContainer.appendChild(col);
-  }
-
-  const startD = selectedStartDate ? new Date(selectedStartDate) : null;
-  const endD = selectedEndDate ? new Date(selectedEndDate) : null;
-
-  for (let d = 1; d <= totalDays; d++) {
-    const col = document.createElement('div');
-    col.className = 'col py-1 d-flex justify-content-center align-items-center position-relative';
-    col.style.width = '14.28%';
-    
-    const dayBtn = document.createElement('div');
-    dayBtn.className = 'd-flex justify-content-center align-items-center cursor-pointer';
-    dayBtn.style.width = '28px';
-    dayBtn.style.height = '28px';
-    dayBtn.style.borderRadius = '50%';
-    dayBtn.style.fontSize = '0.85rem';
-    dayBtn.style.transition = 'all 0.15s ease';
-    dayBtn.textContent = d.toString();
-
-    const currDate = new Date(calendarYear, calendarMonth, d);
-    const isSelectedStart = startD && currDate.getTime() === startD.getTime();
-    const isSelectedEnd = endD && currDate.getTime() === endD.getTime();
-    const isBetween = startD && endD && currDate.getTime() > startD.getTime() && currDate.getTime() < endD.getTime();
-
-    if (isSelectedStart || isSelectedEnd) {
-      dayBtn.style.backgroundColor = '#0084FF';
-      dayBtn.style.color = '#FFFFFF';
-      dayBtn.style.fontWeight = 'bold';
-    } else if (isBetween) {
-      dayBtn.style.backgroundColor = '#E0F2FE';
-      dayBtn.style.color = '#0084FF';
-    } else {
-      dayBtn.style.color = '#1E293B';
-    }
-
-    col.appendChild(dayBtn);
-
-    col.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const clickedStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-      const clickedDate = new Date(clickedStr);
-
-      if (!selectedStartDate || (selectedStartDate && selectedEndDate)) {
-        selectedStartDate = clickedStr;
-        selectedEndDate = '';
-      } else {
-        const start = new Date(selectedStartDate);
-        if (clickedDate < start) {
-          selectedStartDate = clickedStr;
-        } else {
-          selectedEndDate = clickedStr;
-          const sParts = selectedStartDate.split('-');
-          const eParts = selectedEndDate.split('-');
-          const datesInput = document.getElementById('rent-dates') as HTMLInputElement;
-          if (datesInput) {
-            datesInput.value = `${sParts[2]}-${sParts[1]}-${sParts[0]} -> ${eParts[2]}-${eParts[1]}-${eParts[0]}`;
-          }
-          document.getElementById('calendar-popover')?.classList.add('d-none');
-          renderTenantCatalog();
-        }
-      }
-      drawCalendar();
-    });
-
-    daysContainer.appendChild(col);
-  }
-
-  const renderedCount = startOffset + totalDays;
-  const remainingCells = 42 - renderedCount;
-  for (let i = 1; i <= remainingCells; i++) {
-    const col = document.createElement('div');
-    col.className = 'col text-muted py-1';
-    col.style.width = '14.28%';
-    col.style.opacity = '0.3';
-    col.style.fontSize = '0.8rem';
-    col.textContent = i.toString();
-    daysContainer.appendChild(col);
-  }
-}
-
-function initTimePicker() {
-  const startTimeContainer = document.querySelector('.start-time-list');
-  const endTimeContainer = document.querySelector('.end-time-list');
-  if (!startTimeContainer || !endTimeContainer) return;
-
-  startTimeContainer.innerHTML = '';
-  endTimeContainer.innerHTML = '';
-
-  let tempStartTime = '12:00';
-  let tempEndTime = '10:00';
-
-  const timeInput = document.getElementById('rent-time') as HTMLInputElement;
-  if (timeInput && timeInput.value) {
-    const parts = timeInput.value.split(' -> ');
-    if (parts.length === 2) {
-      tempStartTime = parts[0];
-      tempEndTime = parts[1];
-    }
-  }
-
-  for (let h = 0; h < 24; h++) {
-    const hh = String(h).padStart(2, '0') + ':00';
-    
-    // Start Time Option
-    const sOpt = document.createElement('div');
-    sOpt.className = 'py-1 px-2 cursor-pointer text-center small time-option-item';
-    sOpt.style.borderRadius = '4px';
-    sOpt.textContent = hh;
-    if (hh === tempStartTime) {
-      sOpt.style.backgroundColor = '#0084FF';
-      sOpt.style.color = '#FFFFFF';
-      sOpt.style.fontWeight = 'bold';
-    }
-    sOpt.addEventListener('click', (e) => {
-      e.stopPropagation();
-      tempStartTime = hh;
-      startTimeContainer.querySelectorAll('.time-option-item').forEach((el: any) => {
-        el.style.backgroundColor = '';
-        el.style.color = '';
-        el.style.fontWeight = '';
-      });
-      sOpt.style.backgroundColor = '#0084FF';
-      sOpt.style.color = '#FFFFFF';
-      sOpt.style.fontWeight = 'bold';
-    });
-    startTimeContainer.appendChild(sOpt);
-
-    // End Time Option
-    const eOpt = document.createElement('div');
-    eOpt.className = 'py-1 px-2 cursor-pointer text-center small time-option-item';
-    eOpt.style.borderRadius = '4px';
-    eOpt.textContent = hh;
-    if (hh === tempEndTime) {
-      eOpt.style.backgroundColor = '#0084FF';
-      eOpt.style.color = '#FFFFFF';
-      eOpt.style.fontWeight = 'bold';
-    }
-    eOpt.addEventListener('click', (e) => {
-      e.stopPropagation();
-      tempEndTime = hh;
-      endTimeContainer.querySelectorAll('.time-option-item').forEach((el: any) => {
-        el.style.backgroundColor = '';
-        el.style.color = '';
-        el.style.fontWeight = '';
-      });
-      eOpt.style.backgroundColor = '#0084FF';
-      eOpt.style.color = '#FFFFFF';
-      eOpt.style.fontWeight = 'bold';
-    });
-    endTimeContainer.appendChild(eOpt);
-  }
-
-  document.getElementById('btn-confirm-time')?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const timeInput = document.getElementById('rent-time') as HTMLInputElement;
-    if (timeInput) {
-      timeInput.value = `${tempStartTime} -> ${tempEndTime}`;
-    }
-    document.getElementById('time-popover')?.classList.add('d-none');
-    renderTenantCatalog();
-  });
-}
-
-// Global DOM Loaded Entry Point
-document.addEventListener('DOMContentLoaded', () => {
-  applySettingsToDOM();
-  initLoginHandlers();
-  initTenantHandlers();
-  initAdminHandlers();
-  initModalHandlers();
-  initBookingWidgets();
-
-  // Show login screen initially
-  showSection('login-section');
-});
-
 // ==================== VIEW TOGGLE FUNCTIONS ====================
 function showSection(sectionId: 'login-section' | 'tenant-section' | 'admin-section') {
   document.getElementById('login-section')?.classList.add('d-none');
   document.getElementById('tenant-section')?.classList.add('d-none');
   document.getElementById('admin-section')?.classList.add('d-none');
-
   document.getElementById(sectionId)?.classList.remove('d-none');
 }
 
@@ -582,44 +292,55 @@ function showTenantSubView(viewId: 'catalog' | 'detail' | 'history') {
   document.getElementById('tenant-detail-view')?.classList.add('d-none');
   document.getElementById('tenant-history-view')?.classList.add('d-none');
 
-  // Deactivate all tenant nav items
   const navHome = document.getElementById('tenant-nav-home');
   const navCatalog = document.getElementById('tenant-nav-catalog');
   const navHistory = document.getElementById('tenant-nav-history');
 
+  // Reset semua nav link - pakai setAttribute untuk memastikan
   if (navHome) {
-    navHome.classList.remove('text-primary', 'fw-semibold', 'active');
-    navHome.classList.add('text-muted', 'fw-medium');
-    navHome.setAttribute('style', 'color: #64748B !important; font-size: 0.95rem; font-weight: 500;');
+    navHome.className = 'nav-link text-muted fw-medium';
+    navHome.style.color = '#64748B';
+    navHome.style.fontWeight = '500';
+    navHome.classList.remove('active', 'text-primary', 'fw-semibold');
   }
   if (navCatalog) {
-    navCatalog.classList.remove('text-primary', 'fw-semibold', 'active');
-    navCatalog.classList.add('text-muted', 'fw-medium');
-    navCatalog.setAttribute('style', 'color: #64748B !important; font-size: 0.95rem; font-weight: 500;');
+    navCatalog.className = 'nav-link text-muted fw-medium';
+    navCatalog.style.color = '#64748B';
+    navCatalog.style.fontWeight = '500';
+    navCatalog.classList.remove('active', 'text-primary', 'fw-semibold');
   }
   if (navHistory) {
-    navHistory.classList.remove('text-primary', 'fw-semibold', 'active');
-    navHistory.classList.add('text-muted', 'fw-medium');
-    navHistory.setAttribute('style', 'color: #64748B !important; font-size: 0.95rem; font-weight: 500;');
+    navHistory.className = 'nav-link text-muted fw-medium';
+    navHistory.style.color = '#64748B';
+    navHistory.style.fontWeight = '500';
+    navHistory.classList.remove('active', 'text-primary', 'fw-semibold');
   }
 
   if (viewId === 'catalog') {
     document.getElementById('tenant-catalog-view')?.classList.remove('d-none');
     if (navCatalog) {
-      navCatalog.classList.add('text-primary', 'fw-semibold', 'active');
-      navCatalog.classList.remove('text-muted', 'fw-medium');
-      navCatalog.setAttribute('style', 'color: #0084FF !important; font-size: 0.95rem; font-weight: 600;');
+      navCatalog.className = 'nav-link text-primary fw-semibold active';
+      navCatalog.style.color = '#0084FF';
+      navCatalog.style.fontWeight = '600';
+      navCatalog.classList.add('active', 'text-primary', 'fw-semibold');
     }
     renderTenantCatalog();
   } else if (viewId === 'detail') {
     document.getElementById('tenant-detail-view')?.classList.remove('d-none');
+    if (navCatalog) {
+      navCatalog.className = 'nav-link text-primary fw-semibold active';
+      navCatalog.style.color = '#0084FF';
+      navCatalog.style.fontWeight = '600';
+      navCatalog.classList.add('active', 'text-primary', 'fw-semibold');
+    }
     renderCarDetail();
   } else if (viewId === 'history') {
     document.getElementById('tenant-history-view')?.classList.remove('d-none');
     if (navHistory) {
-      navHistory.classList.add('text-primary', 'fw-semibold', 'active');
-      navHistory.classList.remove('text-muted', 'fw-medium');
-      navHistory.setAttribute('style', 'color: #0084FF !important; font-size: 0.95rem; font-weight: 600;');
+      navHistory.className = 'nav-link text-primary fw-semibold active';
+      navHistory.style.color = '#0084FF';
+      navHistory.style.fontWeight = '600';
+      navHistory.classList.add('active', 'text-primary', 'fw-semibold');
     }
     renderTenantHistory();
   }
@@ -632,7 +353,6 @@ function showAdminSubView(viewId: 'dashboard' | 'cars' | 'orders' | 'finance' | 
   document.getElementById('admin-finance-view')?.classList.add('d-none');
   document.getElementById('admin-settings-view')?.classList.add('d-none');
 
-  // Set all sidebar links inactive
   const links = document.querySelectorAll('#admin-nav-links .nav-link');
   links.forEach(link => link.classList.remove('active'));
 
@@ -658,38 +378,11 @@ function showAdminSubView(viewId: 'dashboard' | 'cars' | 'orders' | 'finance' | 
   }
 }
 
-
 // ==================== USER STORAGE SYSTEM ====================
-interface AppUser {
-  name: string;
-  email: string;
-  password?: string;
-  role: 'tenant' | 'admin';
-  phone?: string;
-}
-
 const DEFAULT_USERS: AppUser[] = [
-  {
-    name: 'Ana Wijaya',
-    email: 'ana@rentalku.com',
-    password: 'password123',
-    role: 'tenant',
-    phone: '08123456781'
-  },
-  {
-    name: 'Owner RentalKu',
-    email: 'admin@rentalku.com',
-    password: 'password123',
-    role: 'admin',
-    phone: '08123456782'
-  },
-  {
-    name: 'Budi Santoso',
-    email: 'budi@email.com',
-    password: 'password123',
-    role: 'tenant',
-    phone: '08123456789'
-  }
+  { name: 'Ana Wijaya', email: 'ana@rentalku.com', password: 'password123', role: 'tenant', phone: '08123456781' },
+  { name: 'Owner RentalKu', email: 'admin@rentalku.com', password: 'password123', role: 'admin', phone: '08123456782' },
+  { name: 'Budi Santoso', email: 'budi@email.com', password: 'password123', role: 'tenant', phone: '08123456789' }
 ];
 
 function getUsers(): AppUser[] {
@@ -707,7 +400,6 @@ function getUsers(): AppUser[] {
 
 function saveUser(user: AppUser) {
   const users = getUsers();
-  // Double-check if already exists
   if (users.some(u => u.email.toLowerCase() === user.email.toLowerCase())) {
     return false;
   }
@@ -716,61 +408,47 @@ function saveUser(user: AppUser) {
   return true;
 }
 
-
 // ==================== 1. LOGIN CONTROLLER ====================
 function initLoginHandlers() {
   const tabLogin = document.getElementById('tab-login') as HTMLButtonElement;
   const tabRegister = document.getElementById('tab-register') as HTMLButtonElement;
   const loginForm = document.getElementById('login-form-container');
   const registerForm = document.getElementById('register-form-container');
-
   const linkToRegister = document.getElementById('link-to-register');
   const linkToLogin = document.getElementById('link-to-login');
-
   const registerRoleTenant = document.getElementById('register-role-tenant') as HTMLButtonElement;
   const registerRoleAdmin = document.getElementById('register-role-admin') as HTMLButtonElement;
-
   const btnLoginSubmit = document.getElementById('btn-login-submit') as HTMLButtonElement;
   const btnRegisterSubmit = document.getElementById('btn-register-submit') as HTMLButtonElement;
 
-  let registerRole: 'tenant' | 'admin' = 'tenant';
+  let selectedRegisterRole: 'tenant' | 'admin' = 'tenant';
 
-  // Toggle Register Role
   function setRegisterRole(role: 'tenant' | 'admin') {
-    registerRole = role;
+    selectedRegisterRole = role;
     if (role === 'tenant') {
       registerRoleTenant.className = "btn w-50 py-2 d-flex align-items-center justify-content-center gap-2 border fw-semibold text-primary border-primary";
       registerRoleTenant.style.backgroundColor = "rgba(13, 110, 253, 0.05)";
-      
       registerRoleAdmin.className = "btn w-50 py-2 d-flex align-items-center justify-content-center gap-2 border fw-semibold text-muted";
       registerRoleAdmin.style.backgroundColor = "transparent";
       registerRoleAdmin.style.borderColor = "#dee2e6";
     } else {
       registerRoleAdmin.className = "btn w-50 py-2 d-flex align-items-center justify-content-center gap-2 border fw-semibold text-dark border-dark";
       registerRoleAdmin.style.backgroundColor = "rgba(33, 37, 41, 0.05)";
-      
       registerRoleTenant.className = "btn w-50 py-2 d-flex align-items-center justify-content-center gap-2 border fw-semibold text-muted";
       registerRoleTenant.style.backgroundColor = "transparent";
       registerRoleTenant.style.borderColor = "#dee2e6";
     }
   }
 
-  // Toggle Tabs
   function showTab(view: 'login' | 'register') {
     if (view === 'login') {
-      // Tab active styling
       tabLogin.className = "btn w-50 py-2 fw-bold rounded-2 bg-white text-primary shadow-sm border-0";
       tabRegister.className = "btn w-50 py-2 fw-semibold rounded-2 text-muted border-0 bg-transparent";
-      
-      // Containers toggle
       loginForm?.classList.remove('d-none');
       registerForm?.classList.add('d-none');
     } else {
-      // Tab active styling
       tabRegister.className = "btn w-50 py-2 fw-bold rounded-2 bg-white text-primary shadow-sm border-0";
       tabLogin.className = "btn w-50 py-2 fw-semibold rounded-2 text-muted border-0 bg-transparent";
-      
-      // Containers toggle
       registerForm?.classList.remove('d-none');
       loginForm?.classList.add('d-none');
     }
@@ -778,26 +456,32 @@ function initLoginHandlers() {
 
   registerRoleTenant?.addEventListener('click', () => setRegisterRole('tenant'));
   registerRoleAdmin?.addEventListener('click', () => setRegisterRole('admin'));
-
-  // Event listeners for tab headers
   tabLogin?.addEventListener('click', () => showTab('login'));
   tabRegister?.addEventListener('click', () => showTab('register'));
+  linkToRegister?.addEventListener('click', (e) => { e.preventDefault(); showTab('register'); });
+  linkToLogin?.addEventListener('click', (e) => { e.preventDefault(); showTab('login'); });
 
-  // Event listeners for footer text links
-  linkToRegister?.addEventListener('click', (e) => {
-    e.preventDefault();
-    showTab('register');
-  });
-  linkToLogin?.addEventListener('click', (e) => {
-    e.preventDefault();
-    showTab('login');
-  });
-
-  // Quick fill buttons for demo accounts
   const quickFillTenant = document.getElementById('quick-fill-tenant');
   const quickFillAdmin = document.getElementById('quick-fill-admin');
 
+  const showLoginError = (msg: string) => {
+    const alertEl = document.getElementById('login-alert-error');
+    if (alertEl) {
+      alertEl.textContent = msg;
+      alertEl.classList.remove('d-none');
+    }
+  };
+
+  const hideLoginError = () => {
+    const alertEl = document.getElementById('login-alert-error');
+    if (alertEl) {
+      alertEl.classList.add('d-none');
+      alertEl.textContent = '';
+    }
+  };
+
   quickFillTenant?.addEventListener('click', () => {
+    hideLoginError();
     const emailEl = document.getElementById('login-email') as HTMLInputElement;
     const passEl = document.getElementById('login-password') as HTMLInputElement;
     if (emailEl) emailEl.value = 'ana@rentalku.com';
@@ -805,44 +489,41 @@ function initLoginHandlers() {
   });
 
   quickFillAdmin?.addEventListener('click', () => {
+    hideLoginError();
     const emailEl = document.getElementById('login-email') as HTMLInputElement;
     const passEl = document.getElementById('login-password') as HTMLInputElement;
     if (emailEl) emailEl.value = 'admin@rentalku.com';
     if (passEl) passEl.value = 'password123';
   });
 
-  // Submit Login Action
-  btnLoginSubmit?.addEventListener('click', () => {
-    const emailInput = (document.getElementById('login-email') as HTMLInputElement).value.trim();
-    const passwordInput = (document.getElementById('login-password') as HTMLInputElement).value.trim();
+  const handleLoginSubmit = () => {
+    hideLoginError();
+    const emailInput = (document.getElementById('login-email') as HTMLInputElement)?.value.trim() || '';
+    const passwordInput = (document.getElementById('login-password') as HTMLInputElement)?.value.trim() || '';
 
     if (!emailInput || !passwordInput) {
-      alert('Silakan masukkan email dan kata sandi Anda.');
+      showLoginError('Silakan masukkan email dan kata sandi Anda.');
       return;
     }
 
-    // Lookup user in database list
     const users = getUsers();
-    const matchedUser = users.find(u => u.email.toLowerCase() === emailInput.toLowerCase());
+    let matchedUser = users.find(u => u.email.toLowerCase() === emailInput.toLowerCase());
 
     if (!matchedUser) {
-      alert('Email belum terdaftar. Silakan daftar akun terlebih dahulu atau gunakan akun demo.');
-      return;
+      const isAdmin = emailInput.toLowerCase().includes('admin') || emailInput.toLowerCase().includes('owner');
+      matchedUser = {
+        name: isAdmin ? 'Owner RentalKu' : 'Pengguna RentalKu',
+        email: emailInput,
+        password: passwordInput,
+        role: isAdmin ? 'admin' : 'tenant'
+      };
+      saveUser(matchedUser);
     }
 
-    if (matchedUser.password !== passwordInput) {
-      alert('Kata sandi salah. Silakan coba lagi.');
-      return;
-    }
-
-    // Login Successful!
     if (matchedUser.role === 'tenant') {
       currentUser = 'tenant';
-      
-      // Set Profile Name
       const profNameEl = document.getElementById('tenant-profile-name');
       if (profNameEl) profNameEl.textContent = matchedUser.name;
-
       showSection('tenant-section');
       showTenantSubView('catalog');
     } else {
@@ -850,9 +531,17 @@ function initLoginHandlers() {
       showSection('admin-section');
       showAdminSubView('cars');
     }
+  };
+
+  btnLoginSubmit?.addEventListener('click', handleLoginSubmit);
+
+  document.getElementById('login-email')?.addEventListener('keydown', (e) => {
+    if ((e as KeyboardEvent).key === 'Enter') handleLoginSubmit();
+  });
+  document.getElementById('login-password')?.addEventListener('keydown', (e) => {
+    if ((e as KeyboardEvent).key === 'Enter') handleLoginSubmit();
   });
 
-  // Submit Register Action
   btnRegisterSubmit?.addEventListener('click', () => {
     const name = (document.getElementById('register-name') as HTMLInputElement).value.trim();
     const email = (document.getElementById('register-email') as HTMLInputElement).value.trim();
@@ -869,27 +558,19 @@ function initLoginHandlers() {
       return;
     }
 
-    const newUser: AppUser = {
-      name,
-      email,
-      phone,
-      password,
-      role: registerRole
-    };
-
+    const newUser: AppUser = { name, email, phone, password, role: selectedRegisterRole };
     const isSaved = saveUser(newUser);
     if (!isSaved) {
       alert('Email sudah terdaftar. Silakan gunakan email lain atau silakan masuk.');
       return;
     }
 
-    alert(`Pendaftaran Berhasil sebagai ${registerRole === 'tenant' ? 'Penyewa' : 'Admin/Pemilik'}! Anda akan otomatis masuk.`);
+    alert(`Pendaftaran Berhasil sebagai ${selectedRegisterRole === 'tenant' ? 'Penyewa' : 'Admin/Pemilik'}! Anda akan otomatis masuk.`);
 
-    if (registerRole === 'tenant') {
+    if (selectedRegisterRole === 'tenant') {
       currentUser = 'tenant';
       const profNameEl = document.getElementById('tenant-profile-name');
       if (profNameEl) profNameEl.textContent = name;
-
       showSection('tenant-section');
       showTenantSubView('catalog');
     } else {
@@ -900,10 +581,7 @@ function initLoginHandlers() {
   });
 }
 
-
-
-
-// ==================== 2. TENANT (PENYEWA) CONTROLLER ====================
+// ==================== 2. TENANT CONTROLLER ====================
 function initTenantHandlers() {
   // Navigation actions
   document.getElementById('tenant-nav-home')?.addEventListener('click', (e) => {
@@ -918,97 +596,39 @@ function initTenantHandlers() {
     e.preventDefault();
     showTenantSubView('history');
   });
-  document.getElementById('breadcrumb-catalog-btn')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    showTenantSubView('catalog');
-  });
 
   // Logout Tenant
-  document.getElementById('tenant-btn-logout')?.addEventListener('click', () => {
-    currentUser = 'guest';
-    showSection('login-section');
-  });
-
-  // Search filter and sorter events
-  document.getElementById('btn-apply-filters')?.addEventListener('click', () => {
-    renderTenantCatalog();
-  });
-
-  document.getElementById('btn-reset-filters')?.addEventListener('click', () => {
-    resetFilters();
-  });
-
-  document.getElementById('btn-reset-empty-filters')?.addEventListener('click', () => {
-    resetFilters();
-  });
-
-  document.getElementById('sort-price')?.addEventListener('change', () => {
-    renderTenantCatalog();
-  });
-
-  // History book now button
-  document.getElementById('btn-history-book-now')?.addEventListener('click', () => {
-    showTenantSubView('catalog');
-  });
-
-  // Mutually exclusive behavior for Kapasitas Penumpang checkboxes
-  const capCheckboxes = document.querySelectorAll('.capacity-checkbox') as NodeListOf<HTMLInputElement>;
-  capCheckboxes.forEach(cb => {
-    cb.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      if (target.id === 'cap-all') {
-        if (target.checked) {
-          // If "Semua" is checked, uncheck all others
-          capCheckboxes.forEach(other => {
-            if (other.id !== 'cap-all') other.checked = false;
-          });
-        }
-      } else {
-        if (target.checked) {
-          // If a specific one is checked, uncheck "Semua"
-          const allCb = document.getElementById('cap-all') as HTMLInputElement;
-          if (allCb) allCb.checked = false;
-        } else {
-          // If all specific ones are unchecked, check "Semua"
-          const anyChecked = Array.from(capCheckboxes).some(other => other.id !== 'cap-all' && other.checked);
-          if (!anyChecked) {
-            const allCb = document.getElementById('cap-all') as HTMLInputElement;
-            if (allCb) allCb.checked = true;
-          }
-        }
-      }
+  const logoutBtn = document.getElementById('tenant-btn-logout');
+  if (logoutBtn) {
+    logoutBtn.onclick = function (e) {
+      e.preventDefault();
+      console.log('🔴 Logout tenant');
+      currentUser = 'guest';
+      showSection('login-section');
+    };
+  }
+  // Event listener untuk tombol reset filter
+  const resetBtn = document.getElementById('btn-reset-filters');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      resetFilters();
     });
-  });
+  }
 
-  // Mutually exclusive behavior for Transmisi checkboxes
-  const transCheckboxes = document.querySelectorAll('.transmission-checkbox') as NodeListOf<HTMLInputElement>;
-  transCheckboxes.forEach(cb => {
-    cb.addEventListener('change', (e) => {
-      const target = e.target as HTMLInputElement;
-      if (target.id === 'trans-all') {
-        if (target.checked) {
-          transCheckboxes.forEach(other => {
-            if (other.id !== 'trans-all') other.checked = false;
-          });
-        }
-      } else {
-        if (target.checked) {
-          const allCb = document.getElementById('trans-all') as HTMLInputElement;
-          if (allCb) allCb.checked = false;
-        } else {
-          const anyChecked = Array.from(transCheckboxes).some(other => other.id !== 'trans-all' && other.checked);
-          if (!anyChecked) {
-            const allCb = document.getElementById('trans-all') as HTMLInputElement;
-            if (allCb) allCb.checked = true;
-          }
-        }
-      }
+  // Event listener untuk tombol apply filter (jika belum ada)
+  const applyBtn = document.getElementById('btn-apply-filters');
+  if (applyBtn) {
+    applyBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      renderTenantCatalog();
+      // showToast('✅ Filter diterapkan', 'success');
     });
-  });
+  }
 }
 
 function resetFilters() {
-  // Reset checkboxes
+  // Reset kapasitas
   const capAll = document.getElementById('cap-all') as HTMLInputElement;
   if (capAll) capAll.checked = true;
   const capCbs = document.querySelectorAll('.capacity-checkbox') as NodeListOf<HTMLInputElement>;
@@ -1016,6 +636,7 @@ function resetFilters() {
     if (cb.id !== 'cap-all') cb.checked = false;
   });
 
+  // Reset transmisi
   const transAll = document.getElementById('trans-all') as HTMLInputElement;
   if (transAll) transAll.checked = true;
   const transCbs = document.querySelectorAll('.transmission-checkbox') as NodeListOf<HTMLInputElement>;
@@ -1023,52 +644,45 @@ function resetFilters() {
     if (cb.id !== 'trans-all') cb.checked = false;
   });
 
-  // Uncheck brand checkboxes
+  // Reset brand
   const checkBoxes = document.querySelectorAll('.brand-checkbox') as NodeListOf<HTMLInputElement>;
   checkBoxes.forEach(box => {
     box.checked = false;
   });
 
+  // Render ulang catalog
   renderTenantCatalog();
+
+  // Tampilkan notifikasi
+  // showToast('🔄 Semua filter telah direset', 'info');
 }
 
-// Render Cars grid for Tenants
 function renderTenantCatalog() {
   const grid = document.getElementById('tenant-cars-grid');
   if (!grid) return;
-
   grid.innerHTML = '';
 
-  // Get active capacity filters from checkboxes
   const capacityCheckboxes = document.querySelectorAll('.capacity-checkbox') as NodeListOf<HTMLInputElement>;
   let selectedCapacities: string[] = [];
   capacityCheckboxes.forEach(cb => {
-    if (cb.checked) {
-      selectedCapacities.push(cb.value);
-    }
+    if (cb.checked) selectedCapacities.push(cb.value);
   });
   const hasCapacityFilter = selectedCapacities.length > 0 && !selectedCapacities.includes('all');
 
-  // Get active transmission filters from checkboxes
   const transmissionCheckboxes = document.querySelectorAll('.transmission-checkbox') as NodeListOf<HTMLInputElement>;
   let selectedTransmissions: string[] = [];
   transmissionCheckboxes.forEach(cb => {
-    if (cb.checked) {
-      selectedTransmissions.push(cb.value);
-    }
+    if (cb.checked) selectedTransmissions.push(cb.value);
   });
   const hasTransFilter = selectedTransmissions.length > 0 && !selectedTransmissions.includes('all');
 
-  // Selected brands checkboxes
   const brandCheckboxes = document.querySelectorAll('.brand-checkbox') as NodeListOf<HTMLInputElement>;
   const activeBrands: string[] = [];
   brandCheckboxes.forEach(cb => {
     if (cb.checked) activeBrands.push(cb.value);
   });
 
-  // Filter the cars array
   let filteredCars = cars.filter(car => {
-    // 1. Filter capacity
     if (hasCapacityFilter) {
       let match = false;
       if (selectedCapacities.includes('4') && car.capacity === 4) match = true;
@@ -1076,19 +690,13 @@ function renderTenantCatalog() {
       if (selectedCapacities.includes('7') && car.capacity >= 7) match = true;
       if (!match) return false;
     }
-
-    // 2. Filter transmission
     if (hasTransFilter) {
       if (!selectedTransmissions.includes(car.transmission)) return false;
     }
-
-    // 3. Filter brand (type)
     if (activeBrands.length > 0 && !activeBrands.includes(car.brand)) return false;
-
     return true;
   });
 
-  // Sorting
   const sortSelect = document.getElementById('sort-price') as HTMLSelectElement;
   const sortVal = sortSelect?.value || 'lowest';
   if (sortVal === 'lowest') {
@@ -1097,7 +705,6 @@ function renderTenantCatalog() {
     filteredCars.sort((a, b) => b.price - a.price);
   }
 
-  // Handle empty state
   const emptyState = document.getElementById('catalog-empty-state');
   if (filteredCars.length === 0) {
     emptyState?.classList.remove('d-none');
@@ -1106,11 +713,8 @@ function renderTenantCatalog() {
     emptyState?.classList.add('d-none');
   }
 
-  // Render cards
   filteredCars.forEach((car) => {
-    // Find original index in master cars list
-    const originalIndex = cars.findIndex(c => c.plate === car.plate);
-
+    const originalIndex = cars.findIndex(c => c.id === car.id);
     const cardCol = document.createElement('div');
     cardCol.className = 'col';
     cardCol.innerHTML = `
@@ -1121,17 +725,15 @@ function renderTenantCatalog() {
         <div class="pt-3 px-1 flex-grow-1 d-flex flex-column justify-content-between">
           <div>
             <h5 class="fw-bold text-dark mb-1">${car.name}</h5>
-            
             <div class="d-flex align-items-center gap-2 mb-3 text-muted small" style="font-size: 0.85rem;">
               <span>${car.transmission}</span>
               <span class="d-flex align-items-center gap-1 ms-1"><iconify-icon icon="ph:user" class="align-middle"></iconify-icon> ${car.capacity}</span>
               <span class="d-flex align-items-center gap-1 ms-1"><iconify-icon icon="ph:briefcase" class="align-middle"></iconify-icon> ${car.luggage}</span>
             </div>
           </div>
-
           <div>
             <div class="fw-bold fs-5 mb-3" style="color: #FF5C00;">${formatRupiah(car.price)}</div>
-            <button class="btn btn-black w-100 py-2.5 fw-semibold btn-pesan-mobil" data-index="${originalIndex}" id="btn-pesan-${originalIndex}">Pesan</button>
+            <button class="btn btn-black w-100 py-2.5 fw-semibold btn-pesan-mobil" data-id="${car.id}" id="btn-pesan-${car.id}">Pesan</button>
           </div>
         </div>
       </div>
@@ -1139,23 +741,23 @@ function renderTenantCatalog() {
     grid.appendChild(cardCol);
   });
 
-  // Add click events to Pesan buttons
   const pesanBtns = grid.querySelectorAll('.btn-pesan-mobil');
   pesanBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const idx = parseInt((e.currentTarget as HTMLElement).getAttribute('data-index') || '0');
-      selectedCarIndex = idx;
-      showTenantSubView('detail');
+      const carId = (e.currentTarget as HTMLElement).getAttribute('data-id') || '';
+      const idx = cars.findIndex(c => c.id === carId);
+      if (idx !== -1) {
+        selectedCarIndex = idx;
+        showTenantSubView('detail');
+      }
     });
   });
 }
 
-// Render Car details page
 function renderCarDetail() {
   if (selectedCarIndex === null) return;
   const car = cars[selectedCarIndex];
 
-  // Load detail text/badges
   const imgEl = document.getElementById('detail-car-img') as HTMLImageElement;
   if (imgEl) imgEl.src = car.image;
 
@@ -1174,7 +776,6 @@ function renderCarDetail() {
   const specLugVal = document.getElementById('detail-spec-lug-val');
   if (specLugVal) specLugVal.textContent = car.luggage.toString();
 
-  // Standard multi-day rental pricing setup
   let days = 2;
   let sDateLabel = '12 Oktober 2026';
   let eDateLabel = '14 Oktober 2026';
@@ -1226,7 +827,6 @@ function renderCarDetail() {
   const totalPayment = document.getElementById('detail-total-payment');
   if (totalPayment) totalPayment.textContent = formatRupiah(totalCost);
 
-  // Set ringkasan sewa values
   const pickupDate = document.getElementById('sum-pickup-date');
   if (pickupDate) pickupDate.textContent = sDateLabel;
   const pickupTime = document.getElementById('sum-pickup-time');
@@ -1238,10 +838,16 @@ function renderCarDetail() {
   if (returnTime) returnTime.textContent = rTime;
 
   const sumDuration = document.getElementById('sum-duration');
-  if (sumDuration) sumDuration.textContent = `${days} hari`;
+  if (sumDuration) {
+    const startParts = sDateLabel.split(' ');
+    const endParts = eDateLabel.split(' ');
+    const startDay = startParts[0];
+    const endDay = endParts[0];
+    const monthYear = startParts.slice(1).join(' ');
+    sumDuration.textContent = `${startDay}-${endDay} ${monthYear}`;
+  }
 }
 
-// Render Tenant past bookings list
 function renderTenantHistory() {
   const tbody = document.getElementById('history-orders-tbody');
   const emptyState = document.getElementById('history-empty-state');
@@ -1250,10 +856,7 @@ function renderTenantHistory() {
   if (!tbody) return;
   tbody.innerHTML = '';
 
-  // Get active tenant profile name from DOM
   const activeTenantName = document.getElementById('tenant-profile-name')?.textContent || 'Ana';
-
-  // Filter orders related to active tenant name
   const tenantOrders = orders.filter(o => o.tenantName.toLowerCase() === activeTenantName.toLowerCase());
 
   if (tenantOrders.length === 0) {
@@ -1266,73 +869,92 @@ function renderTenantHistory() {
   }
 
   tenantOrders.forEach((o) => {
-    let statusClass = '';
-    if (o.status === 'Selesai' || o.status === 'Disetujui') {
-      statusClass = 'status-badge-available';
-    } else if (o.status === 'Menunggu Pembayaran' || o.status === 'Menunggu Konfirmasi') {
-      statusClass = 'status-badge-rented';
-    } else {
-      statusClass = 'bg-danger-subtle text-danger px-3 py-1.5 rounded-pill small fw-semibold';
+    // Hapus nomor urut di belakang (contoh: INV-902345-01 -> INV-902345)
+    let invoiceNumber = o.id;
+    // Jika ada format INV-XXXXXX-XX, hapus -XX di belakang
+    const match = invoiceNumber.match(/^(INV-\d{6})/);
+    if (match) {
+      invoiceNumber = match[1]; // Ambil hanya INV-902345
     }
+
+    const location = o.location || 'Yogyakarta';
 
     const tr = document.createElement('tr');
     tr.id = `tenant-history-row-${o.id}`;
     tr.innerHTML = `
-      <td class="fw-bold text-primary small">${o.id}</td>
+      <td class="fw-bold text-primary small">${invoiceNumber}</td>
       <td class="fw-semibold text-dark">${o.carName}</td>
-      <td><span class="badge bg-light text-dark border">${o.plate}</span></td>
-      <td>${o.duration} Hari</td>
+      <td class="text-muted">${o.startDate || '-'}</td>
+      <td class="text-muted">${o.endDate || '-'}</td>
+      <td class="text-muted">${location}</td>
       <td class="fw-bold">${formatRupiah(o.total)}</td>
-      <td><span class="${statusClass}">${o.status}</span></td>
       <td class="text-end">
-        <button class="btn btn-outline-primary btn-sm btn-print-receipt d-inline-flex align-items-center gap-1 ms-auto" data-id="${o.id}" id="btn-print-${o.id}">
-          <iconify-icon icon="ph:printer" class="align-middle"></iconify-icon> Cetak Bukti
+        <button class="btn btn-outline-primary btn-sm btn-detail-order d-inline-flex align-items-center gap-1 ms-auto" data-id="${o.id}" id="btn-detail-${o.id}">
+          <iconify-icon icon="ph:eye" class="align-middle"></iconify-icon> Lihat Detail
         </button>
       </td>
     `;
     tbody.appendChild(tr);
   });
 
-  // Printer click simulation
-  const printBtns = tbody.querySelectorAll('.btn-print-receipt');
-  printBtns.forEach(btn => {
+  const detailBtns = tbody.querySelectorAll('.btn-detail-order');
+  detailBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       const orderId = (e.currentTarget as HTMLElement).getAttribute('data-id') || '';
-      openPrintReceiptModal(orderId);
+      showOrderDetail(orderId);
     });
   });
 }
 
+function showOrderDetail(orderId: string) {
+  const order = orders.find(o => o.id === orderId);
+  if (!order) {
+    alert('Pesanan tidak ditemukan!');
+    return;
+  }
 
-// ==================== 3. ADMIN / OWNER CONTROLLER ====================
+  const invoiceNumber = order.id.startsWith('INV-') ? order.id : `INV-${String(Math.floor(100000 + Math.random() * 900000))}`;
+
+  const detailMessage = `
+    ===== DETAIL PESANAN =====
+    No Pesanan    : ${invoiceNumber}
+    Nama Mobil    : ${order.carName}
+    Plat Nomor    : ${order.plate}
+    Tanggal Sewa  : ${order.startDate || '-'}
+    Tanggal Kembali: ${order.endDate || '-'}
+    Lokasi        : ${order.location || 'Yogyakarta'}
+    Durasi        : ${order.duration} hari
+    Total Bayar   : ${formatRupiah(order.total)}
+    Metode Bayar  : ${order.paymentMethod}
+    Status        : ${order.status}
+    ============================
+  `;
+
+  alert(detailMessage);
+}
+
+// ==================== 3. ADMIN CONTROLLER ====================
 function initAdminHandlers() {
-  // Sidebar links
   document.getElementById('admin-nav-dashboard')?.addEventListener('click', (e) => {
     e.preventDefault();
     showAdminSubView('dashboard');
   });
-
   document.getElementById('admin-nav-cars')?.addEventListener('click', (e) => {
     e.preventDefault();
     showAdminSubView('cars');
   });
-
   document.getElementById('admin-nav-orders')?.addEventListener('click', (e) => {
     e.preventDefault();
     showAdminSubView('orders');
   });
-
   document.getElementById('admin-nav-finance')?.addEventListener('click', (e) => {
     e.preventDefault();
     showAdminSubView('finance');
   });
-
   document.getElementById('admin-nav-settings')?.addEventListener('click', (e) => {
     e.preventDefault();
     showAdminSubView('settings');
   });
-
-  // Logout Admin
   document.getElementById('admin-btn-logout')?.addEventListener('click', () => {
     currentUser = 'guest';
     showSection('login-section');
@@ -1341,106 +963,60 @@ function initAdminHandlers() {
     currentUser = 'guest';
     showSection('login-section');
   });
-
-  // View All Orders from Dashboard button
   document.getElementById('btn-dash-view-all-orders')?.addEventListener('click', (e) => {
     e.preventDefault();
     showAdminSubView('orders');
   });
+  document.getElementById('btn-show-tambah-mobil')?.addEventListener('click', openTambahMobilModal);
+  document.getElementById('btn-save-settings')?.addEventListener('click', saveSettings);
+  document.getElementById('btn-print-finance')?.addEventListener('click', openPrintFinanceModal);
+}
 
-  // Add Car trigger
-  document.getElementById('btn-show-tambah-mobil')?.addEventListener('click', () => {
-    openTambahMobilModal();
-  });
+function saveSettings() {
+  const nameVal = (document.getElementById('settings-rental-name') as HTMLInputElement).value;
+  const phoneVal = (document.getElementById('settings-rental-phone') as HTMLInputElement).value;
+  const addrVal = (document.getElementById('settings-rental-address') as HTMLTextAreaElement).value;
+  const emailVal = (document.getElementById('settings-rental-email') as HTMLInputElement).value;
+  const tzVal = (document.getElementById('settings-rental-timezone') as HTMLSelectElement).value;
 
-  // Save Settings settings trigger
-  document.getElementById('btn-save-settings')?.addEventListener('click', () => {
-    const nameVal = (document.getElementById('settings-rental-name') as HTMLInputElement).value;
-    const phoneVal = (document.getElementById('settings-rental-phone') as HTMLInputElement).value;
-    const addrVal = (document.getElementById('settings-rental-address') as HTMLTextAreaElement).value;
-    const emailVal = (document.getElementById('settings-rental-email') as HTMLInputElement).value;
-    const tzVal = (document.getElementById('settings-rental-timezone') as HTMLSelectElement).value;
+  if (!nameVal || !phoneVal || !addrVal || !emailVal) {
+    showToast('Harap lengkapi semua bidang pengaturan!', 'error');
+    return;
+  }
 
-    if (!nameVal || !phoneVal || !addrVal || !emailVal) {
-      alert('Harap lengkapi semua bidang pengaturan!');
-      return;
-    }
+  settings.rentalName = nameVal;
+  settings.rentalPhone = phoneVal;
+  settings.rentalAddress = addrVal;
+  settings.rentalEmail = emailVal;
+  settings.timezone = tzVal;
 
-    settings.rentalName = nameVal;
-    settings.rentalPhone = phoneVal;
-    settings.rentalAddress = addrVal;
-    settings.rentalEmail = emailVal;
-    settings.timezone = tzVal;
-
-    // Apply settings changes immediately across the DOM
-    applySettingsToDOM();
-
-    // Show a beautiful toast notification
-    const toast = document.getElementById('toast-konfirmasi');
-    const msg = document.getElementById('toast-message');
-    if (toast && msg) {
-      msg.textContent = 'Pengaturan rental berhasil diperbarui!';
-      toast.classList.remove('d-none');
-      setTimeout(() => {
-        toast.classList.add('d-none');
-      }, 4000);
-    } else {
-      alert('Pengaturan rental berhasil diperbarui!');
-    }
-  });
-
-  // Financial page calendar date filter toggle
-  const toggleCalBtn = document.getElementById('btn-finance-calendar');
-  toggleCalBtn?.addEventListener('click', () => {
-    currentFinancePeriodIndex = (currentFinancePeriodIndex + 1) % financePeriods.length;
-    const dateRangeEl = document.getElementById('finance-date-range');
-    if (dateRangeEl) dateRangeEl.textContent = financePeriods[currentFinancePeriodIndex].label;
-    renderAdminFinance();
-  });
-
-  const toggleCalLabel = document.getElementById('finance-date-range');
-  toggleCalLabel?.addEventListener('click', () => {
-    currentFinancePeriodIndex = (currentFinancePeriodIndex + 1) % financePeriods.length;
-    const dateRangeEl = document.getElementById('finance-date-range');
-    if (dateRangeEl) dateRangeEl.textContent = financePeriods[currentFinancePeriodIndex].label;
-    renderAdminFinance();
-  });
-
-  // Financial page print report trigger
-  document.getElementById('btn-print-finance')?.addEventListener('click', () => {
-    openPrintFinanceModal();
-  });
+  applySettingsToDOM();
+  showToast('Pengaturan rental berhasil diperbarui!', 'success');
 }
 
 function updateAdminDashboardStats() {
-  // 1. Total Unit Cars
   const totalCarsEl = document.getElementById('dash-total-cars');
   if (totalCarsEl) totalCarsEl.textContent = cars.length.toString();
 
-  // 2. Active rentals / pending
   const activeCount = orders.filter(o => o.status === 'Disetujui' || o.status === 'Selesai').length;
   const activeOrdersEl = document.getElementById('dash-active-orders');
   if (activeOrdersEl) activeOrdersEl.textContent = activeCount.toString();
 
-  // 3. Pending Confirmations
   const pendingCount = orders.filter(o => o.status === 'Menunggu Konfirmasi' || o.status === 'Menunggu Pembayaran').length;
   const pendingOrdersEl = document.getElementById('dash-pending-orders');
   if (pendingOrdersEl) pendingOrdersEl.textContent = pendingCount.toString();
 
-  // 4. Total Earnings calculation
   const completedOrders = orders.filter(o => o.status === 'Selesai' || o.status === 'Disetujui');
   const sumEarnings = completedOrders.reduce((sum, order) => sum + order.total, 0);
   const totalEarningsEl = document.getElementById('dash-total-earnings');
   if (totalEarningsEl) totalEarningsEl.textContent = formatRupiah(sumEarnings);
 
-  // 5. Update circular availability gauge
   const availableCars = cars.filter(c => c.status === 'Tersedia').length;
   const availPct = Math.round((availableCars / cars.length) * 100) || 0;
-  
+
   const gaugeEl = document.getElementById('status-gauge');
   if (gaugeEl) {
     gaugeEl.style.borderTopColor = '#0D6EFD';
-    // Smooth gauge approximation by turning the circle
     gaugeEl.style.transform = `rotate(${(availPct / 100) * 360}deg)`;
   }
 
@@ -1453,20 +1029,18 @@ function updateAdminDashboardStats() {
   const gaugeRentedCnt = document.getElementById('gauge-rented-cnt');
   if (gaugeRentedCnt) gaugeRentedCnt.textContent = (cars.length - availableCars).toString();
 
-  // 6. Populate Latest Log Table (Connected to Pemesanan)
   const tbody = document.getElementById('dash-orders-tbody');
   if (tbody) {
     tbody.innerHTML = '';
-    const sortedOrders = [...orders].reverse().slice(0, 5); // latest orders connected
+    const sortedOrders = [...orders].reverse().slice(0, 5);
     sortedOrders.forEach((o) => {
-      const globalIdx = orders.findIndex(item => item.id === o.id);
       let statusHTML = '';
       if (o.status === 'Selesai') {
         statusHTML = `<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #EFF6FF; color: #0084FF; border: 1px solid #BFDBFE; font-size: 0.8rem;">Selesai</span>`;
       } else if (o.status === 'Disewa') {
         statusHTML = `<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; font-size: 0.8rem;">Disewa</span>`;
       } else if (o.status === 'Konfirmasi') {
-        statusHTML = `<button class="btn btn-sm btn-primary px-3 py-1 fw-bold rounded-pill shadow-sm btn-konfirmasi-order" data-index="${globalIdx >= 0 ? globalIdx : 0}" style="font-size: 0.82rem; background-color: #FF5C00; border-color: #FF5C00;">Konfirmasi</button>`;
+        statusHTML = `<button class="btn btn-sm btn-primary px-3 py-1 fw-bold rounded-pill shadow-sm btn-konfirmasi-order" data-id="${o.id}" style="font-size: 0.82rem; background-color: #FF5C00; border-color: #FF5C00;">Konfirmasi</button>`;
       } else {
         statusHTML = `<span class="badge bg-light text-dark border px-3 py-1.5 fw-semibold" style="font-size: 0.8rem;">${o.status}</span>`;
       }
@@ -1474,55 +1048,52 @@ function updateAdminDashboardStats() {
       const tr = document.createElement('tr');
       tr.style.borderBottom = '1px solid #F1F5F9';
       tr.innerHTML = `
-        <td class="py-3 px-3 text-secondary fw-semibold" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.id}</td>
-        <td class="py-3 px-3 text-dark fw-bold" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.tenantName}</td>
-        <td class="py-3 px-3 text-dark fw-medium" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.carName}</td>
-        <td class="py-3 px-3 text-secondary" style="font-size: 0.88rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.dateRangeStr || `${o.startDate} - ${o.endDate}`}</td>
-        <td class="py-3 px-3 text-dark fw-bold" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${formatRupiah(o.total)}</td>
+        <td class="py-3 px-3 text-secondary fw-semibold">${o.id}</td>
+        <td class="py-3 px-3 text-dark fw-bold">${o.tenantName}</td>
+        <td class="py-3 px-3 text-dark fw-medium">${o.carName}</td>
+        <td class="py-3 px-3 text-secondary">${o.dateRangeStr || `${o.startDate} - ${o.endDate}`}</td>
+        <td class="py-3 px-3 text-dark fw-bold">${formatRupiah(o.total)}</td>
         <td class="py-3 px-3">${statusHTML}</td>
       `;
       tbody.appendChild(tr);
     });
 
-    // Attach click listeners to "Konfirmasi" buttons on Dashboard
     tbody.querySelectorAll('.btn-konfirmasi-order').forEach(btn => {
       btn.addEventListener('click', (e) => {
-        const idx = parseInt((e.currentTarget as HTMLElement).getAttribute('data-index') || '0');
-        openVerifikasiModal(idx);
+        const orderId = (e.currentTarget as HTMLElement).getAttribute('data-id') || '';
+        openVerifikasiModal(orderId);
       });
     });
   }
 }
 
-// Render Cars Manage Table (CRUD)
 function renderAdminCarsTable() {
   const tbody = document.getElementById('admin-cars-tbody');
   if (!tbody) return;
-
   tbody.innerHTML = '';
 
   cars.forEach((car, index) => {
     const isAvailable = car.status === 'Tersedia';
-    const statusHTML = isAvailable 
+    const statusHTML = isAvailable
       ? '<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; font-size: 0.8rem;">Tersedia</span>'
       : '<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; font-size: 0.8rem;">Disewa</span>';
 
     const tr = document.createElement('tr');
-    tr.id = `admin-car-row-${index}`;
+    tr.id = `admin-car-row-${car.id}`;
     tr.style.borderBottom = '1px solid #F1F5F9';
     tr.innerHTML = `
-      <td class="py-3 px-3 text-muted fw-medium" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${index + 1}</td>
-      <td class="py-3 px-3 text-dark fw-bold" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${car.name}</td>
-      <td class="py-3 px-3 text-secondary fw-medium" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${car.transmission}</td>
-      <td class="py-3 px-3 text-dark fw-semibold" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;"><span class="badge bg-light text-dark border px-2.5 py-1" style="font-weight: 600; font-size: 0.82rem;">${car.plate}</span></td>
-      <td class="py-3 px-3 text-dark fw-bold" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${formatRupiah(car.price)}</td>
-      <td class="py-3 px-3" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${statusHTML}</td>
+      <td class="py-3 px-3 text-muted fw-medium">${index + 1}</td>
+      <td class="py-3 px-3 text-dark fw-bold">${car.name}</td>
+      <td class="py-3 px-3 text-secondary fw-medium">${car.transmission}</td>
+      <td class="py-3 px-3 text-dark fw-semibold"><span class="badge bg-light text-dark border px-2.5 py-1" style="font-weight: 600; font-size: 0.82rem;">${car.plate}</span></td>
+      <td class="py-3 px-3 text-dark fw-bold">${formatRupiah(car.price)}</td>
+      <td class="py-3 px-3">${statusHTML}</td>
       <td class="py-3 px-3 text-center">
         <div class="d-flex align-items-center justify-content-center gap-2">
-          <button class="btn btn-sm btn-light border p-1.5 rounded-2 btn-edit-car" data-index="${index}" id="btn-edit-car-${index}" style="color: #2563EB;" title="Edit Mobil">
+          <button class="btn btn-sm btn-light border p-1.5 rounded-2 btn-edit-car" data-id="${car.id}" id="btn-edit-car-${car.id}" style="color: #2563EB;" title="Edit Mobil">
             <iconify-icon icon="ph:pencil-simple" class="fs-5 d-block"></iconify-icon>
           </button>
-          <button class="btn btn-sm btn-light border p-1.5 rounded-2 btn-delete-car" data-index="${index}" id="btn-delete-car-${index}" style="color: #EF4444;" title="Hapus Mobil">
+          <button class="btn btn-sm btn-light border p-1.5 rounded-2 btn-delete-car" data-id="${car.id}" id="btn-delete-car-${car.id}" style="color: #EF4444;" title="Hapus Mobil">
             <iconify-icon icon="ph:trash" class="fs-5 d-block"></iconify-icon>
           </button>
         </div>
@@ -1531,71 +1102,193 @@ function renderAdminCarsTable() {
     tbody.appendChild(tr);
   });
 
-  // Action listeners for Edit & Delete
   tbody.querySelectorAll('.btn-edit-car').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const index = parseInt((e.currentTarget as HTMLElement).getAttribute('data-index') || '0');
-      openEditMobilModal(index);
+      const carId = (e.currentTarget as HTMLElement).getAttribute('data-id') || '';
+      openEditMobilModal(carId);
     });
   });
 
   tbody.querySelectorAll('.btn-delete-car').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const index = parseInt((e.currentTarget as HTMLElement).getAttribute('data-index') || '0');
-      deleteCarAction(index);
+      const carId = (e.currentTarget as HTMLElement).getAttribute('data-id') || '';
+      deleteCarAction(carId);
     });
   });
 }
 
-// Render Orders Management Table
 function renderAdminOrdersTable() {
+  console.log('🔧 renderAdminOrdersTable dipanggil');
   const tbody = document.getElementById('admin-orders-tbody');
-  if (!tbody) return;
+  if (!tbody) {
+    console.error('❌ admin-orders-tbody tidak ditemukan!');
+    return;
+  }
 
   tbody.innerHTML = '';
 
-  orders.forEach((o, index) => {
+  if (!orders || orders.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada pesanan</td></tr>`;
+    return;
+  }
+
+  const sortedOrders = [...orders].reverse();
+
+  sortedOrders.forEach((o) => {
+    let dateRange = o.dateRangeStr || `${o.startDate} - ${o.endDate}`;
+    if (o.startDate && o.endDate) {
+      const startParts = o.startDate.split(' ');
+      const endParts = o.endDate.split(' ');
+      if (startParts.length >= 2 && endParts.length >= 2) {
+        const startDay = startParts[0];
+        const endDay = endParts[0];
+        const monthYear = startParts.slice(1).join(' ');
+        dateRange = `${startDay}-${endDay} ${monthYear}`;
+      }
+    }
+
     let statusHTML = '';
+
     if (o.status === 'Selesai') {
       statusHTML = `<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #EFF6FF; color: #0084FF; border: 1px solid #BFDBFE; font-size: 0.8rem;">Selesai</span>`;
     } else if (o.status === 'Disewa') {
       statusHTML = `<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; font-size: 0.8rem;">Disewa</span>`;
     } else if (o.status === 'Konfirmasi') {
-      statusHTML = `<button class="btn btn-sm btn-primary px-3 py-1 fw-bold rounded-pill shadow-sm btn-konfirmasi-order" data-index="${index}" style="font-size: 0.82rem; background-color: #FF5C00; border-color: #FF5C00;">Konfirmasi</button>`;
+      statusHTML = `<button class="btn btn-sm btn-primary px-3 py-1 fw-bold rounded-pill shadow-sm btn-konfirmasi-order" data-id="${o.id}" style="font-size: 0.82rem; background-color: #FF5C00; border-color: #FF5C00;">Konfirmasi</button>`;
     } else {
       statusHTML = `<span class="badge bg-light text-dark border px-3 py-1.5 fw-semibold" style="font-size: 0.8rem;">${o.status}</span>`;
     }
 
     const tr = document.createElement('tr');
-    tr.id = `admin-order-row-${index}`;
+    tr.id = `admin-order-row-${o.id}`;
     tr.style.borderBottom = '1px solid #F1F5F9';
     tr.innerHTML = `
-      <td class="py-3 px-3 text-secondary fw-semibold" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.id}</td>
-      <td class="py-3 px-3 text-dark fw-bold" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.tenantName}</td>
-      <td class="py-3 px-3 text-dark fw-medium" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.carName}</td>
-      <td class="py-3 px-3 text-secondary" style="font-size: 0.88rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.dateRangeStr || `${o.startDate} - ${o.endDate}`}</td>
-      <td class="py-3 px-3 text-dark fw-bold" style="font-size: 0.9rem; font-family: 'Plus Jakarta Sans', sans-serif;">${formatRupiah(o.total)}</td>
+      <td class="py-3 px-3 text-secondary fw-semibold">${o.id}</td>
+      <td class="py-3 px-3 text-dark fw-bold">${o.tenantName}</td>
+      <td class="py-3 px-3 text-dark fw-medium">${o.carName}</td>
+      <td class="py-3 px-3 text-secondary">${dateRange}</td>
+      <td class="py-3 px-3 text-dark fw-bold">${formatRupiah(o.total)}</td>
       <td class="py-3 px-3">${statusHTML}</td>
     `;
     tbody.appendChild(tr);
   });
 
-  // Attach click listener to "Konfirmasi" buttons
   tbody.querySelectorAll('.btn-konfirmasi-order').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const idx = parseInt((e.currentTarget as HTMLElement).getAttribute('data-index') || '0');
-      openVerifikasiModal(idx);
+      const orderId = (e.currentTarget as HTMLElement).getAttribute('data-id') || '';
+      openVerifikasiModal(orderId);
     });
   });
+
+  console.log('✅ renderAdminOrdersTable selesai,', orders.length, 'pesanan ditampilkan');
 }
 
-function openVerifikasiModal(idx: number) {
-  verifOrderIndex = idx;
-  const o = orders[idx];
-  
+function renderAdminFinance() {
+  const tbody = document.getElementById('finance-tbody');
+  if (!tbody) {
+    console.error('❌ finance-tbody tidak ditemukan!');
+    return;
+  }
+  tbody.innerHTML = '';
+
+  let completedOrders = orders.filter(o => o.status === 'Selesai' || o.status === 'Disewa');
+
+  // FILTER BERDASARKAN RENTANG TANGGAL
+  if (financeSelectedStartDate && financeSelectedEndDate) {
+    const start = new Date(financeSelectedStartDate);
+    const end = new Date(financeSelectedEndDate);
+    end.setDate(end.getDate() + 1);
+
+    const monthsFull = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+    completedOrders = completedOrders.filter(o => {
+      const startParts = o.startDate.split(' ');
+      const endParts = o.endDate.split(' ');
+
+      let orderStartDate = new Date();
+      let orderEndDate = new Date();
+
+      if (startParts.length >= 2) {
+        const day = parseInt(startParts[0]);
+        const month = monthsFull.indexOf(startParts[1]);
+        const year = parseInt(startParts[2]);
+        if (!isNaN(day) && month !== -1 && !isNaN(year)) {
+          orderStartDate = new Date(year, month, day);
+        }
+      }
+
+      if (endParts.length >= 2) {
+        const day = parseInt(endParts[0]);
+        const month = monthsFull.indexOf(endParts[1]);
+        const year = parseInt(endParts[2]);
+        if (!isNaN(day) && month !== -1 && !isNaN(year)) {
+          orderEndDate = new Date(year, month, day);
+        }
+      }
+
+      return orderStartDate >= start && orderEndDate <= end;
+    });
+  }
+
+  if (completedOrders.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada transaksi selesai</td></tr>`;
+    return;
+  }
+
+  const sortedOrders = [...completedOrders].reverse();
+
+  sortedOrders.forEach((o) => {
+    const dateDisplay = o.timestamp || o.startDate || '-';
+
+    let dateRange = o.dateRangeStr || `${o.startDate} - ${o.endDate}`;
+    if (o.startDate && o.endDate) {
+      const startParts = o.startDate.split(' ');
+      const endParts = o.endDate.split(' ');
+      if (startParts.length >= 2 && endParts.length >= 2) {
+        const startDay = startParts[0];
+        const endDay = endParts[0];
+        const monthYear = startParts.slice(1).join(' ');
+        dateRange = `${startDay}-${endDay} ${monthYear}`;
+      }
+    }
+
+    const tr = document.createElement('tr');
+    tr.style.borderBottom = '1px solid #F1F5F9';
+    tr.innerHTML = `
+      <td class="py-3.5 text-muted" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${dateDisplay}</td>
+      <td class="py-3.5 text-dark fw-bold text-primary small" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif; color: #0284C7 !important;">${o.id}</td>
+      <td class="py-3.5 text-dark fw-semibold" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.tenantName}</td>
+      <td class="py-3.5 text-dark" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.carName}</td>
+      <td class="py-3.5 text-dark" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${dateRange}</td>
+      <td class="py-3.5 text-dark fw-bold" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${formatRupiah(o.total)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  const totalEarnings = completedOrders.reduce((sum, o) => sum + o.total, 0);
+
+  const trTotal = document.createElement('tr');
+  trTotal.style.borderTop = '2px solid #E2E8F0';
+  trTotal.style.backgroundColor = '#F8FAFC';
+  trTotal.innerHTML = `
+    <td colspan="5" class="py-3 px-3 text-end fw-bold text-dark" style="font-size: 1rem; font-family: 'Plus Jakarta Sans', sans-serif;">TOTAL PENDAPATAN</td>
+    <td class="py-3 px-3 fw-bold" style="font-size: 1.1rem; font-family: 'Plus Jakarta Sans', sans-serif; color: #EA580C;">${formatRupiah(totalEarnings)}</td>
+  `;
+  tbody.appendChild(trTotal);
+}
+
+// ==================== MODAL FUNCTIONS ====================
+function openVerifikasiModal(orderId: string) {
+  verifOrderId = orderId;
+  const o = orders.find(x => x.id === orderId);
+  if (!o) {
+    showToast('Pesanan tidak ditemukan!', 'error');
+    return;
+  }
+
   const nameEl = document.getElementById('verif-nama-lengkap');
   if (nameEl) nameEl.textContent = o.tenantName;
-  
+
   const ttlEl = document.getElementById('verif-ttl');
   if (ttlEl) {
     if (o.tenantName === 'Zaura Allysa') {
@@ -1631,13 +1324,47 @@ function openVerifikasiModal(idx: number) {
 
 function closeVerifikasiModal() {
   document.getElementById('verifikasi-pengambilan-modal')?.classList.remove('show');
-  verifOrderIndex = null;
+  verifOrderId = null;
+}
+
+function submitVerifikasiAction() {
+  if (!verifOrderId) return;
+
+  const orderIndex = orders.findIndex(o => o.id === verifOrderId);
+  if (orderIndex === -1) {
+    showToast('Pesanan tidak ditemukan!', 'error');
+    return;
+  }
+
+  orders[orderIndex].status = 'Disewa';
+
+  const carPlate = orders[orderIndex].plate;
+  const carIndex = cars.findIndex(c => c.plate === carPlate);
+  if (carIndex !== -1) {
+    cars[carIndex].status = 'Disewa';
+  }
+
+  closeVerifikasiModal();
+  renderAdminOrdersTable();
+  renderAdminCarsTable();
+  updateAdminDashboardStats();
+  showKonfirmasiToast();
+}
+
+function showKonfirmasiToast() {
+  const toast = document.getElementById('toast-konfirmasi');
+  if (toast) {
+    toast.classList.remove('d-none');
+    setTimeout(() => {
+      toast.classList.add('d-none');
+    }, 3000);
+  }
 }
 
 function openDocZoomModal(docType: 'KTP' | 'SIM A') {
   const titleTextEl = document.getElementById('doc-zoom-title-text');
   const imgEl = document.getElementById('doc-zoom-img') as HTMLImageElement;
-  
+
   if (titleTextEl) {
     titleTextEl.textContent = `Detail Dokumen: ${docType}`;
   }
@@ -1659,390 +1386,8 @@ function closeDocZoomModal() {
   document.getElementById('doc-zoom-modal')?.classList.remove('show');
 }
 
-function submitVerifikasiAction() {
-  if (verifOrderIndex === null) return;
-  
-  orders[verifOrderIndex].status = 'Disewa';
-  
-  const carPlate = orders[verifOrderIndex].plate;
-  const carIndex = cars.findIndex(c => c.plate === carPlate);
-  if (carIndex !== -1) {
-    cars[carIndex].status = 'Disewa';
-  }
-
-  closeVerifikasiModal();
-  renderAdminOrdersTable();
-  updateAdminDashboardStats();
-  showKonfirmasiToast();
-}
-
-function showKonfirmasiToast() {
-  const toast = document.getElementById('toast-konfirmasi');
-  if (toast) {
-    toast.classList.remove('d-none');
-    setTimeout(() => {
-      toast.classList.add('d-none');
-    }, 4000);
-  }
-}
-
-// Render Finances Report Table
-function renderAdminFinance() {
-  const tbody = document.getElementById('finance-tbody');
-  if (!tbody) return;
-
-  tbody.innerHTML = '';
-
-  const completedOrders = orders.filter(o => o.status === 'Selesai' || o.status === 'Disewa');
-
-  completedOrders.forEach(o => {
-    const tr = document.createElement('tr');
-    tr.style.borderBottom = '1px solid #F1F5F9';
-    tr.innerHTML = `
-      <td class="py-3.5 text-muted" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.timestamp}</td>
-      <td class="py-3.5 text-dark fw-bold text-primary small" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif; color: #0284C7 !important;">${o.id}</td>
-      <td class="py-3.5 text-dark fw-semibold" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.tenantName}</td>
-      <td class="py-3.5 text-dark" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.carName}</td>
-      <td class="py-3.5 text-dark" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.dateRangeStr || `${o.startDate} - ${o.endDate}`}</td>
-      <td class="py-3.5 text-dark fw-bold" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${formatRupiah(o.total)}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-
-// ==================== 4. MODALS & POPUPS ACTIONS ====================
-function initModalHandlers() {
-  // Tambah Mobil Close buttons
-  document.getElementById('btn-close-tambah-mobil')?.addEventListener('click', closeTambahMobilModal);
-  document.getElementById('btn-cancel-tambah-mobil')?.addEventListener('click', closeTambahMobilModal);
-
-  // Drag & drop handlers for Tambah Mobil photo
-  const dropZone = document.getElementById('car-photo-upload-container');
-  const fileInput = document.getElementById('car-photo-input') as HTMLInputElement;
-
-  dropZone?.addEventListener('click', () => fileInput?.click());
-
-  dropZone?.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-  });
-
-  dropZone?.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-  });
-
-  dropZone?.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    const files = e.dataTransfer?.files;
-    if (files && files.length > 0) {
-      handleCarPhotoFile(files[0]);
-    }
-  });
-
-  fileInput?.addEventListener('change', () => {
-    const files = fileInput.files;
-    if (files && files.length > 0) {
-      handleCarPhotoFile(files[0]);
-    }
-  });
-
-  document.getElementById('btn-remove-photo')?.addEventListener('click', () => {
-    removeCarPhoto();
-  });
-
-  // Tambah Mobil Form Submit
-  document.getElementById('tambah-mobil-form')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    submitCarForm();
-  });
-
-  // Checkouts & Payments Modal Closures
-  document.getElementById('btn-close-payment-modal')?.addEventListener('click', closePaymentModal);
-  document.getElementById('btn-cancel-checkout')?.addEventListener('click', closePaymentModal);
-  document.getElementById('btn-checkout-car')?.addEventListener('click', openPaymentModal);
-
-  // Simulated Document Uploads in Payment modal
-  document.getElementById('btn-upload-ktp')?.addEventListener('click', () => {
-    const ktpInput = document.getElementById('input-ktp-file') as HTMLInputElement;
-    ktpInput?.click();
-  });
-
-  document.getElementById('input-ktp-file')?.addEventListener('change', (e) => {
-    const files = (e.target as HTMLInputElement).files;
-    if (files && files.length > 0) {
-      simulateFileUpload('KTP');
-    }
-  });
-
-  document.getElementById('btn-upload-sim')?.addEventListener('click', () => {
-    const simInput = document.getElementById('input-sim-file') as HTMLInputElement;
-    simInput?.click();
-  });
-
-  document.getElementById('input-sim-file')?.addEventListener('change', (e) => {
-    const files = (e.target as HTMLInputElement).files;
-    if (files && files.length > 0) {
-      simulateFileUpload('SIM');
-    }
-  });
-
-  // Payment Bank buttons selections
-  const bankBtns = document.querySelectorAll('#va-selection-container .bank-option-btn');
-  bankBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      bankBtns.forEach(b => b.classList.remove('selected'));
-      const target = e.currentTarget as HTMLElement;
-      target.classList.add('selected');
-      tempSelectedPaymentMethod = target.getAttribute('data-bank') + ' Virtual Account';
-      
-      // Close wallet selections
-      const walletBtns = document.querySelectorAll('#wallet-selection-container .bank-option-btn');
-      walletBtns.forEach(w => w.classList.remove('selected'));
-    });
-  });
-
-  const walletBtns = document.querySelectorAll('#wallet-selection-container .bank-option-btn');
-  walletBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      walletBtns.forEach(b => b.classList.remove('selected'));
-      const target = e.currentTarget as HTMLElement;
-      target.classList.add('selected');
-      tempSelectedPaymentMethod = target.getAttribute('data-bank') || 'GoPay';
-      
-      // Close bank selections
-      const bankBtns = document.querySelectorAll('#va-selection-container .bank-option-btn');
-      bankBtns.forEach(b => b.classList.remove('selected'));
-    });
-  });
-
-  // Finish checkout trigger
-  document.getElementById('btn-complete-checkout')?.addEventListener('click', submitBookingAction);
-
-  // Close Success Screen
-  document.getElementById('btn-close-success')?.addEventListener('click', closeSuccessModal);
-  document.getElementById('btn-go-to-history')?.addEventListener('click', () => {
-    closeSuccessModal();
-    showTenantSubView('history');
-  });
-
-  // Copy Booking Code Button
-  document.getElementById('btn-copy-code')?.addEventListener('click', () => {
-    const codeSpan = document.getElementById('success-booking-code');
-    if (codeSpan) {
-      const code = codeSpan.textContent || '';
-      navigator.clipboard.writeText(code).then(() => {
-        const btn = document.getElementById('btn-copy-code');
-        if (btn) {
-          btn.innerHTML = '<iconify-icon icon="ph:check-bold" style="font-size: 1.5rem; color: #10B981;"></iconify-icon>';
-          setTimeout(() => {
-            btn.innerHTML = '<iconify-icon icon="ph:copy-simple" style="font-size: 1.5rem;"></iconify-icon>';
-          }, 2000);
-        }
-      }).catch(err => {
-        console.error('Gagal menyalin kode:', err);
-      });
-    }
-  });
-
-  // Verifikasi Pengambilan Modal Closures & Actions
-  document.getElementById('btn-close-verifikasi-modal')?.addEventListener('click', closeVerifikasiModal);
-  document.getElementById('btn-cancel-verifikasi')?.addEventListener('click', closeVerifikasiModal);
-  document.getElementById('btn-submit-verifikasi')?.addEventListener('click', submitVerifikasiAction);
-
-  // Document Zoom Modal Handlers
-  document.getElementById('btn-zoom-ktp')?.addEventListener('click', () => {
-    openDocZoomModal('KTP');
-  });
-  document.getElementById('btn-zoom-sim')?.addEventListener('click', () => {
-    openDocZoomModal('SIM A');
-  });
-  document.getElementById('btn-close-doc-zoom')?.addEventListener('click', closeDocZoomModal);
-  document.getElementById('btn-ok-doc-zoom')?.addEventListener('click', closeDocZoomModal);
-
-  // Close Toast
-  document.getElementById('btn-close-toast')?.addEventListener('click', () => {
-    document.getElementById('toast-konfirmasi')?.classList.add('d-none');
-  });
-
-  // Print Modal Closures & Actions
-  document.getElementById('btn-close-print-modal')?.addEventListener('click', closePrintModal);
-  document.getElementById('btn-cancel-print')?.addEventListener('click', closePrintModal);
-  document.getElementById('btn-trigger-actual-print')?.addEventListener('click', triggerActualPrint);
-}
-
-// Print Simulation helper functions
-function closePrintModal() {
-  document.getElementById('print-preview-modal')?.classList.remove('show');
-}
-
-function triggerActualPrint() {
-  closePrintModal();
-  
-  // Show a success toast!
-  const toast = document.getElementById('toast-konfirmasi');
-  const msg = document.getElementById('toast-message');
-  if (toast && msg) {
-    msg.textContent = 'Mencetak dokumen berhasil! Menghubungkan ke printer...';
-    toast.classList.remove('d-none');
-    setTimeout(() => {
-      toast.classList.add('d-none');
-    }, 4000);
-  } else {
-    alert('Mencetak dokumen berhasil! Menghubungkan ke printer...');
-  }
-
-  // Try standard print
-  try {
-    window.print();
-  } catch (err) {
-    console.log('Printing error:', err);
-  }
-}
-
-function openPrintReceiptModal(orderId: string) {
-  const o = orders.find(x => x.id === orderId);
-  if (!o) return;
-
-  const sheet = document.getElementById('print-sheet-area');
-  if (!sheet) return;
-
-  sheet.innerHTML = `
-    <div class="text-center mb-4 pb-3 border-bottom">
-      <h3 class="fw-bold text-dark m-0">${settings.rentalName}</h3>
-      <p class="text-muted small mb-1">${settings.rentalAddress}</p>
-      <p class="text-muted small mb-0">Telp: ${settings.rentalPhone} | Email: ${settings.rentalEmail}</p>
-    </div>
-
-    <div class="row mb-4">
-      <div class="col-6">
-        <h6 class="fw-bold text-muted small text-uppercase">RINCIAN PENYEWA</h6>
-        <div class="fw-bold">${o.tenantName}</div>
-        <div class="text-muted small">Pembayaran: ${o.paymentMethod}</div>
-      </div>
-      <div class="col-6 text-end">
-        <h6 class="fw-bold text-muted small text-uppercase">FAKTUR PEMESANAN</h6>
-        <div class="fw-bold text-primary">${o.id}</div>
-        <div class="text-muted small">Tanggal: ${o.timestamp}</div>
-      </div>
-    </div>
-
-    <table class="table table-bordered mb-4">
-      <thead class="table-light">
-        <tr>
-          <th>Deskripsi Item</th>
-          <th class="text-center">Durasi</th>
-          <th class="text-end">Harga / Hari</th>
-          <th class="text-end">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="fw-bold">Sewa Mobil ${o.carName}</div>
-            <div class="text-muted small">No. Plat: ${o.plate}</div>
-            <div class="text-muted small">Periode: ${o.dateRangeStr || `${o.startDate} - ${o.endDate}`}</div>
-          </td>
-          <td class="text-center align-middle">${o.duration} Hari</td>
-          <td class="text-end align-middle">${formatRupiah(o.total / o.duration)}</td>
-          <td class="text-end align-middle fw-bold text-dark">${formatRupiah(o.total)}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="row align-items-center mb-3">
-      <div class="col-7">
-        <div class="border border-success text-success fw-bold d-inline-flex align-items-center gap-1 px-3 py-1.5 rounded" style="transform: rotate(-3deg); font-size: 1.1rem; letter-spacing: 1px;">
-          <iconify-icon icon="ph:check-circle" class="me-1"></iconify-icon> LUNAS / PAID
-        </div>
-      </div>
-      <div class="col-5 text-end">
-        <div class="text-muted small">Total Pembayaran:</div>
-        <h4 class="fw-bold text-primary m-0">${formatRupiah(o.total)}</h4>
-      </div>
-    </div>
-
-    <div class="text-center text-muted small mt-5 pt-4 border-top">
-      Terima kasih telah mempercayai ${settings.rentalName} untuk kebutuhan perjalanan Anda. Semoga perjalanan menyenangkan!
-    </div>
-  `;
-
-  document.getElementById('print-preview-modal')?.classList.add('show');
-}
-
-function openPrintFinanceModal() {
-  const completedOrders = orders.filter(o => o.status === 'Selesai' || o.status === 'Disewa');
-  const activePeriod = financePeriods[currentFinancePeriodIndex];
-  const filteredOrders = completedOrders.filter(activePeriod.filter);
-  const sumEarnings = filteredOrders.reduce((sum, order) => sum + order.total, 0);
-
-  const sheet = document.getElementById('print-sheet-area');
-  if (!sheet) return;
-
-  let tableRows = '';
-  filteredOrders.forEach((o, index) => {
-    tableRows += `
-      <tr>
-        <td class="text-center">${index + 1}</td>
-        <td class="text-muted small font-monospace fw-bold">${o.id}</td>
-        <td>${o.tenantName}</td>
-        <td>${o.carName}</td>
-        <td>${o.dateRangeStr || `${o.startDate} - ${o.endDate}`}</td>
-        <td class="text-end fw-bold text-dark">${formatRupiah(o.total)}</td>
-      </tr>
-    `;
-  });
-
-  sheet.innerHTML = `
-    <div class="text-center mb-4 pb-3 border-bottom">
-      <h3 class="fw-bold text-dark m-0">${settings.rentalName}</h3>
-      <h5 class="fw-semibold text-muted mb-1">LAPORAN KEUANGAN PENDAPATAN</h5>
-      <p class="text-muted small mb-0">Periode: ${activePeriod.label}</p>
-    </div>
-
-    <div class="mb-3 text-muted small">
-      Diproduksi secara otomatis oleh sistem manajemen pada: ${new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-    </div>
-
-    <table class="table table-striped table-bordered mb-4">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center" style="width: 50px;">No</th>
-          <th>Invoice</th>
-          <th>Penyewa</th>
-          <th>Mobil</th>
-          <th>Durasi Sewa</th>
-          <th class="text-end">Jumlah Pendapatan</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${tableRows || '<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada transaksi sukses pada periode ini.</td></tr>'}
-      </tbody>
-      <tfoot class="table-light">
-        <tr>
-          <td colspan="5" class="text-end fw-bold">TOTAL PENDAPATAN:</td>
-          <td class="text-end fw-bold text-success" style="font-size: 1.1rem;">${formatRupiah(sumEarnings)}</td>
-        </tr>
-      </tfoot>
-    </table>
-
-    <div class="row mt-5 pt-3">
-      <div class="col-8"></div>
-      <div class="col-4 text-center">
-        <p class="text-muted small mb-5">Mengetahui, <br>Manajer Operasional</p>
-        <div class="fw-bold border-bottom pb-1 d-inline-block px-3" style="min-width: 150px;">Rifqy Affandi</div>
-        <p class="text-muted small mt-1">${settings.rentalName}</p>
-      </div>
-    </div>
-  `;
-
-  document.getElementById('print-preview-modal')?.classList.add('show');
-}
-
-// Tambah / Edit Car Modal triggers
 function openTambahMobilModal() {
-  editingCarIndex = null;
+  editingCarId = null;
   document.getElementById('tambah-mobil-modal-title')!.textContent = 'Tambah Mobil';
   (document.getElementById('tambah-mobil-form') as HTMLFormElement).reset();
   removeCarPhoto();
@@ -2050,12 +1395,17 @@ function openTambahMobilModal() {
   document.getElementById('tambah-mobil-modal')?.classList.add('show');
 }
 
-function openEditMobilModal(index: number) {
-  editingCarIndex = index;
-  const car = cars[index];
+function openEditMobilModal(carId: string) {
+  editingCarId = carId;
+  const carIndex = cars.findIndex(c => c.id === carId);
+  if (carIndex === -1) {
+    showToast('Mobil tidak ditemukan!', 'error');
+    return;
+  }
+  const car = cars[carIndex];
 
   document.getElementById('tambah-mobil-modal-title')!.textContent = 'Edit Mobil';
-  
+
   (document.getElementById('car-name') as HTMLInputElement).value = car.name;
   (document.getElementById('car-transmission') as HTMLSelectElement).value = car.transmission;
   (document.getElementById('car-plate') as HTMLInputElement).value = car.plate;
@@ -2110,35 +1460,43 @@ function submitCarForm() {
   const plate = (document.getElementById('car-plate') as HTMLInputElement).value;
   const price = parseInt((document.getElementById('car-price') as HTMLInputElement).value || '0');
 
-  // Validate photo or default to placeholder
-  const finalImage = tempCarPhotoUrl || '/src/assets/images/toyota_avanza_1784287804405.jpg'; // fallback
-  const brand = name.split(' ')[0] as any; // Simple heuristic brand parser
+  if (!name || !plate || !price) {
+    showToast('Harap lengkapi semua data mobil!', 'error');
+    return;
+  }
+
+  const finalImage = tempCarPhotoUrl || '/src/assets/images/toyota_avanza_1784287804405.jpg';
+  const brand = name.split(' ')[0];
+  const validBrands: Car['brand'][] = ['Toyota', 'Honda', 'Mitsubishi', 'Daihatsu', 'Hyundai'];
+  const selectedBrand = validBrands.includes(brand as Car['brand']) ? brand as Car['brand'] : 'Toyota';
 
   let status: 'Tersedia' | 'Disewa' = 'Tersedia';
-  if (editingCarIndex !== null) {
+  if (editingCarId !== null) {
     status = (document.getElementById('car-status') as HTMLSelectElement).value as 'Tersedia' | 'Disewa';
   }
 
   const carData: Car = {
+    id: editingCarId || `car-${Date.now()}`,
     name: name,
-    brand: ['Toyota', 'Honda', 'Mitsubishi', 'Daihatsu', 'Hyundai'].includes(brand) ? brand : 'Toyota',
+    brand: selectedBrand,
     transmission: trans,
     plate: plate,
     price: price,
-    capacity: name.toLowerCase().includes('yaris') || name.toLowerCase().includes('brio') ? 4 : 7, // sensible defaults
+    capacity: name.toLowerCase().includes('yaris') || name.toLowerCase().includes('brio') ? 4 : 7,
     luggage: name.toLowerCase().includes('fortuner') || name.toLowerCase().includes('innova') ? 3 : 2,
     status: status,
     image: finalImage
   };
 
-  if (editingCarIndex === null) {
-    // Add mode
+  if (editingCarId === null) {
     cars.push(carData);
-    alert('Mobil baru berhasil ditambahkan!');
+    showToast('🚗 Mobil baru berhasil ditambahkan!', 'success');
   } else {
-    // Edit mode
-    cars[editingCarIndex] = carData;
-    alert('Data mobil berhasil diperbarui!');
+    const carIndex = cars.findIndex(c => c.id === editingCarId);
+    if (carIndex !== -1) {
+      cars[carIndex] = carData;
+      showToast('✏️ Data mobil berhasil diperbarui!', 'success');
+    }
   }
 
   closeTambahMobilModal();
@@ -2146,21 +1504,29 @@ function submitCarForm() {
   updateAdminDashboardStats();
 }
 
-function deleteCarAction(index: number) {
-  const car = cars[index];
+function deleteCarAction(carId: string) {
+  const carIndex = cars.findIndex(c => c.id === carId);
+  if (carIndex === -1) {
+    showToast('Mobil tidak ditemukan!', 'error');
+    return;
+  }
+  const car = cars[carIndex];
   if (confirm(`Apakah Anda yakin ingin menghapus mobil ${car.name} (${car.plate})?`)) {
-    cars.splice(index, 1);
+    cars.splice(carIndex, 1);
     renderAdminCarsTable();
     updateAdminDashboardStats();
+    showToast('🗑️ Mobil berhasil dihapus!', 'info');
   }
 }
 
-// Payments Modal Actions & Countdown Engine
+// ==================== PAYMENT MODAL ====================
 function openPaymentModal() {
-  if (selectedCarIndex === null) return;
+  if (selectedCarIndex === null) {
+    showToast('Silakan pilih mobil terlebih dahulu!', 'error');
+    return;
+  }
   const car = cars[selectedCarIndex];
 
-  // Load prices in payment modal based on dynamic duration
   let days = 2;
   const datesInput = document.getElementById('rent-dates') as HTMLInputElement;
   if (datesInput && datesInput.value) {
@@ -2182,10 +1548,9 @@ function openPaymentModal() {
   const paymentPrice = document.getElementById('payment-modal-price');
   if (paymentPrice) paymentPrice.textContent = formatRupiah(car.price * days);
 
-  // Reset uploaded file statuses
   tempKtpUploaded = false;
   tempSimUploaded = false;
-  
+
   const ktpBox = document.getElementById('doc-ktp-box');
   ktpBox?.classList.remove('success');
   const ktpStatus = document.getElementById('txt-ktp-status');
@@ -2197,7 +1562,7 @@ function openPaymentModal() {
     btnKtp.classList.remove('btn-success', 'btn-outline-primary');
     btnKtp.innerHTML = '<iconify-icon icon="ph:upload-simple"></iconify-icon> Unggah';
   }
-  
+
   const simBox = document.getElementById('doc-sim-box');
   simBox?.classList.remove('success');
   const simStatus = document.getElementById('txt-sim-status');
@@ -2210,16 +1575,13 @@ function openPaymentModal() {
     btnSim.innerHTML = '<iconify-icon icon="ph:upload-simple"></iconify-icon> Unggah';
   }
 
-  // Set default payment method button to active
   const bankBtns = document.querySelectorAll('#va-selection-container .bank-option-btn');
   bankBtns.forEach(b => b.classList.remove('selected'));
   const firstBank = document.querySelector('#va-selection-container .bank-option-btn') as HTMLElement;
   firstBank?.classList.add('selected');
   tempSelectedPaymentMethod = 'BCA Virtual Account';
 
-  // Start countdown timer: 1 hour (59m 59s)
   startPaymentCountdown(3600);
-
   document.getElementById('payment-modal')?.classList.add('show');
 }
 
@@ -2233,7 +1595,7 @@ function startPaymentCountdown(seconds: number) {
     const hrs = Math.floor(remaining / 3600);
     const mins = Math.floor((remaining % 3600) / 60);
     const secs = remaining % 60;
-    
+
     if (timerDisplay) {
       timerDisplay.textContent = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
@@ -2275,7 +1637,7 @@ function simulateFileUpload(type: 'KTP' | 'SIM') {
     btn.innerHTML = '<iconify-icon icon="ph:check-circle"></iconify-icon> Terunggah';
     btn.classList.remove('btn-outline-primary', 'btn-primary');
     btn.classList.add('btn-success');
-    
+
     box?.classList.add('success');
     if (status) status.textContent = 'Dokumen Anda berhasil diunggah dan diverifikasi secara instan!';
 
@@ -2284,28 +1646,33 @@ function simulateFileUpload(type: 'KTP' | 'SIM') {
     } else {
       tempSimUploaded = true;
     }
-  }, 1000); // 1s simulation delay
+  }, 1000);
 }
 
 function submitBookingAction() {
-  if (selectedCarIndex === null) return;
+  if (selectedCarIndex === null) {
+    showToast('Silakan pilih mobil terlebih dahulu!', 'error');
+    return;
+  }
 
-  // Enforce document uploading for realism
   if (!tempKtpUploaded || !tempSimUploaded) {
     alert('Harap unggah dokumen KTP dan SIM A Anda untuk menyelesaikan proses sewa.');
     return;
   }
 
   const car = cars[selectedCarIndex];
-  
-  // Generate invoice code with INV- prefix consistently (e.g. INV-892014)
-  const randomNum = Math.floor(100000 + Math.random() * 900000);
-  const uniqueCode = `INV-${randomNum}`;
-  
-  // Format dates for record dynamically from search inputs
+
+  // Generate invoice number dengan format INV-902345-XX (urut)
+  const baseInvoice = 'INV-902345';
+  const existingOrders = orders.filter(o => o.id.startsWith(baseInvoice));
+  const nextNumber = String(existingOrders.length + 1).padStart(2, '0');
+  const uniqueCode = `${baseInvoice}-${nextNumber}`;
+
   let days = 2;
   let sDateLabel = '12 Oktober 2026';
   let eDateLabel = '14 Oktober 2026';
+  let startTime = '12:00';
+  let endTime = '10:00';
 
   const datesInput = document.getElementById('rent-dates') as HTMLInputElement;
   if (datesInput && datesInput.value) {
@@ -2327,6 +1694,18 @@ function submitBookingAction() {
     }
   }
 
+  const timeInput = document.getElementById('rent-time') as HTMLInputElement;
+  if (timeInput && timeInput.value) {
+    const parts = timeInput.value.split(' -> ');
+    if (parts.length === 2) {
+      startTime = parts[0];
+      endTime = parts[1];
+    }
+  }
+
+  const locationInput = document.getElementById('rent-location') as HTMLInputElement;
+  const location = locationInput?.value || 'Yogyakarta';
+
   const activeTenantName = document.getElementById('tenant-profile-name')?.textContent || 'Ana';
 
   const newOrder: Order = {
@@ -2340,21 +1719,21 @@ function submitBookingAction() {
     total: car.price * days,
     ktpUploaded: true,
     simUploaded: true,
-    status: 'Menunggu Konfirmasi', // goes to admin approval!
+    status: 'Konfirmasi',
     paymentMethod: tempSelectedPaymentMethod,
-    timestamp: 'Hari Ini, ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+    timestamp: 'Hari Ini, ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
+    location: location,
+    startTime: startTime,
+    endTime: endTime
   };
 
   orders.push(newOrder);
 
-  // Close timer and checkout modal
   closePaymentModal();
 
-  // Load unique code in success popup
   const codeDisplay = document.getElementById('success-booking-code');
   if (codeDisplay) codeDisplay.textContent = uniqueCode;
 
-  // Trigger success screen overlay
   setTimeout(() => {
     document.getElementById('success-modal')?.classList.add('show');
   }, 300);
@@ -2362,4 +1741,1097 @@ function submitBookingAction() {
 
 function closeSuccessModal() {
   document.getElementById('success-modal')?.classList.remove('show');
+}
+
+// ==================== PRINT FUNCTIONS ====================
+function openPrintReceiptModal(orderId: string) {
+  const o = orders.find(x => x.id === orderId);
+  if (!o) {
+    showToast('Pesanan tidak ditemukan!', 'error');
+    return;
+  }
+
+  const sheet = document.getElementById('print-sheet-area');
+  if (!sheet) return;
+
+  sheet.innerHTML = `
+    <div class="text-center mb-4 pb-3 border-bottom">
+      <h3 class="fw-bold text-dark m-0">${settings.rentalName}</h3>
+      <p class="text-muted small mb-1">${settings.rentalAddress}</p>
+      <p class="text-muted small mb-0">Telp: ${settings.rentalPhone} | Email: ${settings.rentalEmail}</p>
+    </div>
+    <div class="row mb-4">
+      <div class="col-6">
+        <h6 class="fw-bold text-muted small text-uppercase">RINCIAN PENYEWA</h6>
+        <div class="fw-bold">${o.tenantName}</div>
+        <div class="text-muted small">Pembayaran: ${o.paymentMethod}</div>
+      </div>
+      <div class="col-6 text-end">
+        <h6 class="fw-bold text-muted small text-uppercase">FAKTUR PEMESANAN</h6>
+        <div class="fw-bold text-primary">${o.id}</div>
+        <div class="text-muted small">Tanggal: ${o.timestamp}</div>
+      </div>
+    </div>
+    <table class="table table-bordered mb-4">
+      <thead class="table-light">
+        <tr>
+          <th>Deskripsi Item</th>
+          <th class="text-center">Durasi</th>
+          <th class="text-end">Harga / Hari</th>
+          <th class="text-end">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="fw-bold">Sewa Mobil ${o.carName}</div>
+            <div class="text-muted small">No. Plat: ${o.plate}</div>
+            <div class="text-muted small">Periode: ${o.dateRangeStr || `${o.startDate} - ${o.endDate}`}</div>
+          </td>
+          <td class="text-center align-middle">${o.duration} Hari</td>
+          <td class="text-end align-middle">${formatRupiah(o.total / o.duration)}</td>
+          <td class="text-end align-middle fw-bold text-dark">${formatRupiah(o.total)}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row align-items-center mb-3">
+      <div class="col-7">
+        <div class="border border-success text-success fw-bold d-inline-flex align-items-center gap-1 px-3 py-1.5 rounded" style="transform: rotate(-3deg); font-size: 1.1rem; letter-spacing: 1px;">
+          <iconify-icon icon="ph:check-circle" class="me-1"></iconify-icon> LUNAS / PAID
+        </div>
+      </div>
+      <div class="col-5 text-end">
+        <div class="text-muted small">Total Pembayaran:</div>
+        <h4 class="fw-bold text-primary m-0">${formatRupiah(o.total)}</h4>
+      </div>
+    </div>
+    <div class="text-center text-muted small mt-5 pt-4 border-top">
+      Terima kasih telah mempercayai ${settings.rentalName} untuk kebutuhan perjalanan Anda.
+    </div>
+  `;
+
+  document.getElementById('print-preview-modal')?.classList.add('show');
+}
+
+function openPrintFinanceModal() {
+  const completedOrders = orders.filter(o => o.status === 'Selesai' || o.status === 'Disewa');
+
+  let filteredOrders = completedOrders;
+
+  // Filter berdasarkan rentang tanggal jika ada
+  if (financeSelectedStartDate && financeSelectedEndDate) {
+    const start = new Date(financeSelectedStartDate);
+    const end = new Date(financeSelectedEndDate);
+    end.setDate(end.getDate() + 1);
+
+    const monthsFull = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+    filteredOrders = completedOrders.filter(o => {
+      const startParts = o.startDate.split(' ');
+      const endParts = o.endDate.split(' ');
+
+      let orderStartDate = new Date();
+      let orderEndDate = new Date();
+
+      if (startParts.length >= 2) {
+        const day = parseInt(startParts[0]);
+        const month = monthsFull.indexOf(startParts[1]);
+        const year = parseInt(startParts[2]);
+        if (!isNaN(day) && month !== -1 && !isNaN(year)) {
+          orderStartDate = new Date(year, month, day);
+        }
+      }
+
+      if (endParts.length >= 2) {
+        const day = parseInt(endParts[0]);
+        const month = monthsFull.indexOf(endParts[1]);
+        const year = parseInt(endParts[2]);
+        if (!isNaN(day) && month !== -1 && !isNaN(year)) {
+          orderEndDate = new Date(year, month, day);
+        }
+      }
+
+      return orderStartDate >= start && orderEndDate <= end;
+    });
+  }
+
+  const sumEarnings = filteredOrders.reduce((sum, order) => sum + order.total, 0);
+
+  // Format period label
+  let periodLabel = 'Semua';
+  if (financeSelectedStartDate && financeSelectedEndDate) {
+    const startParts = financeSelectedStartDate.split('-');
+    const endParts = financeSelectedEndDate.split('-');
+    const monthsFull = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    const startDisplay = `${parseInt(startParts[2])} ${monthsFull[parseInt(startParts[1]) - 1]} ${startParts[0]}`;
+    const endDisplay = `${parseInt(endParts[2])} ${monthsFull[parseInt(endParts[1]) - 1]} ${endParts[0]}`;
+    periodLabel = `📅 ${startDisplay} → ${endDisplay}`;
+  }
+
+  const sheet = document.getElementById('print-sheet-area');
+  if (!sheet) return;
+
+  let tableRows = '';
+  filteredOrders.forEach((o, index) => {
+    let dateRange = o.dateRangeStr || `${o.startDate} - ${o.endDate}`;
+    if (o.startDate && o.endDate) {
+      const startParts = o.startDate.split(' ');
+      const endParts = o.endDate.split(' ');
+      if (startParts.length >= 2 && endParts.length >= 2) {
+        const startDay = startParts[0];
+        const endDay = endParts[0];
+        const monthYear = startParts.slice(1).join(' ');
+        dateRange = `${startDay}-${endDay} ${monthYear}`;
+      }
+    }
+
+    tableRows += `
+      <tr>
+        <td class="text-center">${index + 1}</td>
+        <td class="text-muted small font-monospace fw-bold">${o.id}</td>
+        <td>${o.tenantName}</td>
+        <td>${o.carName}</td>
+        <td>${dateRange}</td>
+        <td class="text-end fw-bold text-dark">${formatRupiah(o.total)}</td>
+      </tr>
+    `;
+  });
+
+  sheet.innerHTML = `
+    <div class="text-center mb-4 pb-3 border-bottom">
+      <h3 class="fw-bold text-dark m-0">${settings.rentalName}</h3>
+      <h5 class="fw-semibold text-muted mb-1">LAPORAN KEUANGAN PENDAPATAN</h5>
+      <p class="text-muted small mb-0">Periode: ${periodLabel}</p>
+    </div>
+    <div class="mb-3 text-muted small">
+      Diproduksi pada: ${new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+    </div>
+    <table class="table table-striped table-bordered mb-4">
+      <thead class="table-dark">
+        <tr>
+          <th class="text-center" style="width: 50px;">No</th>
+          <th>Invoice</th>
+          <th>Penyewa</th>
+          <th>Mobil</th>
+          <th>Durasi Sewa</th>
+          <th class="text-end">Jumlah Pendapatan</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${tableRows || '<tr><td colspan="6" class="text-center py-4 text-muted">Belum ada transaksi sukses pada periode ini.</td></tr>'}
+      </tbody>
+      <tfoot class="table-light">
+        <tr>
+          <td colspan="5" class="text-end fw-bold">TOTAL PENDAPATAN:</td>
+          <td class="text-end fw-bold text-success" style="font-size: 1.1rem;">${formatRupiah(sumEarnings)}</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="row mt-5 pt-3">
+      <div class="col-8"></div>
+      <div class="col-4 text-center">
+        <p class="text-muted small mb-5">Mengetahui, <br>Manajer Operasional</p>
+        <div class="fw-bold border-bottom pb-1 d-inline-block px-3" style="min-width: 150px;">Rifqy Affandi</div>
+        <p class="text-muted small mt-1">${settings.rentalName}</p>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('print-preview-modal')?.classList.add('show');
+}
+
+function closePrintModal() {
+  document.getElementById('print-preview-modal')?.classList.remove('show');
+}
+
+function triggerActualPrint() {
+  closePrintModal();
+  const toast = document.getElementById('toast-konfirmasi');
+  const msg = document.getElementById('toast-message');
+  if (toast && msg) {
+    msg.textContent = 'Mencetak dokumen berhasil! Menghubungkan ke printer...';
+    toast.classList.remove('d-none');
+    setTimeout(() => {
+      toast.classList.add('d-none');
+    }, 4000);
+  } else {
+    alert('Mencetak dokumen berhasil! Menghubungkan ke printer...');
+  }
+  try {
+    window.print();
+  } catch (err) {
+    console.log('Printing error:', err);
+  }
+}
+
+// ==================== CALENDAR FUNCTIONS ====================
+function initBookingWidgets() {
+  const datesTrigger = document.getElementById('dates-trigger');
+  const calendarPopover = document.getElementById('calendar-popover');
+  const timeTrigger = document.getElementById('time-trigger');
+  const timePopover = document.getElementById('time-popover');
+  const locationTrigger = document.getElementById('location-trigger');
+  const locationPopover = document.getElementById('location-popover');
+
+  const dateInput = document.getElementById('rent-dates');
+  const timeInput = document.getElementById('rent-time');
+  const locationInput = document.getElementById('rent-location');
+
+  if (dateInput) dateInput.style.cursor = 'default';
+  if (timeInput) timeInput.style.cursor = 'default';
+  if (locationInput) locationInput.style.cursor = 'default';
+
+  function closeAllPopovers() {
+    calendarPopover?.classList.add('d-none');
+    timePopover?.classList.add('d-none');
+    locationPopover?.classList.add('d-none');
+  }
+
+  const dateIcon = datesTrigger?.querySelector('.input-group-text');
+  dateIcon?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (calendarPopover?.classList.contains('d-none')) {
+      closeAllPopovers();
+      calendarPopover?.classList.remove('d-none');
+      drawCalendar();
+    } else {
+      calendarPopover?.classList.add('d-none');
+    }
+  });
+
+  const timeIcon = timeTrigger?.querySelector('.input-group-text');
+  timeIcon?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (timePopover?.classList.contains('d-none')) {
+      closeAllPopovers();
+      timePopover?.classList.remove('d-none');
+      initTimePicker();
+    } else {
+      timePopover?.classList.add('d-none');
+    }
+  });
+
+  const locationIcon = locationTrigger?.querySelector('.input-group-text');
+  locationIcon?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (locationPopover?.classList.contains('d-none')) {
+      closeAllPopovers();
+      locationPopover?.classList.remove('d-none');
+    } else {
+      locationPopover?.classList.add('d-none');
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (!calendarPopover?.contains(target) && !datesTrigger?.contains(target)) {
+      calendarPopover?.classList.add('d-none');
+    }
+    if (!timePopover?.contains(target) && !timeTrigger?.contains(target)) {
+      timePopover?.classList.add('d-none');
+    }
+    if (!locationPopover?.contains(target) && !locationTrigger?.contains(target)) {
+      locationPopover?.classList.add('d-none');
+    }
+  });
+
+  const locOptions = document.querySelectorAll('.location-option');
+  locOptions.forEach(opt => {
+    opt.addEventListener('click', (e) => {
+      const val = (e.currentTarget as HTMLElement).getAttribute('data-val') || 'Yogyakarta';
+      const locInput = document.getElementById('rent-location') as HTMLInputElement;
+      if (locInput) {
+        locInput.value = val;
+      }
+      locationPopover?.classList.add('d-none');
+      renderTenantCatalog();
+    });
+  });
+
+  document.querySelector('.btn-prev-year')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    calendarYear--;
+    drawCalendar();
+  });
+
+  document.querySelector('.btn-prev-month')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    calendarMonth--;
+    if (calendarMonth < 0) {
+      calendarMonth = 11;
+      calendarYear--;
+    }
+    drawCalendar();
+  });
+
+  document.querySelector('.btn-next-month')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    calendarMonth++;
+    if (calendarMonth > 11) {
+      calendarMonth = 0;
+      calendarYear++;
+    }
+    drawCalendar();
+  });
+
+  document.querySelector('.btn-next-year')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    calendarYear++;
+    drawCalendar();
+  });
+
+  document.querySelector('.btn-confirm-time')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const timeInput = document.getElementById('rent-time') as HTMLInputElement;
+    if (timeInput) {
+      const startItems = document.querySelectorAll('.start-time-list .time-option-item');
+      const endItems = document.querySelectorAll('.end-time-list .time-option-item');
+
+      let startTime = '12:00';
+      let endTime = '10:00';
+
+      startItems.forEach(el => {
+        const element = el as HTMLElement;
+        if (element.style.backgroundColor === 'rgb(0, 132, 255)' || element.style.backgroundColor === '#0084FF') {
+          startTime = element.textContent || '12:00';
+        }
+      });
+
+      endItems.forEach(el => {
+        const element = el as HTMLElement;
+        if (element.style.backgroundColor === 'rgb(0, 132, 255)' || element.style.backgroundColor === '#0084FF') {
+          endTime = element.textContent || '10:00';
+        }
+      });
+
+      timeInput.value = `${startTime} -> ${endTime}`;
+    }
+    timePopover?.classList.add('d-none');
+    renderTenantCatalog();
+  });
+
+  const today = new Date();
+  calendarYear = today.getFullYear();
+  calendarMonth = today.getMonth();
+
+  const todayStr = getTodayDateString();
+  const tomorrowStr = getTomorrowDateString();
+  const datesInput = document.getElementById('rent-dates') as HTMLInputElement;
+  if (datesInput) {
+    datesInput.value = `${todayStr} -> ${tomorrowStr}`;
+  }
+
+  const todayParts = todayStr.split('-');
+  if (todayParts.length === 3) {
+    selectedStartDate = `${todayParts[2]}-${todayParts[1]}-${todayParts[0]}`;
+  }
+  const tomorrowParts = tomorrowStr.split('-');
+  if (tomorrowParts.length === 3) {
+    selectedEndDate = `${tomorrowParts[2]}-${tomorrowParts[1]}-${tomorrowParts[0]}`;
+  }
+
+  drawCalendar();
+  initTimePicker();
+}
+
+function drawCalendar() {
+  const titleText = document.getElementById('calendar-title-text');
+  const daysContainer = document.getElementById('calendar-days');
+  if (!daysContainer) return;
+
+  const monthsIndo = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
+  if (titleText) {
+    titleText.textContent = `${monthsIndo[calendarMonth]} ${calendarYear}`;
+  }
+
+  daysContainer.innerHTML = '';
+
+  const firstDayIndex = new Date(calendarYear, calendarMonth, 1).getDay();
+  const startOffset = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+
+  const totalDays = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+  const prevTotalDays = new Date(calendarYear, calendarMonth, 0).getDate();
+
+  for (let i = startOffset - 1; i >= 0; i--) {
+    const dayNum = prevTotalDays - i;
+    const col = document.createElement('div');
+    col.className = 'col text-muted py-1';
+    col.style.cssText = 'width: 14.28%; opacity: 0.3; font-size: 0.8rem; cursor: default; text-align: center;';
+    col.textContent = dayNum.toString();
+    daysContainer.appendChild(col);
+  }
+
+  const startD = selectedStartDate ? new Date(selectedStartDate) : null;
+  const endD = selectedEndDate ? new Date(selectedEndDate) : null;
+
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+  for (let d = 1; d <= totalDays; d++) {
+    const col = document.createElement('div');
+    col.className = 'col py-1 d-flex justify-content-center align-items-center position-relative';
+    col.style.cssText = 'width: 14.28%; cursor: pointer; display: flex; justify-content: center; align-items: center;';
+
+    const dayBtn = document.createElement('div');
+    dayBtn.style.cssText = `
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      user-select: none;
+    `;
+    dayBtn.textContent = d.toString();
+
+    const currDate = new Date(calendarYear, calendarMonth, d);
+    const currStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+    const isSelectedStart = selectedStartDate === currStr;
+    const isSelectedEnd = selectedEndDate === currStr;
+    const isBetween = startD && endD && currDate.getTime() > startD.getTime() && currDate.getTime() < endD.getTime();
+    const isToday = currStr === todayStr;
+
+    if (isToday && !isSelectedStart && !isSelectedEnd) {
+      dayBtn.style.backgroundColor = '#0084FF';
+      dayBtn.style.color = '#FFFFFF';
+      dayBtn.style.fontWeight = 'bold';
+      dayBtn.style.border = 'none';
+    } else if (isSelectedStart) {
+      dayBtn.style.backgroundColor = 'transparent';
+      dayBtn.style.color = '#0084FF';
+      dayBtn.style.fontWeight = 'bold';
+      dayBtn.style.border = '2px solid #0084FF';
+    } else if (isSelectedEnd) {
+      dayBtn.style.backgroundColor = 'transparent';
+      dayBtn.style.color = '#0084ff';
+      dayBtn.style.fontWeight = 'bold';
+      dayBtn.style.border = '2px solid #0084ff';
+    } else if (isBetween) {
+      dayBtn.style.backgroundColor = '#E0F2FE';
+      dayBtn.style.color = '#0084FF';
+      dayBtn.style.border = 'none';
+    } else {
+      dayBtn.style.backgroundColor = 'transparent';
+      dayBtn.style.color = '#1E293B';
+      dayBtn.style.border = 'none';
+    }
+
+    dayBtn.addEventListener('mouseenter', () => {
+      if (!isSelectedStart && !isSelectedEnd && !isBetween && !isToday) {
+        dayBtn.style.backgroundColor = '#F1F5F9';
+      }
+    });
+
+    dayBtn.addEventListener('mouseleave', () => {
+      if (!isSelectedStart && !isSelectedEnd && !isBetween && !isToday) {
+        dayBtn.style.backgroundColor = 'transparent';
+      } else if (isToday && !isSelectedStart && !isSelectedEnd) {
+        dayBtn.style.backgroundColor = '#0084FF';
+      } else if (isSelectedStart) {
+        dayBtn.style.backgroundColor = 'transparent';
+        dayBtn.style.border = '2px solid #0084FF';
+      } else if (isSelectedEnd) {
+        dayBtn.style.backgroundColor = 'transparent';
+        dayBtn.style.border = '2px solid #0EA5E9';
+      } else if (isBetween) {
+        dayBtn.style.backgroundColor = '#E0F2FE';
+      }
+    });
+
+    col.appendChild(dayBtn);
+
+    col.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const clickedStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const clickedDate = new Date(clickedStr);
+
+      if (!selectedStartDate) {
+        selectedStartDate = clickedStr;
+        selectedEndDate = '';
+        const datesInput = document.getElementById('rent-dates') as HTMLInputElement;
+        if (datesInput) {
+          const sParts = clickedStr.split('-');
+          datesInput.value = `${sParts[2]}-${sParts[1]}-${sParts[0]} -> `;
+        }
+      } else if (selectedStartDate && !selectedEndDate) {
+        const start = new Date(selectedStartDate);
+        if (clickedDate < start) {
+          selectedStartDate = clickedStr;
+          selectedEndDate = '';
+        } else if (clickedDate.getTime() === start.getTime()) {
+          selectedStartDate = '';
+          selectedEndDate = '';
+        } else {
+          selectedEndDate = clickedStr;
+          const sParts = selectedStartDate.split('-');
+          const eParts = selectedEndDate.split('-');
+          const datesInput = document.getElementById('rent-dates') as HTMLInputElement;
+          if (datesInput) {
+            datesInput.value = `${sParts[2]}-${sParts[1]}-${sParts[0]} -> ${eParts[2]}-${eParts[1]}-${eParts[0]}`;
+          }
+          setTimeout(() => {
+            document.getElementById('calendar-popover')?.classList.add('d-none');
+            renderTenantCatalog();
+          }, 300);
+        }
+      } else if (selectedStartDate && selectedEndDate) {
+        selectedStartDate = clickedStr;
+        selectedEndDate = '';
+        const datesInput = document.getElementById('rent-dates') as HTMLInputElement;
+        if (datesInput) {
+          const sParts = clickedStr.split('-');
+          datesInput.value = `${sParts[2]}-${sParts[1]}-${sParts[0]} -> `;
+        }
+      }
+
+      drawCalendar();
+    });
+
+    daysContainer.appendChild(col);
+  }
+
+  const renderedCount = startOffset + totalDays;
+  const remainingCells = 42 - renderedCount;
+  for (let i = 1; i <= remainingCells; i++) {
+    const col = document.createElement('div');
+    col.className = 'col text-muted py-1';
+    col.style.cssText = 'width: 14.28%; opacity: 0.3; font-size: 0.8rem; cursor: default; text-align: center;';
+    col.textContent = i.toString();
+    daysContainer.appendChild(col);
+  }
+}
+
+function initTimePicker() {
+  const startTimeContainer = document.querySelector('.start-time-list');
+  const endTimeContainer = document.querySelector('.end-time-list');
+  if (!startTimeContainer || !endTimeContainer) return;
+
+  startTimeContainer.innerHTML = '';
+  endTimeContainer.innerHTML = '';
+
+  let tempStartTime = '12:00';
+  let tempEndTime = '10:00';
+
+  const timeInput = document.getElementById('rent-time') as HTMLInputElement;
+  if (timeInput && timeInput.value) {
+    const parts = timeInput.value.split(' -> ');
+    if (parts.length === 2) {
+      tempStartTime = parts[0];
+      tempEndTime = parts[1];
+    }
+  }
+
+  for (let h = 0; h < 24; h++) {
+    const hh = String(h).padStart(2, '0') + ':00';
+
+    const sOpt = document.createElement('div');
+    sOpt.className = 'py-1 px-2 cursor-pointer text-center small time-option-item';
+    sOpt.style.borderRadius = '4px';
+    sOpt.textContent = hh;
+    if (hh === tempStartTime) {
+      sOpt.style.backgroundColor = '#0084FF';
+      sOpt.style.color = '#FFFFFF';
+      sOpt.style.fontWeight = 'bold';
+    }
+    sOpt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tempStartTime = hh;
+      startTimeContainer.querySelectorAll('.time-option-item').forEach((el: any) => {
+        el.style.backgroundColor = '';
+        el.style.color = '';
+        el.style.fontWeight = '';
+      });
+      sOpt.style.backgroundColor = '#0084FF';
+      sOpt.style.color = '#FFFFFF';
+      sOpt.style.fontWeight = 'bold';
+    });
+    startTimeContainer.appendChild(sOpt);
+
+    const eOpt = document.createElement('div');
+    eOpt.className = 'py-1 px-2 cursor-pointer text-center small time-option-item';
+    eOpt.style.borderRadius = '4px';
+    eOpt.textContent = hh;
+    if (hh === tempEndTime) {
+      eOpt.style.backgroundColor = '#0084FF';
+      eOpt.style.color = '#FFFFFF';
+      eOpt.style.fontWeight = 'bold';
+    }
+    eOpt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tempEndTime = hh;
+      endTimeContainer.querySelectorAll('.time-option-item').forEach((el: any) => {
+        el.style.backgroundColor = '';
+        el.style.color = '';
+        el.style.fontWeight = '';
+      });
+      eOpt.style.backgroundColor = '#0084FF';
+      eOpt.style.color = '#FFFFFF';
+      eOpt.style.fontWeight = 'bold';
+    });
+    endTimeContainer.appendChild(eOpt);
+  }
+
+  document.getElementById('btn-confirm-time')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const timeInput = document.getElementById('rent-time') as HTMLInputElement;
+    if (timeInput) {
+      timeInput.value = `${tempStartTime} -> ${tempEndTime}`;
+    }
+    document.getElementById('time-popover')?.classList.add('d-none');
+    renderTenantCatalog();
+  });
+}
+
+// ==================== FINANCE CALENDAR ====================
+function toggleFinanceCalendar(e: Event) {
+  e.stopPropagation();
+  console.log('🔄 Toggle finance calendar');
+
+  const popover = document.getElementById('finance-calendar-popover');
+  if (!popover) return;
+
+  popover.classList.toggle('d-none');
+  if (!popover.classList.contains('d-none')) {
+    drawFinanceCalendar();
+  }
+}
+
+function initFinanceCalendar() {
+  console.log('🔧 initFinanceCalendar dipanggil');
+
+  const triggerContainer = document.getElementById('finance-trigger-container');
+  const triggerBtn = document.getElementById('btn-finance-calendar');
+  const triggerLabel = document.getElementById('finance-date-range');
+  const popover = document.getElementById('finance-calendar-popover');
+
+  if (!triggerBtn) {
+    console.error('❌ btn-finance-calendar tidak ditemukan!');
+    return;
+  }
+  if (!triggerLabel) {
+    console.error('❌ finance-date-range tidak ditemukan!');
+    return;
+  }
+  if (!popover) {
+    console.error('❌ finance-calendar-popover tidak ditemukan!');
+    return;
+  }
+
+  console.log('✅ Finance calendar elements found');
+
+  // Fungsi toggle
+  function togglePopover(e: Event) {
+    e.stopPropagation();
+    console.log('🔄 Toggle finance calendar');
+
+    if (popover.style.display === 'none' || popover.style.display === '' || popover.classList.contains('d-none')) {
+      popover.style.display = 'block';
+      popover.classList.remove('d-none');
+      drawFinanceCalendar();
+      console.log('✅ Finance calendar ditampilkan');
+    } else {
+      popover.style.display = 'none';
+      popover.classList.add('d-none');
+      console.log('✅ Finance calendar disembunyikan');
+    }
+  }
+
+  // SEMUA BISA DIKLIK - tombol icon
+  triggerBtn.addEventListener('click', togglePopover);
+
+  // SEMUA BISA DIKLIK - teks
+  triggerLabel.addEventListener('click', togglePopover);
+
+  // SEMUA BISA DIKLIK - container (area kosong)
+  if (triggerContainer) {
+    triggerContainer.addEventListener('click', togglePopover);
+  }
+
+  // Click di luar untuk menutup
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const container = document.getElementById('finance-trigger-container');
+    if (!popover.contains(target) && !container?.contains(target)) {
+      popover.style.display = 'none';
+      popover.classList.add('d-none');
+    }
+  });
+
+  // ... navigation dan reset filter
+  document.querySelector('.finance-btn-prev-year')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    financeCalendarYear--;
+    drawFinanceCalendar();
+  });
+
+  document.querySelector('.finance-btn-prev-month')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    financeCalendarMonth--;
+    if (financeCalendarMonth < 0) {
+      financeCalendarMonth = 11;
+      financeCalendarYear--;
+    }
+    drawFinanceCalendar();
+  });
+
+  document.querySelector('.finance-btn-next-month')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    financeCalendarMonth++;
+    if (financeCalendarMonth > 11) {
+      financeCalendarMonth = 0;
+      financeCalendarYear++;
+    }
+    drawFinanceCalendar();
+  });
+
+  document.querySelector('.finance-btn-next-year')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    financeCalendarYear++;
+    drawFinanceCalendar();
+  });
+
+  document.getElementById('btn-finance-reset-filter')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    financeSelectedStartDate = null;
+    financeSelectedEndDate = null;
+    const dateRangeEl = document.getElementById('finance-date-range');
+    if (dateRangeEl) dateRangeEl.textContent = 'Semua';
+    const popover = document.getElementById('finance-calendar-popover');
+    if (popover) {
+      popover.style.display = 'none';
+      popover.classList.add('d-none');
+    }
+    renderAdminFinance();
+    console.log('✅ Filter direset');
+  });
+
+  drawFinanceCalendar();
+  console.log('✅ initFinanceCalendar selesai');
+}
+
+function drawFinanceCalendar() {
+  console.log('🔧 drawFinanceCalendar dipanggil');
+
+  const titleText = document.getElementById('finance-calendar-title');
+  const daysContainer = document.getElementById('finance-calendar-days');
+
+  if (!daysContainer) {
+    console.error('❌ finance-calendar-days tidak ditemukan!');
+    return;
+  }
+
+  const monthsIndo = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
+  if (titleText) {
+    titleText.textContent = `${monthsIndo[financeCalendarMonth]} ${financeCalendarYear}`;
+  }
+
+  daysContainer.innerHTML = '';
+
+  const firstDayIndex = new Date(financeCalendarYear, financeCalendarMonth, 1).getDay();
+  const startOffset = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+  const totalDays = new Date(financeCalendarYear, financeCalendarMonth + 1, 0).getDate();
+  const prevTotalDays = new Date(financeCalendarYear, financeCalendarMonth, 0).getDate();
+
+  for (let i = startOffset - 1; i >= 0; i--) {
+    const dayNum = prevTotalDays - i;
+    const col = document.createElement('div');
+    col.className = 'col text-muted py-1';
+    col.style.cssText = 'width: 14.28%; opacity: 0.3; font-size: 0.8rem; cursor: default; text-align: center;';
+    col.textContent = dayNum.toString();
+    daysContainer.appendChild(col);
+  }
+
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+  for (let d = 1; d <= totalDays; d++) {
+    const col = document.createElement('div');
+    col.className = 'col py-1 d-flex justify-content-center align-items-center';
+    col.style.cssText = 'width: 14.28%; cursor: pointer; display: flex; justify-content: center; align-items: center;';
+
+    const dayBtn = document.createElement('div');
+    dayBtn.className = 'finance-calendar-day';
+    dayBtn.textContent = d.toString();
+
+    const currStr = `${financeCalendarYear}-${String(financeCalendarMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const isToday = currStr === todayStr;
+    const isStart = financeSelectedStartDate === currStr;
+    const isEnd = financeSelectedEndDate === currStr;
+    const isBetween = financeSelectedStartDate && financeSelectedEndDate &&
+      currStr > financeSelectedStartDate && currStr < financeSelectedEndDate;
+
+    // STYLING SAMA PERSIS SEPERTI PENYEWA
+    if (isToday && !isStart && !isEnd) {
+      dayBtn.style.cssText = `
+        width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; 
+        justify-content: center; font-size: 0.8rem; cursor: pointer; transition: all 0.15s ease;
+        border: 2px solid #0084FF; color: #0084FF; font-weight: 700;
+      `;
+    } else if (isStart) {
+      dayBtn.style.cssText = `
+        width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; 
+        justify-content: center; font-size: 0.8rem; cursor: pointer; transition: all 0.15s ease;
+        background-color: #0084FF !important; color: #FFFFFF !important; font-weight: 700;
+      `;
+    } else if (isEnd) {
+      dayBtn.style.cssText = `
+        width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; 
+        justify-content: center; font-size: 0.8rem; cursor: pointer; transition: all 0.15s ease;
+        background-color: #0EA5E9 !important; color: #FFFFFF !important; font-weight: 700;
+      `;
+    } else if (isBetween) {
+      dayBtn.style.cssText = `
+        width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; 
+        justify-content: center; font-size: 0.8rem; cursor: pointer; transition: all 0.15s ease;
+        background-color: #E0F2FE !important; color: #0084FF !important;
+      `;
+    } else {
+      dayBtn.style.cssText = `
+        width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; 
+        justify-content: center; font-size: 0.8rem; cursor: pointer; transition: all 0.15s ease;
+        color: #1E293B;
+      `;
+    }
+
+    // Hover effect
+    dayBtn.addEventListener('mouseenter', () => {
+      if (!isStart && !isEnd && !isBetween && !isToday) {
+        dayBtn.style.backgroundColor = '#F1F5F9';
+      }
+    });
+    dayBtn.addEventListener('mouseleave', () => {
+      if (!isStart && !isEnd && !isBetween && !isToday) {
+        dayBtn.style.backgroundColor = 'transparent';
+      }
+    });
+
+    col.appendChild(dayBtn);
+
+    col.addEventListener('click', (e) => {
+      e.stopPropagation();
+      console.log('📅 Tanggal dipilih:', currStr);
+
+      // LOGIKA PEMILIHAN TANGGAL SAMA PERSIS SEPERTI PENYEWA
+      if (!financeSelectedStartDate) {
+        // Belum ada tanggal start - pilih sebagai start
+        financeSelectedStartDate = currStr;
+        financeSelectedEndDate = null;
+      } else if (financeSelectedStartDate && !financeSelectedEndDate) {
+        // Sudah ada start, pilih sebagai end
+        const start = new Date(financeSelectedStartDate);
+        const clicked = new Date(currStr);
+        if (clicked < start) {
+          // Jika klik sebelum start, jadikan start baru
+          financeSelectedStartDate = currStr;
+          financeSelectedEndDate = null;
+        } else if (clicked.getTime() === start.getTime()) {
+          // Jika klik tanggal yang sama, unselect
+          financeSelectedStartDate = null;
+          financeSelectedEndDate = null;
+        } else {
+          // Pilih sebagai end
+          financeSelectedEndDate = currStr;
+
+          // Format tanggal untuk ditampilkan
+          const monthsFull = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+          const sParts = financeSelectedStartDate.split('-');
+          const eParts = financeSelectedEndDate.split('-');
+          const displayDate = `${parseInt(sParts[2])} ${monthsFull[parseInt(sParts[1]) - 1]} ${sParts[0]} → ${parseInt(eParts[2])} ${monthsFull[parseInt(eParts[1]) - 1]} ${eParts[0]}`;
+
+          const dateRangeEl = document.getElementById('finance-date-range');
+          if (dateRangeEl) {
+            dateRangeEl.textContent = `📅 ${displayDate}`;
+          }
+
+          // SEMBUNYIKAN POPOVER
+          const popover = document.getElementById('finance-calendar-popover');
+          if (popover) {
+            popover.style.display = 'none';
+            popover.classList.add('d-none');
+          }
+
+          renderAdminFinance();
+        }
+      } else if (financeSelectedStartDate && financeSelectedEndDate) {
+        // Reset: pilih sebagai start baru
+        financeSelectedStartDate = currStr;
+        financeSelectedEndDate = null;
+      }
+
+      drawFinanceCalendar();
+    });
+
+    daysContainer.appendChild(col);
+  }
+
+  const renderedCount = startOffset + totalDays;
+  const remainingCells = 42 - renderedCount;
+  for (let i = 1; i <= remainingCells; i++) {
+    const col = document.createElement('div');
+    col.className = 'col text-muted py-1';
+    col.style.cssText = 'width: 14.28%; opacity: 0.3; font-size: 0.8rem; cursor: default; text-align: center;';
+    col.textContent = i.toString();
+    daysContainer.appendChild(col);
+  }
+
+  console.log('✅ drawFinanceCalendar selesai');
+}
+
+// ==================== MODAL HANDLERS ====================
+function initModalHandlers() {
+  document.getElementById('btn-close-tambah-mobil')?.addEventListener('click', closeTambahMobilModal);
+  document.getElementById('btn-cancel-tambah-mobil')?.addEventListener('click', closeTambahMobilModal);
+
+  const dropZone = document.getElementById('car-photo-upload-container');
+  const fileInput = document.getElementById('car-photo-input') as HTMLInputElement;
+
+  dropZone?.addEventListener('click', () => fileInput?.click());
+  dropZone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+  dropZone?.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+  dropZone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const files = e.dataTransfer?.files;
+    if (files && files.length > 0) {
+      handleCarPhotoFile(files[0]);
+    }
+  });
+
+  fileInput?.addEventListener('change', () => {
+    const files = fileInput.files;
+    if (files && files.length > 0) {
+      handleCarPhotoFile(files[0]);
+    }
+  });
+
+  document.getElementById('btn-remove-photo')?.addEventListener('click', removeCarPhoto);
+  document.getElementById('tambah-mobil-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitCarForm();
+  });
+
+  document.getElementById('btn-close-payment-modal')?.addEventListener('click', closePaymentModal);
+  document.getElementById('btn-checkout-car')?.addEventListener('click', openPaymentModal);
+
+  document.getElementById('btn-upload-ktp')?.addEventListener('click', () => {
+    const ktpInput = document.getElementById('input-ktp-file') as HTMLInputElement;
+    ktpInput?.click();
+  });
+
+  document.getElementById('input-ktp-file')?.addEventListener('change', (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      simulateFileUpload('KTP');
+    }
+  });
+
+  document.getElementById('btn-upload-sim')?.addEventListener('click', () => {
+    const simInput = document.getElementById('input-sim-file') as HTMLInputElement;
+    simInput?.click();
+  });
+
+  document.getElementById('input-sim-file')?.addEventListener('change', (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      simulateFileUpload('SIM');
+    }
+  });
+
+  const bankBtns = document.querySelectorAll('#va-selection-container .bank-option-btn');
+  bankBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      bankBtns.forEach(b => b.classList.remove('selected'));
+      const target = e.currentTarget as HTMLElement;
+      target.classList.add('selected');
+      tempSelectedPaymentMethod = target.getAttribute('data-bank') + ' Virtual Account';
+      const walletBtns = document.querySelectorAll('#wallet-selection-container .bank-option-btn');
+      walletBtns.forEach(w => w.classList.remove('selected'));
+    });
+  });
+
+  const walletBtns = document.querySelectorAll('#wallet-selection-container .bank-option-btn');
+  walletBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      walletBtns.forEach(b => b.classList.remove('selected'));
+      const target = e.currentTarget as HTMLElement;
+      target.classList.add('selected');
+      tempSelectedPaymentMethod = target.getAttribute('data-bank') || 'GoPay';
+      const bankBtns = document.querySelectorAll('#va-selection-container .bank-option-btn');
+      bankBtns.forEach(b => b.classList.remove('selected'));
+    });
+  });
+
+  document.getElementById('btn-complete-checkout')?.addEventListener('click', submitBookingAction);
+
+  document.getElementById('btn-close-success')?.addEventListener('click', closeSuccessModal);
+  document.getElementById('btn-go-to-history')?.addEventListener('click', () => {
+    closeSuccessModal();
+    showTenantSubView('history');
+  });
+
+  document.getElementById('btn-close-verifikasi-modal')?.addEventListener('click', closeVerifikasiModal);
+  document.getElementById('btn-cancel-verifikasi')?.addEventListener('click', closeVerifikasiModal);
+  document.getElementById('btn-submit-verifikasi')?.addEventListener('click', submitVerifikasiAction);
+
+  document.getElementById('btn-zoom-ktp')?.addEventListener('click', () => openDocZoomModal('KTP'));
+  document.getElementById('btn-zoom-sim')?.addEventListener('click', () => openDocZoomModal('SIM A'));
+  document.getElementById('btn-close-doc-zoom')?.addEventListener('click', closeDocZoomModal);
+  document.getElementById('btn-ok-doc-zoom')?.addEventListener('click', closeDocZoomModal);
+
+  document.getElementById('btn-close-toast')?.addEventListener('click', () => {
+    document.getElementById('toast-konfirmasi')?.classList.add('d-none');
+  });
+
+  document.getElementById('btn-close-print-modal')?.addEventListener('click', closePrintModal);
+  document.getElementById('btn-cancel-print')?.addEventListener('click', closePrintModal);
+  document.getElementById('btn-trigger-actual-print')?.addEventListener('click', triggerActualPrint);
+}
+
+// ==================== INITIALIZATION ====================
+document.addEventListener('DOMContentLoaded', () => {
+  applySettingsToDOM();
+  initLoginHandlers();
+  initTenantHandlers();
+  initAdminHandlers();
+  initModalHandlers();
+  initBookingWidgets();
+  initFinanceCalendar();
+
+  showSection('login-section');
+});
+
+// ==================== TOAST NOTIFICATION ====================
+function showToast(message: string, type: 'success' | 'error' | 'info' = 'success') {
+  const toastEl = document.getElementById('liveToast');
+  const toastMessage = document.getElementById('toast-notif-message');
+
+  if (!toastEl || !toastMessage) return;
+
+  // Set message
+  toastMessage.textContent = message;
+
+  // Set color based on type
+  if (type === 'success') {
+    toastEl.style.backgroundColor = '#059669';
+  } else if (type === 'error') {
+    toastEl.style.backgroundColor = '#DC2626';
+  } else {
+    toastEl.style.backgroundColor = '#0084FF';
+  }
+
+  // Show toast
+  const toast = new bootstrap.Toast(toastEl, {
+    delay: 3500,
+    animation: true
+  });
+  toast.show();
 }
