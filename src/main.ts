@@ -29,7 +29,7 @@ interface Order {
   total: number;
   ktpUploaded: boolean;
   simUploaded: boolean;
-  status: 'Menunggu Pembayaran' | 'Menunggu Konfirmasi' | 'Disetujui' | 'Ditolak' | 'Selesai' | 'Disewa' | 'getElementById(';
+  status: 'Menunggu Pembayaran' | 'Menunggu Konfirmasi' | 'Disetujui' | 'Ditolak' | 'Selesai' | 'Disewa' | 'Konfirmasi';
   paymentMethod: string;
   timestamp: string;
   dateRangeStr?: string;
