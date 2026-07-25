@@ -608,30 +608,22 @@ function initTenantHandlers() {
       showSection('login-section');
     };
   }
-  // Event listener untuk tombol reset filter
-  const resetBtn = document.getElementById('btn-reset-filters');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-      resetFilters();
-    });
-  }
 
-  // Event listener untuk tombol apply filter (jika belum ada)
-  const applyBtn = document.getElementById('btn-apply-filters');
-  if (applyBtn) {
-    applyBtn.addEventListener('click', function (e) {
-      e.preventDefault();
+  // ========== AUTO-RESET FILTER SAAT CHECKBOX BERUBAH ==========
+  const filterCheckboxes = document.querySelectorAll(
+    '.capacity-checkbox, .brand-checkbox, .transmission-checkbox'
+  );
+
+  filterCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+      console.log('🔄 Filter berubah, render ulang catalog...');
       renderTenantCatalog();
-      // showToast('✅ Filter diterapkan', 'success');
     });
-  }
+  });
 
   // ========== NAVIGASI BREADCRUMB ==========
-  // Event listener untuk breadcrumb di detail mobil
   document.addEventListener('click', function (e) {
     const target = e.target as HTMLElement;
-    // Cek apakah klik pada breadcrumb "Katalog Mobil"
     if (target.id === 'breadcrumb-catalog-btn' || target.closest('#breadcrumb-catalog-btn')) {
       e.preventDefault();
       console.log('🔙 Kembali ke Katalog Mobil');
