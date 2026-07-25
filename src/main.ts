@@ -83,7 +83,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: 'src/assets/images/yaris.png'
+    image: './images/yaris.png'
   },
   {
     id: 'car-2',
@@ -95,7 +95,7 @@ let cars: Car[] = [
     capacity: 5,
     luggage: 2,
     status: 'Tersedia',
-    image: 'src/assets/images/brio.png'
+    image: './images/brio.png'
   },
   {
     id: 'car-3',
@@ -107,7 +107,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: 'src/assets/images/avanza.png'
+    image: './images/avanza.png'
   },
   {
     id: 'car-4',
@@ -119,7 +119,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: 'src/assets/images/innova.png'
+    image: './images/innova.png'
   },
   {
     id: 'car-5',
@@ -131,7 +131,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: 'src/assets/images/xpender.png'
+    image: './images/xpender.png'
   },
   {
     id: 'car-6',
@@ -143,7 +143,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: 'src/assets/images/fortuner.png'
+    image: './images/fortuner.png'
   }
 ];
 
