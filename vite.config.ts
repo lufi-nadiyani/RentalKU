@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/RentalKU/', // Ganti dengan nama repo GitHub Anda
+  base: '/RentalKu/', // Ganti dengan nama repo GitHub Anda
 
   build: {
     outDir: 'dist',
