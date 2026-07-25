@@ -985,6 +985,33 @@ function initAdminHandlers() {
   document.getElementById('btn-print-finance')?.addEventListener('click', openPrintFinanceModal);
 }
 
+// ==================== TOAST NOTIFICATION ====================
+function showToast(message: string, type: 'success' | 'error' | 'info' = 'success') {
+  const toastEl = document.getElementById('liveToast');
+  const toastMessage = document.getElementById('toast-notif-message');
+
+  if (!toastEl || !toastMessage) return;
+
+  // Set message
+  toastMessage.textContent = message;
+
+  // Set color based on type
+  if (type === 'success') {
+    toastEl.style.backgroundColor = '#059669';
+  } else if (type === 'error') {
+    toastEl.style.backgroundColor = '#DC2626';
+  } else {
+    toastEl.style.backgroundColor = '#0084FF';
+  }
+
+  // Show toast
+  const toast = new bootstrap.Toast(toastEl, {
+    delay: 3500,
+    animation: true
+  });
+  toast.show();
+}
+
 function saveSettings() {
   const nameVal = (document.getElementById('settings-rental-name') as HTMLInputElement).value;
   const phoneVal = (document.getElementById('settings-rental-phone') as HTMLInputElement).value;
@@ -2823,32 +2850,6 @@ document.addEventListener('DOMContentLoaded', () => {
   showSection('login-section');
 });
 
-// ==================== TOAST NOTIFICATION ====================
-function showToast(message: string, type: 'success' | 'error' | 'info' = 'success') {
-  const toastEl = document.getElementById('liveToast');
-  const toastMessage = document.getElementById('toast-notif-message');
-
-  if (!toastEl || !toastMessage) return;
-
-  // Set message
-  toastMessage.textContent = message;
-
-  // Set color based on type
-  if (type === 'success') {
-    toastEl.style.backgroundColor = '#059669';
-  } else if (type === 'error') {
-    toastEl.style.backgroundColor = '#DC2626';
-  } else {
-    toastEl.style.backgroundColor = '#0084FF';
-  }
-
-  // Show toast
-  const toast = new bootstrap.Toast(toastEl, {
-    delay: 3500,
-    animation: true
-  });
-  toast.show();
-}
 
 // ==================== TOGGLE PASSWORD VISIBILITY ====================
 function togglePasswordVisibility(inputId: string, iconId: string) {
