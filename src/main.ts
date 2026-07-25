@@ -2,6 +2,7 @@
  * Rentalku - Application State & Logic
  * Framework: Bootstrap 5.3.3
  */
+import './style.css';
 
 // ==================== INTERFACES ====================
 interface Car {
@@ -82,7 +83,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: 'dist/images/yaris.png'
+    image: 'src/assets/images/yaris.png'
   },
   {
     id: 'car-2',
@@ -94,7 +95,7 @@ let cars: Car[] = [
     capacity: 5,
     luggage: 2,
     status: 'Tersedia',
-    image: 'dist/images/brio.png'
+    image: 'src/assets/images/brio.png'
   },
   {
     id: 'car-3',
@@ -106,7 +107,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: 'dist/images/avanza.png'
+    image: 'src/assets/images/avanza.png'
   },
   {
     id: 'car-4',
@@ -118,7 +119,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: 'dist/images/innova.png'
+    image: 'src/assets/images/innova.png'
   },
   {
     id: 'car-5',
@@ -130,7 +131,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: 'dist/images/xpender.png'
+    image: 'src/assets/images/xpender.png'
   },
   {
     id: 'car-6',
@@ -142,7 +143,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: 'dist/images/fortuner.png'
+    image: 'src/assets/images/fortuner.png'
   }
 ];
 
@@ -1383,10 +1384,10 @@ function openDocZoomModal(docType: 'KTP' | 'SIM A') {
 
   if (imgEl) {
     if (docType === 'KTP') {
-      imgEl.src = '/images/indonesia_ktp_mockup_1784629847316.jpg';
+      imgEl.src = 'src/assets/images/ktp.png';
       imgEl.alt = 'Kartu Tanda Penduduk (KTP)';
     } else {
-      imgEl.src = '/images/indonesia_sim_mockup_1784629865756.jpg';
+      imgEl.src = 'src/assets/images/sim a.png';
       imgEl.alt = 'Surat Izin Mengemudi (SIM A)';
     }
   }
