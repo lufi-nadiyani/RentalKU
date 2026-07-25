@@ -895,7 +895,7 @@ function renderTenantHistory() {
       <td class="fw-bold">${formatRupiah(o.total)}</td>
       <td class="text-end">
         <button class="btn btn-outline-primary btn-sm btn-detail-order d-inline-flex align-items-center gap-1 ms-auto" data-id="${o.id}" id="btn-detail-${o.id}">
-          <iconify-icon icon="ph:eye" class="align-middle"></iconify-icon> Lihat Detail
+          Lihat Detail
         </button>
       </td>
     `;
@@ -1288,7 +1288,7 @@ function renderAdminFinance() {
     tr.style.borderBottom = '1px solid #F1F5F9';
     tr.innerHTML = `
       <td class="py-3.5 text-muted" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${dateDisplay}</td>
-      <td class="py-3.5 text-dark fw-bold text-primary small" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif; color: #0284C7 !important;">${o.id}</td>
+      <td class="py-3.5 text-dark fw-bold text-primary small" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif; color: #1E293B !important;">${o.id}</td>
       <td class="py-3.5 text-dark fw-semibold" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.tenantName}</td>
       <td class="py-3.5 text-dark" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${o.carName}</td>
       <td class="py-3.5 text-dark" style="font-size: 0.95rem; font-family: 'Plus Jakarta Sans', sans-serif;">${dateRange}</td>
