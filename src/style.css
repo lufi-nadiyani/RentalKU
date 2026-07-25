@@ -10,16 +10,6 @@
   --price-orange: #EA580C;
 }
 
-/* ========================================
-   BASE STYLES
-   ======================================== */
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: #F8FAFC;
@@ -27,10 +17,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ========================================
-   SCROLLBAR
-   ======================================== */
-
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -49,31 +36,10 @@ body {
   background: #94A3B8;
 }
 
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #CBD5E1 #F1F5F9;
-}
-
-/* ========================================
-   LOGIN SECTION
-   ======================================== */
-
-.login-bg {
-  min-height: 100vh;
-  background: radial-gradient(circle at 10% 20%, rgb(30, 37, 76) 0%, rgb(15, 23, 42) 90%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
-
-/* ========================================
-   ADMIN SIDEBAR
-   ======================================== */
-
+/* Sidebar Styling (Admin) */
 .admin-sidebar {
   background-color: #24285B;
+  /* Deep Indigo Navy */
   color: #FFFFFF;
   height: calc(100vh - 75px);
   width: 240px;
@@ -104,6 +70,12 @@ body {
   white-space: nowrap;
 }
 
+.admin-sidebar button.nav-link {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
 .admin-sidebar .nav-link:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
   border-color: rgba(255, 255, 255, 0.8) !important;
@@ -122,6 +94,17 @@ body {
   padding-top: 1rem;
 }
 
+/* Custom table row hover action */
+.table-hover tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #F1F5F9 !important;
+  /* Soft grey Bootstrap-like hover */
+}
+
+/* Main Content Area Adjustments */
 .admin-main-content {
   margin-left: 240px;
   padding: 2.5rem;
@@ -130,15 +113,23 @@ body {
   background-color: #FFFFFF;
 }
 
-/* ========================================
-   TENANT - CAR CATALOG
-   ======================================== */
+/* Header Area styling */
+.main-header {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+/* Car Catalog (Tenant) Card Styles */
 .car-card {
   border: none;
   border-radius: 16px;
   overflow: hidden;
   background-color: #D9F1FF;
+  /* Light blue/cyan background */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
   padding: 0.75rem;
@@ -157,6 +148,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #FFFFFF;
+  /* White rounded background for images */
   border-radius: 12px;
   padding: 1rem;
   overflow: hidden;
@@ -173,10 +165,19 @@ body {
   transform: scale(1.05);
 }
 
-/* ========================================
-   TENANT NAVBAR
-   ======================================== */
+.car-spec-badge {
+  background-color: #F1F5F9;
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
 
+/* Tenant Navbar Styling */
 #tenant-navbar .nav-link {
   position: relative;
   transition: color 0.15s ease;
@@ -193,10 +194,6 @@ body {
   border-radius: 3px 3px 0 0;
 }
 
-/* ========================================
-   FILTER SIDEBAR
-   ======================================== */
-
 .filter-section-title {
   font-size: 0.95rem;
   font-weight: 700;
@@ -206,55 +203,78 @@ body {
   letter-spacing: 0.5px;
 }
 
-#tenant-filter-sidebar {
-  background: #FFFFFF;
+/* Custom Filter Chips UI */
+.filter-chip-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  background-color: #F8FAFC;
   border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  padding: 1rem;
-  position: sticky;
-  top: 85px;
-  z-index: 10;
-  overflow-y: auto;
-  max-height: calc(100vh - 100px);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  line-height: 1.25;
 }
 
-#tenant-filter-sidebar::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+.filter-chip-label:hover {
+  background-color: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #0084FF;
 }
 
-#tenant-filter-sidebar::-webkit-scrollbar-track {
-  background: #F1F5F9;
-  border-radius: 10px;
+.btn-check:checked+.filter-chip-label {
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 6px rgba(0, 132, 255, 0.25);
 }
 
-#tenant-filter-sidebar::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 10px;
+.btn-check:focus+.filter-chip-label {
+  box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.25);
 }
 
-#tenant-filter-sidebar::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+/* Soft & Gentle Logout Button Hover (Not harsh/dark red) */
+#tenant-btn-logout,
+.btn-outline-danger {
+  transition: all 0.2s ease-in-out !important;
 }
 
-#tenant-filter-sidebar {
-  scrollbar-width: thin;
-  scrollbar-color: #CBD5E1 #F1F5F9;
+#tenant-btn-logout:hover,
+#tenant-btn-logout:focus,
+#tenant-btn-logout:active,
+.btn-outline-danger:hover,
+.btn-outline-danger:focus,
+.btn-outline-danger:active {
+  background-color: #FEF2F2 !important;
+  color: #DC2626 !important;
+  border-color: #FCA5A5 !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.08) !important;
+  transform: translateY(-1px);
 }
 
-.filter-actions {
-  position: sticky;
-  bottom: 0;
-  background: white;
-  padding-top: 0.75rem;
-  border-top: 1px solid #E2E8F0;
-  margin-top: 0.5rem;
+#admin-btn-logout {
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
-/* ========================================
-   CUSTOM MODAL OVERLAY
-   ======================================== */
+#admin-btn-logout:hover,
+#admin-btn-logout:focus,
+#admin-btn-logout:active {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  color: #FCA5A5 !important;
+  border-color: rgba(252, 165, 165, 0.6) !important;
+}
 
+/* Custom Overlays (Modals) — z-index dinaikkan & displaynya diperbaiki
+   di bagian PATCH paling bawah supaya SELALU tampil di atas semua
+   elemen lain (navbar, sidebar, popover, dsb). Aturan dasar tetap
+   dipertahankan di sini. */
 .custom-modal-overlay {
   position: fixed;
   top: 0;
@@ -281,7 +301,7 @@ body {
 .custom-modal-content {
   background-color: #FFFFFF;
   border-radius: 18px;
-  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.18), 0 8px 16px -4px rgba(15, 23, 42, 0.08);
   width: 100%;
   max-width: 500px;
   padding: 1.75rem 2rem;
@@ -314,29 +334,29 @@ body {
   background: #94A3B8;
 }
 
-.custom-modal-overlay.show .custom-modal-content {
-  transform: scale(1);
+/* Sticky Close Cross Button on Modal Popup Header so it remains visible when scrolling */
+.custom-modal-content .btn-close,
+.custom-modal-content button.btn-close,
+.custom-modal-content button[id^="btn-close"] {
+  position: sticky !important;
+  top: 0 !important;
+  float: right !important;
+  z-index: 100 !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(4px) !important;
+  border-radius: 50% !important;
+  padding: 0.35rem !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.2s ease !important;
 }
 
-/* ========================================
-   BUTTONS
-   ======================================== */
-
-.btn-black {
-  background-color: #000000;
-  color: #FFFFFF;
-  font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  border: 1px solid #000000;
-  transition: all 0.2s ease;
+.custom-modal-content .btn-close:hover,
+.custom-modal-content button[id^="btn-close"]:hover {
+  background-color: #F1F5F9 !important;
+  transform: scale(1.1) !important;
 }
 
-.btn-black:hover {
-  background-color: #222222;
-  color: #FFFFFF;
-}
-
+/* Global Button Hover & Click (Active) States */
 .btn,
 button,
 .btn-primary,
@@ -365,12 +385,663 @@ button:not(:disabled):hover,
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
 }
 
+.btn-primary:hover,
+#btn-login-submit:hover,
+#btn-register-submit:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  box-shadow: 0 4px 14px rgba(0, 132, 255, 0.25) !important;
+  filter: brightness(1.03);
+}
+
+.btn-outline-primary:hover {
+  background-color: rgba(0, 132, 255, 0.20) !important;
+  color: #0084FF !important;
+  border-color: #0084FF !important;
+}
+
+.btn-outline-secondary:hover,
+.btn-secondary:hover {
+  background-color: rgba(100, 116, 139, 0.25) !important;
+  color: #0F172A !important;
+  border-color: #64748B !important;
+}
+
+.btn-outline-danger:hover,
+.btn-danger:hover {
+  background-color: rgba(239, 68, 68, 0.20) !important;
+  color: #DC2626 !important;
+  border-color: #EF4444 !important;
+}
+
+.btn-light:hover {
+  background-color: rgba(226, 232, 240, 0.85) !important;
+  color: #0F172A !important;
+}
+
+.btn-success:hover {
+  background-color: #16A34A !important;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25) !important;
+}
+
+.btn-black:hover {
+  background-color: rgba(15, 23, 42, 0.88) !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25) !important;
+}
+
+.doc-card-hover:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #0084FF !important;
+  box-shadow: 0 6px 16px rgba(0, 132, 255, 0.15) !important;
+}
+
+.btn-konfirmasi-order:hover {
+  background-color: #E05A00 !important;
+  border-color: #E05A00 !important;
+}
+
 .btn:active,
 button:not(:disabled):active,
 #tenant-profile-box:active,
 #admin-profile-box:active {
   transform: translateY(1px) scale(0.97) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.custom-modal-overlay.show .custom-modal-content {
+  transform: scale(1);
+}
+
+/* Drag & Drop File Container */
+.upload-drag-container {
+  border: 2px dashed #CBD5E1;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: #F8FAFC;
+  transition: all 0.2s ease;
+}
+
+.upload-drag-container:hover {
+  border-color: var(--accent-blue);
+  background-color: #EFF6FF;
+}
+
+.upload-drag-container.dragover {
+  border-color: #10B981;
+  background-color: #ECFDF5;
+}
+
+/* Custom Radio/Checkboxes (Modernized) */
+.form-check-input:checked {
+  background-color: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+/* Detail Car Specs Section */
+.detail-spec-card {
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+  background: #FFFFFF;
+}
+
+/* Price Highlight styles */
+.price-tag {
+  color: var(--price-orange);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.price-tag-sm {
+  color: var(--price-orange);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Success Circle Animation */
+.success-checkmark {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+
+.success-icon-circle {
+  width: 80px;
+  height: 80px;
+  background-color: #10B981;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2.75rem;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+}
+
+/* Status Labels */
+.status-badge-available {
+  background-color: #DCFCE7;
+  color: #15803D;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-badge-rented {
+  background-color: #FEF3C7;
+  color: #B45309;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Uploaded Document Row (in Payment Modal) */
+.uploaded-doc-box {
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.uploaded-doc-box.success {
+  border-color: #A7F3D0;
+  background-color: #ECFDF5;
+}
+
+/* Bank Selection Grids */
+.bank-option-btn {
+  border: 1.5px solid #CBD5E1 !important;
+  background-color: #FFFFFF !important;
+  border-radius: 10px !important;
+  padding: 0.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease !important;
+  height: 52px !important;
+  user-select: none !important;
+}
+
+.bank-option-btn * {
+  pointer-events: none !important;
+}
+
+.bank-option-btn:hover {
+  border-color: #0084FF !important;
+  background-color: #F8FAFC !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.bank-option-btn:active {
+  background-color: #EFF6FF !important;
+  transform: none !important;
+}
+
+.bank-option-btn.selected {
+  border-color: #0084FF !important;
+  background-color: #EFF6FF !important;
+  box-shadow: 0 0 0 2.5px rgba(0, 132, 255, 0.3) !important;
+}
+
+.bank-logo {
+  max-height: 25px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Utility Animations */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Role login selection container */
+.login-bg {
+  min-height: 100vh;
+  background: radial-gradient(circle at 10% 20%, rgb(30, 37, 76) 0%, rgb(15, 23, 42) 90%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+/* Black Pesan/Konfirmasi button style */
+.btn-black {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #000000;
+  transition: all 0.2s ease;
+}
+
+.btn-black:hover {
+  background-color: #222222;
+  color: #FFFFFF;
+}
+
+/* Breadcrumbs */
+.rentalku-breadcrumb {
+  font-size: 0.85rem;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.rentalku-breadcrumb a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+/* Custom Dropdown Popovers */
+#calendar-popover,
+#time-popover,
+#location-popover {
+  border-radius: 12px;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+  background-color: #FFFFFF;
+}
+
+/* ==================== CALENDAR STYLING ==================== */
+
+#calendar-popover {
+  border-radius: 12px !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+  background-color: #FFFFFF !important;
+  width: 320px !important;
+}
+
+#calendar-popover button:hover {
+  background-color: #F1F5F9;
+  border-radius: 6px;
+}
+
+#calendar-days .col {
+  cursor: pointer !important;
+}
+
+#calendar-days .col.text-muted {
+  cursor: default !important;
+  opacity: 0.3 !important;
+}
+
+.calendar-nav-btn {
+  border-radius: 6px !important;
+  padding: 4px 10px !important;
+  font-size: 0.75rem !important;
+}
+
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #E2E8F0;
+  font-size: 0.65rem;
+  color: #475569;
+}
+
+.calendar-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.calendar-legend-dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.calendar-legend-dot-today {
+  background-color: #0084FF;
+}
+
+.calendar-legend-dot-start {
+  border: 2px solid #0084FF;
+  background-color: transparent;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.calendar-legend-dot-end {
+  border: 2px solid #0EA5E9;
+  background-color: transparent;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.calendar-legend-dot-between {
+  background-color: #E0F2FE;
+  border: none;
+}
+
+.location-option {
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.location-option:hover {
+  background-color: #EFF6FF !important;
+  color: #0084FF !important;
+}
+
+.time-option-item {
+  transition: all 0.1s ease;
+}
+
+.time-option-item:hover {
+  background-color: #F1F5F9;
+}
+
+/* Tenant Navbar Bottom Border Alignment on Desktop */
+@media (min-width: 992px) {
+  #tenant-navbar {
+    height: 70px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  #tenant-navbar .container {
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  #tenant-navbar .navbar-collapse {
+    height: 100% !important;
+  }
+
+  #tenant-navbar .navbar-nav {
+    height: 100% !important;
+    align-items: stretch !important;
+    margin-bottom: 0 !important;
+  }
+
+  #tenant-navbar .nav-item {
+    display: flex !important;
+    align-items: stretch !important;
+    height: 100% !important;
+  }
+
+  #tenant-navbar .nav-link {
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    border-radius: 0 !important;
+  }
+
+  #tenant-navbar .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #0084FF;
+    z-index: 2;
+  }
+}
+
+/* Custom Bank Logo Size Adjustments */
+.bank-logo {
+  max-height: 24px !important;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Document Upload Rows Mobile Responsiveness */
+@media (max-width: 480px) {
+  .uploaded-doc-box {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    text-align: center;
+  }
+
+  .uploaded-doc-box .d-flex {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .uploaded-doc-box .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* Car Detail Container Mobile Responsiveness */
+@media (max-width: 991px) {
+  #detail-car-container>div:first-child {
+    border-right: none !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 2.5rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  #detail-car-container>div:last-child {
+    padding-left: 0 !important;
+  }
+}
+
+/* Admin Panel Layout Responsiveness */
+@media (max-width: 991px) {
+  .admin-sidebar {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 1.25rem 1rem !important;
+    border-right: none !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    margin-top: 75px !important;
+  }
+
+  .admin-sidebar #admin-nav-links {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .admin-sidebar .nav-link {
+    margin-bottom: 0 !important;
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    font-size: 0.85rem !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+
+  .admin-sidebar .sidebar-footer {
+    margin-top: 1rem !important;
+    padding-top: 0 !important;
+    width: 100% !important;
+  }
+
+  .admin-sidebar .sidebar-footer .nav-link {
+    width: 100% !important;
+  }
+
+  .admin-main-content {
+    margin-left: 0 !important;
+    padding: 1.5rem !important;
+    padding-top: 2rem !important;
+  }
+}
+
+/* Bank option buttons - ukuran seperti btn Unggah */
+.bank-option-btn {
+  height: 28px !important;
+  padding: 2px 4px !important;
+  border-radius: 6px !important;
+  border: 1.5px solid #CBD5E1 !important;
+  background-color: #FFFFFF !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  user-select: none !important;
+  min-width: 0 !important;
+}
+
+.bank-option-btn * {
+  pointer-events: none !important;
+}
+
+.bank-option-btn:hover {
+  border-color: #0084FF !important;
+  background-color: #F8FAFC !important;
+}
+
+.bank-option-btn.selected {
+  border-color: #0084FF !important;
+  background-color: #EFF6FF !important;
+  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.25) !important;
+}
+
+.bank-option-btn img {
+  max-height: 18px !important;
+  max-width: 75% !important;
+  object-fit: contain !important;
+}
+
+.bank-option-btn span {
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+  line-height: 1 !important;
+}
+
+/* ==================== FINANCE CALENDAR POPOVER ==================== */
+
+#laporan-keuangan-header-row .d-flex.align-items-center.border.bg-white {
+  position: relative !important;
+}
+
+#finance-calendar-popover {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  margin-top: 5px !important;
+  width: 320px !important;
+  max-width: 90vw !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  padding: 16px !important;
+}
+
+#finance-calendar-days .col {
+  cursor: pointer !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 4px 0 !important;
+  flex: 0 0 14.28% !important;
+  max-width: 14.28% !important;
+}
+
+#finance-calendar-days .finance-calendar-day {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.8rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#finance-calendar-days .finance-calendar-day:hover {
+  background-color: #F1F5F9 !important;
+}
+
+#finance-calendar-days .finance-calendar-day.today {
+  border: 2px solid #0084FF !important;
+  color: #0084FF !important;
+  font-weight: 700 !important;
+}
+
+#finance-calendar-days .finance-calendar-day.selected {
+  background-color: #0084FF !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+}
+
+#btn-finance-reset-filter {
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  padding: 4px 12px !important;
+  font-size: 0.75rem !important;
+}
+
+#btn-finance-reset-filter:hover {
+  background-color: #0076E5 !important;
+}
+
+/* ==================== UNIFORM BUTTON STYLES ==================== */
+
+.btn-uniform {
+  height: 38px !important;
+  padding: 0.5rem 1.25rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+}
+
+.btn-uniform:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-uniform:active {
+  transform: translateY(1px) scale(0.97) !important;
 }
 
 .btn-pesan-mobil {
@@ -392,105 +1063,278 @@ button:not(:disabled):active,
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* ========================================
-   PRICE TAG
-   ======================================== */
-
-.price-tag {
-  color: var(--price-orange);
-  font-weight: 700;
-  font-size: 1.5rem;
+.btn-pesan-mobil:active {
+  transform: translateY(1px) scale(0.97) !important;
 }
 
-/* ========================================
-   UPLOAD DRAG
-   ======================================== */
-
-.upload-drag-container {
-  border: 2px dashed #CBD5E1;
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: center;
-  cursor: pointer;
-  background-color: #F8FAFC;
-  transition: all 0.2s ease;
+#btn-checkout-car {
+  height: 42px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  width: 100% !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-.upload-drag-container:hover {
-  border-color: var(--accent-blue);
-  background-color: #EFF6FF;
+#btn-checkout-car:hover {
+  background-color: #222222 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
 }
 
-.upload-drag-container.dragover {
-  border-color: #10B981;
-  background-color: #ECFDF5;
+#btn-checkout-car:active {
+  transform: translateY(1px) scale(0.97) !important;
 }
 
-/* ========================================
-   BANK OPTION
-   ======================================== */
+#tenant-btn-logout {
+  height: 38px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  border-color: #F87171 !important;
+  color: #EF4444 !important;
+  background-color: transparent !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
 
-.bank-option-btn {
-  border: 1.5px solid #CBD5E1 !important;
-  background-color: #FFFFFF !important;
-  border-radius: 10px !important;
-  padding: 0.5rem !important;
-  display: flex !important;
+#tenant-btn-logout:hover {
+  background-color: #FEF2F2 !important;
+  color: #DC2626 !important;
+  border-color: #FCA5A5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.08) !important;
+}
+
+#tenant-btn-logout:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+#btn-show-tambah-mobil {
+  height: 38px !important;
+  padding: 0.5rem 1.25rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  cursor: pointer !important;
-  transition: all 0.15s ease !important;
-  height: 28px !important;
-  user-select: none !important;
+  gap: 6px !important;
 }
 
-.bank-option-btn:hover {
+#btn-show-tambah-mobil:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 132, 255, 0.25) !important;
+}
+
+#btn-show-tambah-mobil:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+#btn-print-finance {
+  height: 38px !important;
+  padding: 0.5rem 1.25rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #0084FF !important;
   border-color: #0084FF !important;
-  background-color: #F8FAFC !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
 }
 
-.bank-option-btn.selected {
-  border-color: #0084FF !important;
-  background-color: #EFF6FF !important;
-  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.25) !important;
+#btn-print-finance:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 132, 255, 0.25) !important;
 }
 
-/* ========================================
-   CALENDAR POPOVER
-   ======================================== */
+#btn-print-finance:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
 
-#calendar-popover {
-  border-radius: 12px !important;
+.btn-konfirmasi-order {
+  height: 32px !important;
+  padding: 0.25rem 0.75rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  background-color: #FF5C00 !important;
+  border-color: #FF5C00 !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-konfirmasi-order:hover {
+  background-color: #E05A00 !important;
+  border-color: #E05A00 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(255, 92, 0, 0.3) !important;
+}
+
+.btn-konfirmasi-order:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+.btn-edit-car,
+.btn-delete-car {
+  height: 32px !important;
+  width: 32px !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
   border: 1px solid #E2E8F0 !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
   background-color: #FFFFFF !important;
-  width: 320px !important;
-  z-index: 1050 !important;
 }
 
-/* ========================================
-   FINANCE CALENDAR
-   ======================================== */
-
-#finance-calendar-popover {
-  position: absolute !important;
-  top: 100% !important;
-  left: 0 !important;
-  margin-top: 5px !important;
-  z-index: 1060 !important;
-  width: 320px !important;
-  max-width: 90vw !important;
-  background: #FFFFFF !important;
-  border: 1px solid #E2E8F0 !important;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
-  padding: 16px !important;
+.btn-edit-car:hover {
+  background-color: #EFF6FF !important;
+  border-color: #0084FF !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.15) !important;
 }
 
-/* ========================================
-   TOAST
-   ======================================== */
+.btn-delete-car:hover {
+  background-color: #FEF2F2 !important;
+  border-color: #FCA5A5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15) !important;
+}
 
+#btn-apply-filters {
+  height: 38px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  width: 100% !important;
+}
+
+#btn-apply-filters:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 132, 255, 0.25) !important;
+}
+
+#btn-apply-filters:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+.btn-upload-doc {
+  height: 32px !important;
+  padding: 0.25rem 0.75rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-upload-doc:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.2) !important;
+}
+
+.btn-upload-doc:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+#btn-complete-checkout {
+  height: 38px !important;
+  padding: 0.5rem 1.25rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #22C55E !important;
+  border-color: #22C55E !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#btn-complete-checkout:hover {
+  background-color: #16A34A !important;
+  border-color: #16A34A !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25) !important;
+}
+
+#btn-complete-checkout:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+#btn-submit-car {
+  height: 34px !important;
+  padding: 0.375rem 1rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  background-color: #0084FF !important;
+  border-color: #0084FF !important;
+  color: #FFFFFF !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#btn-submit-car:hover {
+  background-color: #0076E5 !important;
+  border-color: #0076E5 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.2) !important;
+}
+
+#btn-submit-car:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+.btn-cancel-modal {
+  height: 34px !important;
+  padding: 0.375rem 1rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  background-color: transparent !important;
+  border: 1px solid #CBD5E1 !important;
+  color: #475569 !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-cancel-modal:hover {
+  background-color: #F1F5F9 !important;
+  border-color: #94A3B8 !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn-cancel-modal:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Toast Notification */
 #liveToast {
   border-radius: 12px !important;
   padding: 0.5rem 1rem !important;
@@ -510,634 +1354,285 @@ button:not(:disabled):active,
   }
 }
 
-/* ========================================
-   RESPONSIVE - MOBILE FIRST
-   ======================================== */
+/* ==================== SCROLLBAR CUSTOM ==================== */
 
-/* Extra Small (HP) */
+.filter-card::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.filter-card::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 10px;
+}
+
+.filter-card::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.filter-card::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+.filter-card {
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 #F1F5F9;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 #F1F5F9;
+}
+
+
+/* =====================================================================
+   ================  PATCH: MODAL STACKING + RESPONSIVE  ================
+   Semua aturan di bawah ini SENGAJA diletakkan paling akhir supaya
+   selalu MENANG melawan aturan-aturan lama di atas (khususnya soal
+   z-index kalender/finance yang sebelumnya sempat lebih tinggi dari
+   modal, dan layout tenant-section yang fixed 100vh overflow:hidden
+   sehingga terpotong di layar kecil).
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1) URUTAN LAPISAN (Z-INDEX) YANG KONSISTEN
+   konten biasa < navbar/sidebar (1000-1020) < dropdown kalender/lokasi
+   (1200) < MODAL (5000) < toast notifikasi (9999)
+--------------------------------------------------------------------- */
+#calendar-popover,
+#time-popover,
+#location-popover,
+#finance-calendar-popover {
+  z-index: 1200 !important;
+}
+
+.custom-modal-overlay {
+  z-index: 5000 !important;
+  isolation: isolate;
+}
+
+.custom-modal-content .btn-close,
+.custom-modal-content button[id^="btn-close"] {
+  z-index: 10 !important;
+}
+
+#liveToast,
+#toast-konfirmasi {
+  z-index: 9999 !important;
+}
+
+header,
+#tenant-navbar {
+  z-index: 1020 !important;
+}
+
+.admin-sidebar {
+  z-index: 999 !important;
+}
+
+/* ---------------------------------------------------------------------
+   2) MODAL SELALU DI TENGAH & TIDAK PERNAH TERPOTONG/KETUTUP
+--------------------------------------------------------------------- */
+.custom-modal-overlay {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow-y: auto !important;
+  padding: 16px !important;
+}
+
+.custom-modal-overlay:not(.show) {
+  display: none !important;
+}
+
+.custom-modal-overlay.show {
+  display: flex !important;
+}
+
+.custom-modal-content {
+  max-height: calc(100vh - 32px) !important;
+  margin: auto !important;
+}
+
+/* ---------------------------------------------------------------------
+   3) RESPONSIVE: TABLET & MOBILE (≤ 991px)
+--------------------------------------------------------------------- */
+@media (max-width: 991.98px) {
+
+  #tenant-section {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow: visible !important;
+  }
+
+  #tenant-section>.container {
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  #tenant-catalog-view,
+  #tenant-detail-view {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  #tenant-cars-grid {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  .filter-card,
+  #tenant-filter-sidebar {
+    position: static !important;
+    max-height: none !important;
+  }
+
+  #detail-car-container {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  #detail-car-container>.col-lg-6 {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .custom-modal-content {
+    max-width: 92vw !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   4) RESPONSIVE: HP KECIL (≤ 575px)
+--------------------------------------------------------------------- */
 @media (max-width: 575.98px) {
 
-  /* LOGIN */
+  body {
+    overflow-x: hidden !important;
+  }
+
   #login-card {
-    padding: 1.25rem 1rem !important;
-    margin: 0.5rem !important;
-    max-height: 95vh !important;
+    padding: 1.5rem 1.25rem !important;
     border-radius: 16px !important;
   }
 
   #login-app-title {
-    font-size: 1.5rem !important;
+    font-size: 1.6rem !important;
   }
 
-  /* TENANT NAVBAR */
-  #tenant-navbar {
-    padding: 0.5rem 0 !important;
+  #tenant-navbar .container,
+  #admin-logo,
+  #admin-profile-box {
+    flex-wrap: wrap;
   }
 
-  #tenant-navbar .container {
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+  #tenant-profile-box span,
+  #admin-profile-box span {
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  #tenant-navbar .navbar-brand span {
-    font-size: 1rem !important;
-  }
-
-  #tenant-navbar .nav-link {
-    font-size: 0.8rem !important;
-    padding: 0.3rem 0.5rem !important;
-  }
-
-  #tenant-navbar .nav-link.active::after {
-    bottom: -8px !important;
-    height: 2px !important;
-  }
-
-  #tenant-profile-box {
-    padding: 0.2rem 0.5rem !important;
-    height: 32px !important;
-    min-width: auto !important;
-    font-size: 0.7rem !important;
-  }
-
-  #tenant-profile-box img {
-    width: 20px !important;
-    height: 20px !important;
-  }
-
-  #tenant-profile-box span {
-    font-size: 0.7rem !important;
-  }
-
-  #tenant-btn-logout {
-    height: 32px !important;
-    font-size: 0.7rem !important;
-    padding: 0.2rem 0.5rem !important;
-  }
-
-  /* FILTER SIDEBAR */
-  #tenant-filter-sidebar {
-    max-height: 200px !important;
-    overflow-y: auto !important;
-    position: relative !important;
-    top: 0 !important;
-    margin-bottom: 0.5rem !important;
-    padding: 0.5rem !important;
-    border-radius: 10px !important;
-  }
-
-  #tenant-filter-sidebar .filter-section-title {
-    font-size: 0.6rem !important;
-    margin-bottom: 0.15rem !important;
-  }
-
-  #tenant-filter-sidebar .form-check {
-    padding-left: 1.1rem !important;
-    margin-bottom: 0.1rem !important;
-  }
-
-  #tenant-filter-sidebar .form-check-label {
-    font-size: 0.6rem !important;
-  }
-
-  #tenant-filter-sidebar .form-check-input {
-    width: 0.6rem !important;
-    height: 0.6rem !important;
-  }
-
-  #tenant-filter-sidebar h5 {
-    font-size: 0.7rem !important;
-    margin-bottom: 0 !important;
-  }
-
-  #tenant-filter-sidebar #btn-reset-filters {
-    font-size: 0.55rem !important;
-    padding: 0.05rem 0.3rem !important;
-  }
-
-  #tenant-filter-sidebar #btn-apply-filters {
-    font-size: 0.65rem !important;
-    padding: 0.2rem 0.4rem !important;
-    height: 28px !important;
-  }
-
-  #tenant-filter-sidebar .filter-actions {
-    padding-top: 0.3rem !important;
-    margin-top: 0.3rem !important;
-  }
-
-  /* CATALOG VIEW */
-  #tenant-catalog-view .row.g-3 {
-    flex-direction: column !important;
-    height: auto !important;
-    overflow-y: auto !important;
-  }
-
-  .col-lg-3 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-    padding: 0 0.25rem !important;
-  }
-
-  .col-lg-9 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-    padding: 0 0.25rem !important;
-  }
-
-  /* CAR GRID */
   #tenant-cars-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 0.4rem !important;
-    padding-bottom: 0.5rem !important;
+    row-gap: 0.75rem !important;
   }
 
-  .car-card {
-    padding: 0.4rem !important;
-    border-radius: 12px !important;
+  #search-row-card .row.g-2>div {
+    margin-bottom: 6px;
   }
 
-  .car-card-img-wrapper {
-    height: 70px !important;
-    padding: 0.3rem !important;
-    border-radius: 8px !important;
-  }
-
-  .car-card h5 {
-    font-size: 0.6rem !important;
-    margin-bottom: 0.1rem !important;
-  }
-
-  .car-card .text-muted.small {
-    font-size: 0.5rem !important;
-    gap: 0.15rem !important;
-  }
-
-  .car-card .fw-bold.fs-5 {
-    font-size: 0.65rem !important;
-    margin-bottom: 0.2rem !important;
-  }
-
-  .car-card .btn-pesan-mobil {
-    font-size: 0.55rem !important;
-    padding: 0.15rem 0.4rem !important;
-    height: 24px !important;
-  }
-
-  /* SEARCH ROW */
-  #search-row-card {
-    padding: 0.4rem !important;
-    margin-bottom: 0.3rem !important;
-  }
-
-  #search-row-card .row {
-    flex-direction: column !important;
-    gap: 0.3rem !important;
-  }
-
-  #search-row-card .col-md-3 {
+  .custom-modal-content {
+    max-width: 100% !important;
     width: 100% !important;
-    flex: 0 0 100% !important;
+    padding: 1.25rem !important;
+    border-radius: 14px !important;
   }
 
-  #search-row-card input,
-  #search-row-card select {
-    height: 26px !important;
-    font-size: 0.6rem !important;
-    padding: 0.15rem 0.4rem !important;
+  .custom-modal-content .d-flex.justify-content-end.gap-2,
+  .custom-modal-content .d-flex.align-items-center.gap-2 {
+    flex-direction: column !important;
   }
 
-  /* CALENDAR POPOVER */
-  #calendar-popover {
-    width: calc(100vw - 32px) !important;
+  .custom-modal-content .d-flex.justify-content-end.gap-2>.btn,
+  .custom-modal-content .d-flex.align-items-center.gap-2>.btn {
+    width: 100% !important;
+  }
+
+  #calendar-popover,
+  #time-popover,
+  #finance-calendar-popover {
     left: 50% !important;
     transform: translateX(-50%) !important;
-    top: 110% !important;
-    padding: 0.5rem !important;
+    width: calc(100vw - 24px) !important;
+    max-width: 340px !important;
   }
 
-  #calendar-popover .btn-sm {
-    font-size: 0.55rem !important;
-    padding: 0.1rem 0.3rem !important;
-  }
-
-  #calendar-popover .fw-bold {
-    font-size: 0.7rem !important;
-  }
-
-  #calendar-popover .row.g-0 .col {
-    font-size: 0.55rem !important;
-    padding: 2px 0 !important;
-  }
-
-  /* TIME POPOVER */
-  #time-popover {
-    width: calc(100vw - 32px) !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    top: 110% !important;
-    padding: 0.5rem !important;
-  }
-
-  #time-popover .time-option-item {
-    font-size: 0.6rem !important;
-    padding: 0.15rem 0.3rem !important;
-  }
-
-  /* DETAIL CAR */
-  #detail-car-container {
-    flex-direction: column !important;
-    height: auto !important;
-    max-height: none !important;
-    overflow-y: auto !important;
-  }
-
-  #detail-car-container .col-lg-6 {
-    width: 100% !important;
-    border-right: none !important;
-    padding: 0 0.25rem !important;
-    height: auto !important;
-    max-height: none !important;
-  }
-
-  #detail-car-container .col-lg-6:first-child {
-    border-bottom: 1px solid #E2E8F0 !important;
-    padding-bottom: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
   }
 
   #detail-car-name {
-    font-size: 1rem !important;
+    font-size: 1.15rem !important;
   }
 
   #detail-car-price {
-    font-size: 1rem !important;
+    font-size: 1.05rem !important;
   }
+}
 
-  #btn-checkout-car {
-    font-size: 0.75rem !important;
-    padding: 0.3rem !important;
-    height: 36px !important;
-  }
-
-  /* HISTORY */
-  #history-table-card {
-    padding: 0.4rem !important;
-  }
-
-  #history-table {
-    font-size: 0.55rem !important;
-  }
-
-  #history-table th,
-  #history-table td {
-    padding: 0.15rem 0.2rem !important;
-    white-space: nowrap !important;
-  }
-
-  #history-table .btn-sm {
-    font-size: 0.5rem !important;
-    padding: 0.05rem 0.25rem !important;
-  }
-
-  /* ADMIN SIDEBAR */
-  .admin-sidebar {
-    position: relative !important;
-    top: 0 !important;
-    height: auto !important;
-    width: 100% !important;
-    padding: 0.4rem !important;
-    border-right: none !important;
-    border-bottom: 1px solid #E2E8F0 !important;
-  }
-
-  .admin-sidebar #admin-nav-links {
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    gap: 0.2rem !important;
-    justify-content: center !important;
-  }
-
-  .admin-sidebar .nav-link {
-    font-size: 0.55rem !important;
-    padding: 0.2rem 0.35rem !important;
-    margin-bottom: 0 !important;
-    border-radius: 6px !important;
-  }
-
-  .admin-main-content {
-    margin-left: 0 !important;
-    padding: 0.5rem !important;
-    padding-top: 0.5rem !important;
-  }
-
-  /* ADMIN HEADER */
-  header {
-    height: 56px !important;
-  }
-
-  #admin-logo iconify-icon {
-    font-size: 2rem !important;
-  }
-
-  #admin-logo span {
-    font-size: 1rem !important;
-  }
-
-  #admin-profile-box {
-    min-width: auto !important;
-    padding: 0.15rem 0.3rem !important;
-    font-size: 0.6rem !important;
-    height: 30px !important;
-  }
-
-  #admin-profile-box span {
-    display: none !important;
-  }
-
-  #admin-profile-box img {
-    width: 18px !important;
-    height: 18px !important;
-  }
-
-  /* ADMIN DASHBOARD */
-  #admin-dashboard-view .col-xl-3 {
-    flex: 0 0 50% !important;
-    max-width: 50% !important;
-    padding: 0.2rem !important;
-  }
-
-  #admin-dashboard-view .card {
-    padding: 0.4rem !important;
-  }
-
-  #admin-dashboard-view .card h3 {
-    font-size: 0.9rem !important;
-  }
-
-  /* ADMIN TABLES */
-  #admin-cars-table,
-  #admin-orders-table,
-  #admin-finance-table {
-    font-size: 0.6rem !important;
-  }
-
-  #admin-cars-table th,
-  #admin-cars-table td,
-  #admin-orders-table th,
-  #admin-orders-table td,
-  #admin-finance-table th,
-  #admin-finance-table td {
-    padding: 0.15rem 0.2rem !important;
-    white-space: nowrap !important;
-  }
-
-  #admin-cars-table .btn-sm,
-  #admin-orders-table .btn-sm {
-    font-size: 0.5rem !important;
-    padding: 0.05rem 0.2rem !important;
-    height: 22px !important;
-    width: 22px !important;
-  }
-
-  /* MODALS */
-  .custom-modal-content {
-    padding: 0.6rem !important;
-    max-width: 95vw !important;
-    margin: 0.25rem !important;
-    max-height: 95vh !important;
-    border-radius: 12px !important;
-  }
-
-  .custom-modal-content .row.g-2 {
-    flex-direction: column !important;
-  }
-
-  .custom-modal-content .col-6 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    padding: 0.15rem 0 !important;
-  }
-
-  .custom-modal-content h5 {
-    font-size: 0.8rem !important;
-  }
-
-  /* FINANCE CALENDAR */
+/* Finance calendar popover di HP kecil tampil sebagai dialog tengah,
+   supaya tidak nyembul keluar layar */
+@media (max-width: 575px) {
   #finance-calendar-popover {
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: calc(100vw - 32px) !important;
-    max-width: 380px !important;
+    max-width: 400px !important;
     max-height: 80vh !important;
     overflow-y: auto !important;
-    padding: 0.5rem !important;
-  }
-
-  /* TOAST */
-  #liveToast {
-    min-width: auto !important;
-    width: calc(100vw - 32px) !important;
-    margin: 0 16px !important;
-    font-size: 0.7rem !important;
-  }
-
-  /* HEADER ROWS */
-  #data-mobil-header-row,
-  #pemesanan-header-row,
-  #laporan-keuangan-header-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 0.5rem !important;
-  }
-
-  #data-mobil-header-row h2,
-  #pemesanan-header-row h2,
-  #laporan-keuangan-header-row h2 {
-    font-size: 1.2rem !important;
-  }
-
-  #btn-show-tambah-mobil,
-  #btn-print-finance {
-    font-size: 0.7rem !important;
-    padding: 0.2rem 0.5rem !important;
-    height: 30px !important;
-  }
-
-  /* SETTINGS */
-  #admin-settings-view .card {
-    padding: 0.75rem !important;
-  }
-
-  #btn-save-settings {
-    font-size: 0.75rem !important;
-    padding: 0.3rem 0.8rem !important;
-    height: 32px !important;
+    margin-top: 0 !important;
+    border-radius: 16px !important;
   }
 }
 
-/* Tablet */
-@media (min-width: 576px) and (max-width: 991.98px) {
-  #tenant-filter-sidebar {
-    max-height: 250px !important;
-    overflow-y: auto !important;
-    position: relative !important;
-    top: 0 !important;
-    margin-bottom: 0.75rem !important;
+/* ---------------------------------------------------------------------
+   5) TARGET SENTUH RAMAH-JARI (min ~40px) DI SEMUA LAYAR KECIL
+--------------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+
+  .btn,
+  button,
+  .form-check-input,
+  .location-option,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select.form-select {
+    min-height: 40px;
   }
 
-  .col-lg-3 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
-
-  .col-lg-9 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
-
-  #tenant-cars-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
-    gap: 0.5rem !important;
-  }
-
-  .car-card-img-wrapper {
-    height: 100px !important;
-  }
-
-  .admin-sidebar {
-    width: 200px !important;
-  }
-
-  .admin-main-content {
-    margin-left: 200px !important;
-    padding: 1rem !important;
-    padding-top: 1.5rem !important;
-  }
-
-  #detail-car-container .col-lg-6 {
-    width: 100% !important;
-    border-right: none !important;
-  }
-
-  #detail-car-container .col-lg-6:first-child {
-    border-bottom: 1px solid #E2E8F0 !important;
-    padding-bottom: 0.75rem !important;
-    margin-bottom: 0.75rem !important;
-  }
-
-  #admin-dashboard-view .col-xl-3 {
-    flex: 0 0 50% !important;
-    max-width: 50% !important;
+  .form-check-input {
+    width: 1.15em;
+    height: 1.15em;
   }
 }
 
-/* Desktop */
-@media (min-width: 992px) {
-  #tenant-filter-sidebar {
-    position: sticky !important;
-    top: 85px !important;
-    max-height: calc(100vh - 100px) !important;
-    overflow-y: auto !important;
-  }
-
-  .col-lg-3 {
-    width: 25% !important;
-    flex: 0 0 25% !important;
-    max-width: 25% !important;
-  }
-
-  .col-lg-9 {
-    width: 75% !important;
-    flex: 0 0 75% !important;
-    max-width: 75% !important;
-  }
-
-  #tenant-cars-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
-    gap: 1rem !important;
-  }
-
-  .car-card-img-wrapper {
-    height: 160px !important;
-  }
-
-  .admin-sidebar {
-    width: 240px !important;
-    position: fixed !important;
-    top: 75px !important;
-    left: 0 !important;
-  }
-
-  .admin-main-content {
-    margin-left: 240px !important;
-    padding: 2.5rem !important;
-    padding-top: 105px !important;
-  }
-
-  #detail-car-container .col-lg-6:first-child {
-    border-right: 1px solid #E2E8F0 !important;
-    border-bottom: none !important;
-  }
-
-  #detail-car-container .col-lg-6:last-child {
-    padding-left: 1.5rem !important;
-  }
-
-  #admin-dashboard-view .col-xl-3 {
-    flex: 0 0 25% !important;
-    max-width: 25% !important;
-  }
+/* ---------------------------------------------------------------------
+   6) CEGAH SCROLL GANDA / KONTEN TERPOTONG DI SEMUA DEVICE
+--------------------------------------------------------------------- */
+html,
+body {
+  overflow-x: hidden;
 }
 
-/* ========================================
-   UTILITY CLASSES
-   ======================================== */
-
-.hide-on-mobile {
-  display: inherit;
-}
-
-@media (max-width: 575.98px) {
-  .hide-on-mobile {
-    display: none !important;
-  }
-}
-
-.show-on-mobile {
-  display: none !important;
-}
-
-@media (max-width: 575.98px) {
-  .show-on-mobile {
-    display: inherit !important;
-  }
-}
-
-.flex-responsive {
-  flex-direction: row !important;
-}
-
-@media (max-width: 575.98px) {
-  .flex-responsive {
-    flex-direction: column !important;
-    gap: 0.4rem !important;
-  }
-}
-
-.text-responsive {
-  font-size: clamp(0.65rem, 1.5vw, 1rem) !important;
-}
-
-.heading-responsive {
-  font-size: clamp(1rem, 3vw, 2.2rem) !important;
+img {
+  max-width: 100%;
+  height: auto;
 }
