@@ -1,17 +1,523 @@
-/* ========================================
-   RESPONSIVE FIX - MOBILE FIRST
-   ======================================== */
+/* Plus Jakarta Sans Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary-navy: #1F294C;
+  --secondary-navy: #141A33;
+  --text-gray-light: #A0AEC0;
+  --accent-blue: #0D6EFD;
+  --hover-navy: #2A3764;
+  --price-orange: #EA580C;
+}
 
 /* ========================================
-   EXTRA SMALL (HP) - max-width: 575px
+   BASE STYLES
    ======================================== */
-@media (max-width: 575.98px) {
 
-  /* === LOGIN PAGE === */
-  #login-section {
-    padding: 0.5rem !important;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #F8FAFC;
+  color: #1E293B;
+  overflow-x: hidden;
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 #F1F5F9;
+}
+
+/* ========================================
+   LOGIN SECTION
+   ======================================== */
+
+.login-bg {
+  min-height: 100vh;
+  background: radial-gradient(circle at 10% 20%, rgb(30, 37, 76) 0%, rgb(15, 23, 42) 90%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+/* ========================================
+   ADMIN SIDEBAR
+   ======================================== */
+
+.admin-sidebar {
+  background-color: #24285B;
+  color: #FFFFFF;
+  height: calc(100vh - 75px);
+  width: 240px;
+  position: fixed;
+  top: 75px;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid #E2E8F0;
+}
+
+.admin-sidebar .nav-link {
+  color: #FFFFFF !important;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: transparent;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.admin-sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  color: #FFFFFF !important;
+}
+
+.admin-sidebar .nav-link.active {
+  color: #1E293B !important;
+  background-color: #FFFFFF !important;
+  border-color: #FFFFFF;
+  font-weight: 700;
+}
+
+.admin-sidebar .sidebar-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.admin-main-content {
+  margin-left: 240px;
+  padding: 2.5rem;
+  padding-top: 105px;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+}
+
+/* ========================================
+   TENANT - CAR CATALOG
+   ======================================== */
+
+.car-card {
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #D9F1FF;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.car-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.05);
+}
+
+.car-card-img-wrapper {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.car-card-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.car-card:hover .car-card-img {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   TENANT NAVBAR
+   ======================================== */
+
+#tenant-navbar .nav-link {
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+#tenant-navbar .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #0084FF;
+  border-radius: 3px 3px 0 0;
+}
+
+/* ========================================
+   FILTER SIDEBAR
+   ======================================== */
+
+.filter-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#tenant-filter-sidebar {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 1rem;
+  position: sticky;
+  top: 85px;
+  z-index: 10;
+  overflow-y: auto;
+  max-height: calc(100vh - 100px);
+}
+
+#tenant-filter-sidebar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+#tenant-filter-sidebar::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 10px;
+}
+
+#tenant-filter-sidebar::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+}
+
+#tenant-filter-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+#tenant-filter-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 #F1F5F9;
+}
+
+.filter-actions {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  padding-top: 0.75rem;
+  border-top: 1px solid #E2E8F0;
+  margin-top: 0.5rem;
+}
+
+/* ========================================
+   CUSTOM MODAL OVERLAY
+   ======================================== */
+
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+  padding: 1.25rem;
+}
+
+.custom-modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.custom-modal-content {
+  background-color: #FFFFFF;
+  border-radius: 18px;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.18);
+  width: 100%;
+  max-width: 500px;
+  padding: 1.75rem 2rem;
+  transform: scale(0.96);
+  transition: transform 0.2s ease-in-out;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 #F8FAFC;
+  position: relative;
+}
+
+.custom-modal-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  display: block;
+}
+
+.custom-modal-content::-webkit-scrollbar-track {
+  background: #F8FAFC;
+  border-radius: 8px;
+}
+
+.custom-modal-content::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 8px;
+}
+
+.custom-modal-content::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+.custom-modal-overlay.show .custom-modal-content {
+  transform: scale(1);
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn-black {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #000000;
+  transition: all 0.2s ease;
+}
+
+.btn-black:hover {
+  background-color: #222222;
+  color: #FFFFFF;
+}
+
+.btn,
+button,
+.btn-primary,
+.btn-black,
+.btn-outline-primary,
+.btn-outline-danger,
+.btn-outline-secondary,
+.btn-light,
+.btn-success,
+.bank-option-btn,
+#tenant-profile-box,
+#admin-profile-box,
+#btn-login-submit,
+#btn-register-submit,
+.btn-konfirmasi-order,
+.btn-edit-car,
+.btn-delete-car {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn:hover,
+button:not(:disabled):hover,
+#tenant-profile-box:hover,
+#admin-profile-box:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+}
+
+.btn:active,
+button:not(:disabled):active,
+#tenant-profile-box:active,
+#admin-profile-box:active {
+  transform: translateY(1px) scale(0.97) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-pesan-mobil {
+  height: 42px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  width: 100% !important;
+}
+
+.btn-pesan-mobil:hover {
+  background-color: #222222 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ========================================
+   PRICE TAG
+   ======================================== */
+
+.price-tag {
+  color: var(--price-orange);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+/* ========================================
+   UPLOAD DRAG
+   ======================================== */
+
+.upload-drag-container {
+  border: 2px dashed #CBD5E1;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: #F8FAFC;
+  transition: all 0.2s ease;
+}
+
+.upload-drag-container:hover {
+  border-color: var(--accent-blue);
+  background-color: #EFF6FF;
+}
+
+.upload-drag-container.dragover {
+  border-color: #10B981;
+  background-color: #ECFDF5;
+}
+
+/* ========================================
+   BANK OPTION
+   ======================================== */
+
+.bank-option-btn {
+  border: 1.5px solid #CBD5E1 !important;
+  background-color: #FFFFFF !important;
+  border-radius: 10px !important;
+  padding: 0.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  height: 28px !important;
+  user-select: none !important;
+}
+
+.bank-option-btn:hover {
+  border-color: #0084FF !important;
+  background-color: #F8FAFC !important;
+}
+
+.bank-option-btn.selected {
+  border-color: #0084FF !important;
+  background-color: #EFF6FF !important;
+  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.25) !important;
+}
+
+/* ========================================
+   CALENDAR POPOVER
+   ======================================== */
+
+#calendar-popover {
+  border-radius: 12px !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+  background-color: #FFFFFF !important;
+  width: 320px !important;
+  z-index: 1050 !important;
+}
+
+/* ========================================
+   FINANCE CALENDAR
+   ======================================== */
+
+#finance-calendar-popover {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  margin-top: 5px !important;
+  z-index: 1060 !important;
+  width: 320px !important;
+  max-width: 90vw !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  padding: 16px !important;
+}
+
+/* ========================================
+   TOAST
+   ======================================== */
+
+#liveToast {
+  border-radius: 12px !important;
+  padding: 0.5rem 1rem !important;
+  min-width: 350px;
+  animation: slideDown 0.4s ease forwards;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
   }
 
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE FIRST
+   ======================================== */
+
+/* Extra Small (HP) */
+@media (max-width: 575.98px) {
+
+  /* LOGIN */
   #login-card {
     padding: 1.25rem 1rem !important;
     margin: 0.5rem !important;
@@ -23,37 +529,7 @@
     font-size: 1.5rem !important;
   }
 
-  #login-card .text-secondary.small {
-    font-size: 0.75rem !important;
-  }
-
-  #login-card .input-group-text {
-    padding: 0.3rem 0.5rem !important;
-  }
-
-  #login-card .form-control {
-    font-size: 0.8rem !important;
-    padding: 0.4rem 0.5rem !important;
-  }
-
-  #login-card .btn-primary {
-    font-size: 0.85rem !important;
-    padding: 0.5rem !important;
-  }
-
-  /* Quick Fill Buttons */
-  .quick-fill-group {
-    flex-direction: column !important;
-    gap: 0.4rem !important;
-  }
-
-  .quick-fill-group .btn {
-    width: 100% !important;
-    font-size: 0.7rem !important;
-    padding: 0.3rem !important;
-  }
-
-  /* === TENANT NAVBAR === */
+  /* TENANT NAVBAR */
   #tenant-navbar {
     padding: 0.5rem 0 !important;
   }
@@ -67,22 +543,13 @@
     font-size: 1rem !important;
   }
 
-  #tenant-navbar .navbar-brand iconify-icon {
-    font-size: 2rem !important;
-  }
-
-  #tenant-navbar .navbar-toggler {
-    padding: 0.2rem 0.4rem !important;
-    font-size: 0.8rem !important;
-  }
-
   #tenant-navbar .nav-link {
     font-size: 0.8rem !important;
     padding: 0.3rem 0.5rem !important;
   }
 
   #tenant-navbar .nav-link.active::after {
-    bottom: -6px !important;
+    bottom: -8px !important;
     height: 2px !important;
   }
 
@@ -108,13 +575,9 @@
     padding: 0.2rem 0.5rem !important;
   }
 
-  #tenant-btn-logout iconify-icon {
-    font-size: 0.8rem !important;
-  }
-
-  /* === FILTER SIDEBAR === */
+  /* FILTER SIDEBAR */
   #tenant-filter-sidebar {
-    max-height: 180px !important;
+    max-height: 200px !important;
     overflow-y: auto !important;
     position: relative !important;
     top: 0 !important;
@@ -131,7 +594,6 @@
   #tenant-filter-sidebar .form-check {
     padding-left: 1.1rem !important;
     margin-bottom: 0.1rem !important;
-    min-height: 1.2rem !important;
   }
 
   #tenant-filter-sidebar .form-check-label {
@@ -141,7 +603,6 @@
   #tenant-filter-sidebar .form-check-input {
     width: 0.6rem !important;
     height: 0.6rem !important;
-    margin-top: 0.1rem !important;
   }
 
   #tenant-filter-sidebar h5 {
@@ -165,18 +626,11 @@
     margin-top: 0.3rem !important;
   }
 
-  /* === CATALOG VIEW === */
+  /* CATALOG VIEW */
   #tenant-catalog-view .row.g-3 {
     flex-direction: column !important;
     height: auto !important;
     overflow-y: auto !important;
-    gap: 0 !important;
-  }
-
-  #tenant-catalog-view {
-    height: 100% !important;
-    overflow-y: auto !important;
-    padding-bottom: 0.5rem !important;
   }
 
   .col-lg-3 {
@@ -193,7 +647,7 @@
     padding: 0 0.25rem !important;
   }
 
-  /* === CAR GRID === */
+  /* CAR GRID */
   #tenant-cars-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
@@ -220,11 +674,6 @@
   .car-card .text-muted.small {
     font-size: 0.5rem !important;
     gap: 0.15rem !important;
-    margin-bottom: 0.2rem !important;
-  }
-
-  .car-card .text-muted.small span {
-    font-size: 0.5rem !important;
   }
 
   .car-card .fw-bold.fs-5 {
@@ -236,10 +685,9 @@
     font-size: 0.55rem !important;
     padding: 0.15rem 0.4rem !important;
     height: 24px !important;
-    border-radius: 6px !important;
   }
 
-  /* === SEARCH ROW === */
+  /* SEARCH ROW */
   #search-row-card {
     padding: 0.4rem !important;
     margin-bottom: 0.3rem !important;
@@ -253,7 +701,6 @@
   #search-row-card .col-md-3 {
     width: 100% !important;
     flex: 0 0 100% !important;
-    padding: 0 !important;
   }
 
   #search-row-card input,
@@ -263,24 +710,13 @@
     padding: 0.15rem 0.4rem !important;
   }
 
-  #search-row-card .input-group-text {
-    padding: 0.15rem 0.3rem !important;
-    width: 28px !important;
-  }
-
-  #search-row-card .input-group-text iconify-icon {
-    font-size: 0.7rem !important;
-  }
-
-  /* === CALENDAR POPOVER === */
+  /* CALENDAR POPOVER */
   #calendar-popover {
     width: calc(100vw - 32px) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     top: 110% !important;
-    padding: 0.75rem !important;
-    max-height: 80vh !important;
-    overflow-y: auto !important;
+    padding: 0.5rem !important;
   }
 
   #calendar-popover .btn-sm {
@@ -297,13 +733,7 @@
     padding: 2px 0 !important;
   }
 
-  #calendar-popover .row.g-0 .col div {
-    width: 22px !important;
-    height: 22px !important;
-    font-size: 0.6rem !important;
-  }
-
-  /* === TIME POPOVER === */
+  /* TIME POPOVER */
   #time-popover {
     width: calc(100vw - 32px) !important;
     left: 50% !important;
@@ -317,26 +747,12 @@
     padding: 0.15rem 0.3rem !important;
   }
 
-  /* === LOCATION POPOVER === */
-  #location-popover {
-    width: calc(100vw - 32px) !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    top: 110% !important;
-  }
-
-  #location-popover .location-option {
-    font-size: 0.7rem !important;
-    padding: 0.3rem 0.5rem !important;
-  }
-
-  /* === DETAIL CAR === */
+  /* DETAIL CAR */
   #detail-car-container {
     flex-direction: column !important;
     height: auto !important;
     max-height: none !important;
     overflow-y: auto !important;
-    padding-top: 0 !important;
   }
 
   #detail-car-container .col-lg-6 {
@@ -353,46 +769,12 @@
     margin-bottom: 0.5rem !important;
   }
 
-  #detail-car-container .col-lg-6:last-child {
-    padding-top: 0 !important;
-    padding-bottom: 0.5rem !important;
-  }
-
-  #detail-car-container .pe-lg-3 {
-    padding-right: 0 !important;
-  }
-
-  #detail-car-container .ps-lg-3 {
-    padding-left: 0 !important;
-  }
-
-  .detail-car-img-wrapper {
-    height: 100px !important;
-  }
-
   #detail-car-name {
     font-size: 1rem !important;
-    margin-top: 0 !important;
   }
 
   #detail-car-price {
     font-size: 1rem !important;
-  }
-
-  #detail-car-container .card {
-    padding: 0.5rem !important;
-  }
-
-  #detail-car-container .card h5 {
-    font-size: 0.7rem !important;
-  }
-
-  #detail-car-container .card .text-muted {
-    font-size: 0.6rem !important;
-  }
-
-  #detail-car-container .card .fw-bold.text-dark {
-    font-size: 0.65rem !important;
   }
 
   #btn-checkout-car {
@@ -401,10 +783,9 @@
     height: 36px !important;
   }
 
-  /* === HISTORY TABLE === */
+  /* HISTORY */
   #history-table-card {
     padding: 0.4rem !important;
-    border-radius: 10px !important;
   }
 
   #history-table {
@@ -422,19 +803,7 @@
     padding: 0.05rem 0.25rem !important;
   }
 
-  #history-empty-state {
-    padding: 1rem 0.5rem !important;
-  }
-
-  #history-empty-state h5 {
-    font-size: 0.9rem !important;
-  }
-
-  #history-empty-state p {
-    font-size: 0.7rem !important;
-  }
-
-  /* === ADMIN SIDEBAR === */
+  /* ADMIN SIDEBAR */
   .admin-sidebar {
     position: relative !important;
     top: 0 !important;
@@ -443,8 +812,6 @@
     padding: 0.4rem !important;
     border-right: none !important;
     border-bottom: 1px solid #E2E8F0 !important;
-    margin-top: 0 !important;
-    border-radius: 0 !important;
   }
 
   .admin-sidebar #admin-nav-links {
@@ -458,18 +825,7 @@
     font-size: 0.55rem !important;
     padding: 0.2rem 0.35rem !important;
     margin-bottom: 0 !important;
-    white-space: nowrap !important;
     border-radius: 6px !important;
-    gap: 4px !important;
-  }
-
-  .admin-sidebar .nav-link iconify-icon {
-    font-size: 0.7rem !important;
-  }
-
-  .admin-sidebar .sidebar-footer {
-    margin-top: 0.3rem !important;
-    padding-top: 0 !important;
   }
 
   .admin-main-content {
@@ -478,14 +834,9 @@
     padding-top: 0.5rem !important;
   }
 
-  /* === ADMIN HEADER === */
+  /* ADMIN HEADER */
   header {
     height: 56px !important;
-  }
-
-  header .container {
-    padding-left: 0.4rem !important;
-    padding-right: 0.4rem !important;
   }
 
   #admin-logo iconify-icon {
@@ -501,7 +852,6 @@
     padding: 0.15rem 0.3rem !important;
     font-size: 0.6rem !important;
     height: 30px !important;
-    border-radius: 6px !important;
   }
 
   #admin-profile-box span {
@@ -513,19 +863,7 @@
     height: 18px !important;
   }
 
-  #admin-profile-box .notification-bell {
-    padding: 0.2rem !important;
-  }
-
-  #admin-profile-box .notification-bell iconify-icon {
-    font-size: 0.9rem !important;
-  }
-
-  /* === ADMIN DASHBOARD === */
-  #admin-dashboard-view .row.g-4 {
-    gap: 0 !important;
-  }
-
+  /* ADMIN DASHBOARD */
   #admin-dashboard-view .col-xl-3 {
     flex: 0 0 50% !important;
     max-width: 50% !important;
@@ -534,31 +872,13 @@
 
   #admin-dashboard-view .card {
     padding: 0.4rem !important;
-    border-radius: 10px !important;
-  }
-
-  #admin-dashboard-view .card .text-muted {
-    font-size: 0.55rem !important;
   }
 
   #admin-dashboard-view .card h3 {
     font-size: 0.9rem !important;
-    margin-bottom: 0 !important;
   }
 
-  #admin-dashboard-view .card .p-2 {
-    padding: 0.2rem !important;
-  }
-
-  #admin-dashboard-view .card .fs-5 {
-    font-size: 0.8rem !important;
-  }
-
-  #admin-dashboard-view .card .small {
-    font-size: 0.5rem !important;
-  }
-
-  /* === ADMIN TABLES === */
+  /* ADMIN TABLES */
   #admin-cars-table,
   #admin-orders-table,
   #admin-finance-table {
@@ -575,12 +895,6 @@
     white-space: nowrap !important;
   }
 
-  #admin-cars-table .badge,
-  #admin-orders-table .badge {
-    font-size: 0.5rem !important;
-    padding: 0.1rem 0.3rem !important;
-  }
-
   #admin-cars-table .btn-sm,
   #admin-orders-table .btn-sm {
     font-size: 0.5rem !important;
@@ -589,12 +903,7 @@
     width: 22px !important;
   }
 
-  #admin-cars-table .btn-sm iconify-icon,
-  #admin-orders-table .btn-sm iconify-icon {
-    font-size: 0.6rem !important;
-  }
-
-  /* === MODALS === */
+  /* MODALS */
   .custom-modal-content {
     padding: 0.6rem !important;
     max-width: 95vw !important;
@@ -617,38 +926,7 @@
     font-size: 0.8rem !important;
   }
 
-  .custom-modal-content .form-label {
-    font-size: 0.65rem !important;
-  }
-
-  .custom-modal-content .form-control,
-  .custom-modal-content .form-select {
-    font-size: 0.7rem !important;
-    padding: 0.2rem 0.4rem !important;
-  }
-
-  .custom-modal-content .btn-sm {
-    font-size: 0.65rem !important;
-    padding: 0.15rem 0.4rem !important;
-  }
-
-  .custom-modal-content .uploaded-doc-box {
-    padding: 0.3rem 0.5rem !important;
-    flex-direction: column !important;
-    gap: 0.3rem !important;
-  }
-
-  .custom-modal-content .uploaded-doc-box .d-flex {
-    flex-direction: column !important;
-    gap: 0.2rem !important;
-    text-align: center !important;
-  }
-
-  .custom-modal-content .uploaded-doc-box .btn {
-    width: 100% !important;
-  }
-
-  /* === FINANCE CALENDAR === */
+  /* FINANCE CALENDAR */
   #finance-calendar-popover {
     position: fixed !important;
     top: 50% !important;
@@ -658,110 +936,42 @@
     max-width: 380px !important;
     max-height: 80vh !important;
     overflow-y: auto !important;
-    margin-top: 0 !important;
-    border-radius: 12px !important;
-    padding: 0.75rem !important;
+    padding: 0.5rem !important;
   }
 
-  #finance-calendar-popover .btn-sm {
-    font-size: 0.55rem !important;
-    padding: 0.1rem 0.3rem !important;
-  }
-
-  #finance-calendar-popover .fw-bold {
-    font-size: 0.7rem !important;
-  }
-
-  #finance-calendar-popover .col {
-    font-size: 0.55rem !important;
-  }
-
-  #finance-calendar-popover .finance-calendar-day {
-    width: 22px !important;
-    height: 22px !important;
-    font-size: 0.6rem !important;
-  }
-
-  /* === TOAST === */
+  /* TOAST */
   #liveToast {
     min-width: auto !important;
     width: calc(100vw - 32px) !important;
     margin: 0 16px !important;
     font-size: 0.7rem !important;
-    padding: 0.3rem 0.5rem !important;
   }
 
-  #liveToast .toast-body {
-    padding: 0.3rem 0.5rem !important;
-  }
-
-  #liveToast .toast-body iconify-icon {
-    font-size: 1rem !important;
-  }
-
-  /* === ADMIN DATA MOBIL HEADER === */
-  #data-mobil-header-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-
-  #data-mobil-header-row h2 {
-    font-size: 1.2rem !important;
-  }
-
-  #btn-show-tambah-mobil {
-    font-size: 0.7rem !important;
-    padding: 0.2rem 0.5rem !important;
-    height: 30px !important;
-  }
-
-  /* === ADMIN PEMESANAN HEADER === */
-  #pemesanan-header-row h2 {
-    font-size: 1.2rem !important;
-  }
-
-  /* === ADMIN LAPORAN KEUANGAN HEADER === */
+  /* HEADER ROWS */
+  #data-mobil-header-row,
+  #pemesanan-header-row,
   #laporan-keuangan-header-row {
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 0.5rem !important;
   }
 
+  #data-mobil-header-row h2,
+  #pemesanan-header-row h2,
   #laporan-keuangan-header-row h2 {
     font-size: 1.2rem !important;
   }
 
-  #laporan-keuangan-header-row .d-flex {
-    flex-wrap: wrap !important;
-    gap: 0.3rem !important;
-    width: 100% !important;
-  }
-
+  #btn-show-tambah-mobil,
   #btn-print-finance {
     font-size: 0.7rem !important;
     padding: 0.2rem 0.5rem !important;
     height: 30px !important;
   }
 
-  /* === SETTINGS === */
+  /* SETTINGS */
   #admin-settings-view .card {
     padding: 0.75rem !important;
-  }
-
-  #admin-settings-view .card h5 {
-    font-size: 0.9rem !important;
-  }
-
-  #admin-settings-view .card .form-label {
-    font-size: 0.65rem !important;
-  }
-
-  #admin-settings-view .card .form-control,
-  #admin-settings-view .card .form-select {
-    font-size: 0.7rem !important;
-    padding: 0.2rem 0.4rem !important;
   }
 
   #btn-save-settings {
@@ -771,102 +981,8 @@
   }
 }
 
-/* ========================================
-   SMALL (Tablet) - 576px - 767px
-   ======================================== */
-@media (min-width: 576px) and (max-width: 767.98px) {
-
-  /* === LOGIN === */
-  #login-card {
-    padding: 1.5rem !important;
-    max-width: 420px !important;
-  }
-
-  /* === TENANT === */
-  #tenant-cars-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 0.5rem !important;
-  }
-
-  .car-card-img-wrapper {
-    height: 100px !important;
-  }
-
-  .car-card h5 {
-    font-size: 0.75rem !important;
-  }
-
-  .car-card .fw-bold.fs-5 {
-    font-size: 0.8rem !important;
-  }
-
-  /* === FILTER === */
-  #tenant-filter-sidebar {
-    max-height: 220px !important;
-    overflow-y: auto !important;
-    position: relative !important;
-    top: 0 !important;
-    margin-bottom: 0.5rem !important;
-  }
-
-  .col-lg-3 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
-
-  .col-lg-9 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* === ADMIN === */
-  .admin-sidebar .nav-link {
-    font-size: 0.7rem !important;
-    padding: 0.3rem 0.5rem !important;
-  }
-
-  .admin-main-content {
-    padding: 0.75rem !important;
-  }
-
-  #admin-dashboard-view .col-xl-3 {
-    flex: 0 0 50% !important;
-    max-width: 50% !important;
-  }
-
-  /* === DETAIL CAR === */
-  #detail-car-container .col-lg-6 {
-    width: 100% !important;
-    border-right: none !important;
-  }
-
-  #detail-car-container .col-lg-6:first-child {
-    border-bottom: 1px solid #E2E8F0 !important;
-    padding-bottom: 0.75rem !important;
-    margin-bottom: 0.75rem !important;
-  }
-}
-
-/* ========================================
-   MEDIUM (Tablet besar) - 768px - 991px
-   ======================================== */
-@media (min-width: 768px) and (max-width: 991.98px) {
-
-  /* === TENANT === */
-  #tenant-cars-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
-    gap: 0.75rem !important;
-  }
-
-  .car-card-img-wrapper {
-    height: 120px !important;
-  }
-
-  /* === FILTER === */
+/* Tablet */
+@media (min-width: 576px) and (max-width: 991.98px) {
   #tenant-filter-sidebar {
     max-height: 250px !important;
     overflow-y: auto !important;
@@ -887,14 +1003,18 @@
     max-width: 100% !important;
   }
 
-  /* === ADMIN === */
-  .admin-sidebar {
-    width: 200px !important;
+  #tenant-cars-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 0.5rem !important;
   }
 
-  .admin-sidebar .nav-link {
-    font-size: 0.75rem !important;
-    padding: 0.4rem 0.6rem !important;
+  .car-card-img-wrapper {
+    height: 100px !important;
+  }
+
+  .admin-sidebar {
+    width: 200px !important;
   }
 
   .admin-main-content {
@@ -903,12 +1023,6 @@
     padding-top: 1.5rem !important;
   }
 
-  #admin-dashboard-view .col-xl-3 {
-    flex: 0 0 50% !important;
-    max-width: 50% !important;
-  }
-
-  /* === DETAIL CAR === */
   #detail-car-container .col-lg-6 {
     width: 100% !important;
     border-right: none !important;
@@ -920,79 +1034,21 @@
     margin-bottom: 0.75rem !important;
   }
 
-  /* === CALENDAR === */
-  #calendar-popover {
-    width: 300px !important;
-  }
-
-  #finance-calendar-popover {
-    width: 300px !important;
-  }
-}
-
-/* ========================================
-   LARGE (Desktop) - 992px - 1199px
-   ======================================== */
-@media (min-width: 992px) and (max-width: 1199.98px) {
-
-  /* === TENANT === */
-  #tenant-cars-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
-    gap: 0.75rem !important;
-  }
-
-  .car-card-img-wrapper {
-    height: 140px !important;
-  }
-
-  /* === FILTER === */
-  .col-lg-3 {
-    width: 30% !important;
-    flex: 0 0 30% !important;
-    max-width: 30% !important;
-  }
-
-  .col-lg-9 {
-    width: 70% !important;
-    flex: 0 0 70% !important;
-    max-width: 70% !important;
-  }
-
-  /* === ADMIN === */
-  .admin-sidebar {
-    width: 220px !important;
-  }
-
-  .admin-main-content {
-    margin-left: 220px !important;
-    padding: 1.5rem !important;
-    padding-top: 100px !important;
-  }
-
   #admin-dashboard-view .col-xl-3 {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
 }
 
-/* ========================================
-   EXTRA LARGE (Desktop besar) - 1200px+
-   ======================================== */
-@media (min-width: 1200px) {
-
-  /* === TENANT === */
-  #tenant-cars-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
-    gap: 1rem !important;
+/* Desktop */
+@media (min-width: 992px) {
+  #tenant-filter-sidebar {
+    position: sticky !important;
+    top: 85px !important;
+    max-height: calc(100vh - 100px) !important;
+    overflow-y: auto !important;
   }
 
-  .car-card-img-wrapper {
-    height: 160px !important;
-  }
-
-  /* === FILTER === */
   .col-lg-3 {
     width: 25% !important;
     flex: 0 0 25% !important;
@@ -1005,15 +1061,36 @@
     max-width: 75% !important;
   }
 
-  /* === ADMIN === */
+  #tenant-cars-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .car-card-img-wrapper {
+    height: 160px !important;
+  }
+
   .admin-sidebar {
     width: 240px !important;
+    position: fixed !important;
+    top: 75px !important;
+    left: 0 !important;
   }
 
   .admin-main-content {
     margin-left: 240px !important;
     padding: 2.5rem !important;
     padding-top: 105px !important;
+  }
+
+  #detail-car-container .col-lg-6:first-child {
+    border-right: 1px solid #E2E8F0 !important;
+    border-bottom: none !important;
+  }
+
+  #detail-car-container .col-lg-6:last-child {
+    padding-left: 1.5rem !important;
   }
 
   #admin-dashboard-view .col-xl-3 {
@@ -1023,19 +1100,9 @@
 }
 
 /* ========================================
-   UTILITY RESPONSIVE CLASSES
+   UTILITY CLASSES
    ======================================== */
 
-/* Text responsif */
-.text-responsive {
-  font-size: clamp(0.65rem, 1.5vw, 1rem) !important;
-}
-
-.heading-responsive {
-  font-size: clamp(1rem, 3vw, 2.2rem) !important;
-}
-
-/* Hide on mobile */
 .hide-on-mobile {
   display: inherit;
 }
@@ -1046,7 +1113,6 @@
   }
 }
 
-/* Show on mobile */
 .show-on-mobile {
   display: none !important;
 }
@@ -1057,7 +1123,6 @@
   }
 }
 
-/* Flex responsif */
 .flex-responsive {
   flex-direction: row !important;
 }
@@ -1069,99 +1134,10 @@
   }
 }
 
-/* Gap responsif */
-.gap-responsive {
-  gap: 1rem !important;
+.text-responsive {
+  font-size: clamp(0.65rem, 1.5vw, 1rem) !important;
 }
 
-@media (max-width: 575.98px) {
-  .gap-responsive {
-    gap: 0.4rem !important;
-  }
-}
-
-/* Padding responsif */
-.p-responsive {
-  padding: 2rem !important;
-}
-
-@media (max-width: 575.98px) {
-  .p-responsive {
-    padding: 0.5rem !important;
-  }
-}
-
-/* Margin responsif */
-.m-responsive {
-  margin: 2rem !important;
-}
-
-@media (max-width: 575.98px) {
-  .m-responsive {
-    margin: 0.5rem !important;
-  }
-}
-
-/* Grid responsif */
-.grid-responsive {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 1rem !important;
-}
-
-@media (max-width: 575.98px) {
-  .grid-responsive {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.4rem !important;
-  }
-}
-
-/* ========================================
-   FIX: FILTER CARD TIDAK MENUTUPI CATALOG
-   ======================================== */
-
-#tenant-catalog-view {
-  height: 100% !important;
-  overflow: hidden !important;
-}
-
-@media (max-width: 991.98px) {
-  #tenant-catalog-view {
-    height: auto !important;
-    overflow-y: auto !important;
-  }
-
-  #tenant-catalog-view .row.g-3 {
-    flex-direction: column !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-
-  #tenant-filter-sidebar {
-    position: relative !important;
-    top: 0 !important;
-    margin-bottom: 0.75rem !important;
-    max-height: 250px !important;
-    overflow-y: auto !important;
-  }
-
-  #tenant-cars-grid {
-    overflow: visible !important;
-  }
-}
-
-/* ========================================
-   FIX: MODAL TIDAK KEPOTONG
-   ======================================== */
-
-.custom-modal-content {
-  max-height: 90vh !important;
-  overflow-y: auto !important;
-}
-
-@media (max-width: 575.98px) {
-  .custom-modal-content {
-    max-height: 95vh !important;
-    padding: 0.75rem !important;
-  }
+.heading-responsive {
+  font-size: clamp(1rem, 3vw, 2.2rem) !important;
 }
