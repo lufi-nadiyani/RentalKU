@@ -1,539 +1,168 @@
-/* Plus Jakarta Sans Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-
-:root {
-  --primary-navy: #1F294C;
-  --secondary-navy: #141A33;
-  --text-gray-light: #A0AEC0;
-  --accent-blue: #0D6EFD;
-  --hover-navy: #2A3764;
-  --price-orange: #EA580C;
-}
-
 /* ========================================
-   BASE STYLES
+   RESPONSIVE FIX - MOBILE FIRST
    ======================================== */
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: #F8FAFC;
-  color: #1E293B;
-  overflow-x: hidden;
-}
-
 /* ========================================
-   SCROLLBAR CUSTOM
+   EXTRA SMALL (HP) - max-width: 575px
    ======================================== */
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #F1F5F9;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
-}
-
-/* Firefox scrollbar */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #CBD5E1 #F1F5F9;
-}
-
-/* ========================================
-   SIDEBAR ADMIN
-   ======================================== */
-
-.admin-sidebar {
-  background-color: #24285B;
-  color: #FFFFFF;
-  height: calc(100vh - 75px);
-  width: 240px;
-  position: fixed;
-  top: 75px;
-  left: 0;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem 1rem;
-  border-right: 1px solid #E2E8F0;
-}
-
-.admin-sidebar .nav-link {
-  color: #FFFFFF !important;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 0.6rem 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background-color: transparent;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.admin-sidebar .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(255, 255, 255, 0.8) !important;
-  color: #FFFFFF !important;
-}
-
-.admin-sidebar .nav-link.active {
-  color: #1E293B !important;
-  background-color: #FFFFFF !important;
-  border-color: #FFFFFF;
-  font-weight: 700;
-}
-
-.admin-sidebar .sidebar-footer {
-  margin-top: auto;
-  padding-top: 1rem;
-}
-
-.admin-main-content {
-  margin-left: 240px;
-  padding: 2.5rem;
-  padding-top: 105px;
-  min-height: 100vh;
-  background-color: #FFFFFF;
-}
-
-/* ========================================
-   CAR CATALOG (TENANT)
-   ======================================== */
-
-.car-card {
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: #D9F1FF;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  height: 100%;
-  padding: 0.75rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.car-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.05);
-}
-
-.car-card-img-wrapper {
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #FFFFFF;
-  border-radius: 12px;
-  padding: 1rem;
-  overflow: hidden;
-}
-
-.car-card-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.car-card:hover .car-card-img {
-  transform: scale(1.05);
-}
-
-/* ========================================
-   TENANT NAVBAR
-   ======================================== */
-
-#tenant-navbar .nav-link {
-  position: relative;
-  transition: color 0.15s ease;
-}
-
-#tenant-navbar .nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: -16px;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background-color: #0084FF;
-  border-radius: 3px 3px 0 0;
-}
-
-/* ========================================
-   FILTER SIDEBAR
-   ======================================== */
-
-#tenant-filter-sidebar {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  padding: 1rem;
-  position: sticky;
-  top: 85px;
-  z-index: 10;
-  overflow-y: auto;
-  max-height: calc(100vh - 100px);
-}
-
-#tenant-filter-sidebar::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-#tenant-filter-sidebar::-webkit-scrollbar-track {
-  background: #F1F5F9;
-  border-radius: 10px;
-}
-
-#tenant-filter-sidebar::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 10px;
-}
-
-#tenant-filter-sidebar::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
-}
-
-#tenant-filter-sidebar {
-  scrollbar-width: thin;
-  scrollbar-color: #CBD5E1 #F1F5F9;
-}
-
-.filter-section-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #475569;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.filter-actions {
-  position: sticky;
-  bottom: 0;
-  background: white;
-  padding-top: 0.75rem;
-  border-top: 1px solid #E2E8F0;
-  margin-top: 0.5rem;
-}
-
-/* ========================================
-   CUSTOM MODAL OVERLAY
-   ======================================== */
-
-.custom-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(4px);
-  z-index: 1050;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease-in-out;
-  padding: 1.25rem;
-}
-
-.custom-modal-overlay.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.custom-modal-content {
-  background-color: #FFFFFF;
-  border-radius: 18px;
-  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.18);
-  width: 100%;
-  max-width: 500px;
-  padding: 1.75rem 2rem;
-  transform: scale(0.96);
-  transition: transform 0.2s ease-in-out;
-  max-height: 90vh;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #CBD5E1 #F8FAFC;
-  position: relative;
-}
-
-.custom-modal-content::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  display: block;
-}
-
-.custom-modal-content::-webkit-scrollbar-track {
-  background: #F8FAFC;
-  border-radius: 8px;
-}
-
-.custom-modal-content::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 8px;
-}
-
-.custom-modal-overlay.show .custom-modal-content {
-  transform: scale(1);
-}
-
-/* ========================================
-   BUTTON UNIFORM
-   ======================================== */
-
-.btn-uniform {
-  height: 38px !important;
-  padding: 0.5rem 1.25rem !important;
-  font-size: 0.85rem !important;
-  font-weight: 600 !important;
-  border-radius: 8px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  cursor: pointer !important;
-  line-height: 1 !important;
-}
-
-.btn-black {
-  background-color: #000000;
-  color: #FFFFFF;
-  font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  border: 1px solid #000000;
-  transition: all 0.2s ease;
-}
-
-.btn-black:hover {
-  background-color: #222222;
-  color: #FFFFFF;
-}
-
-/* ========================================
-   PRICE TAG
-   ======================================== */
-
-.price-tag {
-  color: var(--price-orange);
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-/* ========================================
-   LOGIN SECTION
-   ======================================== */
-
-.login-bg {
-  min-height: 100vh;
-  background: radial-gradient(circle at 10% 20%, rgb(30, 37, 76) 0%, rgb(15, 23, 42) 90%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
-
-/* ========================================
-   UPLOAD DRAG CONTAINER
-   ======================================== */
-
-.upload-drag-container {
-  border: 2px dashed #CBD5E1;
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: center;
-  cursor: pointer;
-  background-color: #F8FAFC;
-  transition: all 0.2s ease;
-}
-
-.upload-drag-container:hover {
-  border-color: var(--accent-blue);
-  background-color: #EFF6FF;
-}
-
-.upload-drag-container.dragover {
-  border-color: #10B981;
-  background-color: #ECFDF5;
-}
-
-/* ========================================
-   BANK OPTION BTN
-   ======================================== */
-
-.bank-option-btn {
-  border: 1.5px solid #CBD5E1 !important;
-  background-color: #FFFFFF !important;
-  border-radius: 10px !important;
-  padding: 0.5rem !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer !important;
-  transition: all 0.15s ease !important;
-  height: 28px !important;
-  user-select: none !important;
-}
-
-.bank-option-btn:hover {
-  border-color: #0084FF !important;
-  background-color: #F8FAFC !important;
-}
-
-.bank-option-btn.selected {
-  border-color: #0084FF !important;
-  background-color: #EFF6FF !important;
-  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.25) !important;
-}
-
-/* ========================================
-   CALENDAR POPOVER
-   ======================================== */
-
-#calendar-popover {
-  border-radius: 12px !important;
-  border: 1px solid #E2E8F0 !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
-  background-color: #FFFFFF !important;
-  width: 320px !important;
-  z-index: 1050 !important;
-}
-
-/* ========================================
-   FINANCE CALENDAR POPOVER
-   ======================================== */
-
-#finance-calendar-popover {
-  position: absolute !important;
-  top: 100% !important;
-  left: 0 !important;
-  margin-top: 5px !important;
-  z-index: 1060 !important;
-  width: 320px !important;
-  max-width: 90vw !important;
-  background: #FFFFFF !important;
-  border: 1px solid #E2E8F0 !important;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
-  padding: 16px !important;
-}
-
-/* ========================================
-   RESPONSIVE - MOBILE FIRST
-   ======================================== */
-
-/* Extra Small (HP) */
 @media (max-width: 575.98px) {
 
-  /* === LOGIN === */
+  /* === LOGIN PAGE === */
+  #login-section {
+    padding: 0.5rem !important;
+  }
+
   #login-card {
-    padding: 1.5rem 1rem !important;
-    margin: 0.5rem;
-    max-height: 95vh;
+    padding: 1.25rem 1rem !important;
+    margin: 0.5rem !important;
+    max-height: 95vh !important;
+    border-radius: 16px !important;
   }
 
   #login-app-title {
     font-size: 1.5rem !important;
   }
 
-  .login-bg {
+  #login-card .text-secondary.small {
+    font-size: 0.75rem !important;
+  }
+
+  #login-card .input-group-text {
+    padding: 0.3rem 0.5rem !important;
+  }
+
+  #login-card .form-control {
+    font-size: 0.8rem !important;
+    padding: 0.4rem 0.5rem !important;
+  }
+
+  #login-card .btn-primary {
+    font-size: 0.85rem !important;
     padding: 0.5rem !important;
   }
 
+  /* Quick Fill Buttons */
+  .quick-fill-group {
+    flex-direction: column !important;
+    gap: 0.4rem !important;
+  }
+
+  .quick-fill-group .btn {
+    width: 100% !important;
+    font-size: 0.7rem !important;
+    padding: 0.3rem !important;
+  }
+
   /* === TENANT NAVBAR === */
+  #tenant-navbar {
+    padding: 0.5rem 0 !important;
+  }
+
   #tenant-navbar .container {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
   }
 
   #tenant-navbar .navbar-brand span {
-    font-size: 1.2rem !important;
+    font-size: 1rem !important;
+  }
+
+  #tenant-navbar .navbar-brand iconify-icon {
+    font-size: 2rem !important;
+  }
+
+  #tenant-navbar .navbar-toggler {
+    padding: 0.2rem 0.4rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  #tenant-navbar .nav-link {
+    font-size: 0.8rem !important;
+    padding: 0.3rem 0.5rem !important;
   }
 
   #tenant-navbar .nav-link.active::after {
-    bottom: -8px !important;
+    bottom: -6px !important;
     height: 2px !important;
+  }
+
+  #tenant-profile-box {
+    padding: 0.2rem 0.5rem !important;
+    height: 32px !important;
+    min-width: auto !important;
+    font-size: 0.7rem !important;
+  }
+
+  #tenant-profile-box img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  #tenant-profile-box span {
+    font-size: 0.7rem !important;
+  }
+
+  #tenant-btn-logout {
+    height: 32px !important;
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.5rem !important;
+  }
+
+  #tenant-btn-logout iconify-icon {
+    font-size: 0.8rem !important;
   }
 
   /* === FILTER SIDEBAR === */
   #tenant-filter-sidebar {
-    max-height: 200px !important;
+    max-height: 180px !important;
     overflow-y: auto !important;
     position: relative !important;
     top: 0 !important;
-    margin-bottom: 1rem !important;
-    padding: 0.75rem !important;
-    border-radius: 12px !important;
+    margin-bottom: 0.5rem !important;
+    padding: 0.5rem !important;
+    border-radius: 10px !important;
   }
 
   #tenant-filter-sidebar .filter-section-title {
-    font-size: 0.65rem !important;
-    margin-bottom: 0.25rem !important;
-  }
-
-  #tenant-filter-sidebar .form-check {
-    padding-left: 1.25rem !important;
+    font-size: 0.6rem !important;
     margin-bottom: 0.15rem !important;
   }
 
+  #tenant-filter-sidebar .form-check {
+    padding-left: 1.1rem !important;
+    margin-bottom: 0.1rem !important;
+    min-height: 1.2rem !important;
+  }
+
   #tenant-filter-sidebar .form-check-label {
-    font-size: 0.65rem !important;
+    font-size: 0.6rem !important;
   }
 
   #tenant-filter-sidebar .form-check-input {
-    width: 0.7rem !important;
-    height: 0.7rem !important;
-    margin-top: 0.15rem !important;
+    width: 0.6rem !important;
+    height: 0.6rem !important;
+    margin-top: 0.1rem !important;
   }
 
   #tenant-filter-sidebar h5 {
-    font-size: 0.8rem !important;
+    font-size: 0.7rem !important;
+    margin-bottom: 0 !important;
   }
 
   #tenant-filter-sidebar #btn-reset-filters {
-    font-size: 0.6rem !important;
-    padding: 0.1rem 0.35rem !important;
+    font-size: 0.55rem !important;
+    padding: 0.05rem 0.3rem !important;
   }
 
   #tenant-filter-sidebar #btn-apply-filters {
-    font-size: 0.7rem !important;
-    padding: 0.3rem 0.5rem !important;
-    height: 30px !important;
+    font-size: 0.65rem !important;
+    padding: 0.2rem 0.4rem !important;
+    height: 28px !important;
   }
 
   #tenant-filter-sidebar .filter-actions {
-    position: sticky !important;
-    bottom: 0 !important;
-    background: white !important;
-    padding-top: 0.5rem !important;
-    margin-top: 0.5rem !important;
-    border-top: 1px solid #E2E8F0 !important;
-    z-index: 20 !important;
+    padding-top: 0.3rem !important;
+    margin-top: 0.3rem !important;
   }
 
   /* === CATALOG VIEW === */
@@ -541,80 +170,106 @@ body {
     flex-direction: column !important;
     height: auto !important;
     overflow-y: auto !important;
+    gap: 0 !important;
   }
 
   #tenant-catalog-view {
     height: 100% !important;
     overflow-y: auto !important;
+    padding-bottom: 0.5rem !important;
   }
 
   .col-lg-3 {
     width: 100% !important;
     flex: 0 0 100% !important;
     max-width: 100% !important;
-    padding: 0 0.5rem !important;
+    padding: 0 0.25rem !important;
   }
 
   .col-lg-9 {
     width: 100% !important;
     flex: 0 0 100% !important;
     max-width: 100% !important;
-    padding: 0 0.5rem !important;
+    padding: 0 0.25rem !important;
   }
 
   /* === CAR GRID === */
   #tenant-cars-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 0.5rem !important;
+    gap: 0.4rem !important;
     padding-bottom: 0.5rem !important;
   }
 
   .car-card {
-    padding: 0.5rem !important;
+    padding: 0.4rem !important;
+    border-radius: 12px !important;
   }
 
   .car-card-img-wrapper {
-    height: 80px !important;
-    padding: 0.5rem !important;
+    height: 70px !important;
+    padding: 0.3rem !important;
+    border-radius: 8px !important;
   }
 
   .car-card h5 {
-    font-size: 0.7rem !important;
-    margin-bottom: 0.2rem !important;
+    font-size: 0.6rem !important;
+    margin-bottom: 0.1rem !important;
   }
 
   .car-card .text-muted.small {
-    font-size: 0.55rem !important;
-    gap: 0.2rem !important;
+    font-size: 0.5rem !important;
+    gap: 0.15rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  .car-card .text-muted.small span {
+    font-size: 0.5rem !important;
   }
 
   .car-card .fw-bold.fs-5 {
-    font-size: 0.75rem !important;
-    margin-bottom: 0.3rem !important;
+    font-size: 0.65rem !important;
+    margin-bottom: 0.2rem !important;
   }
 
   .car-card .btn-pesan-mobil {
-    font-size: 0.6rem !important;
-    padding: 0.2rem 0.5rem !important;
-    height: 26px !important;
+    font-size: 0.55rem !important;
+    padding: 0.15rem 0.4rem !important;
+    height: 24px !important;
+    border-radius: 6px !important;
   }
 
   /* === SEARCH ROW === */
+  #search-row-card {
+    padding: 0.4rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
   #search-row-card .row {
     flex-direction: column !important;
-    gap: 0.4rem !important;
+    gap: 0.3rem !important;
   }
 
   #search-row-card .col-md-3 {
     width: 100% !important;
     flex: 0 0 100% !important;
+    padding: 0 !important;
   }
 
   #search-row-card input,
   #search-row-card select {
-    height: 28px !important;
-    font-size: 0.65rem !important;
+    height: 26px !important;
+    font-size: 0.6rem !important;
+    padding: 0.15rem 0.4rem !important;
+  }
+
+  #search-row-card .input-group-text {
+    padding: 0.15rem 0.3rem !important;
+    width: 28px !important;
+  }
+
+  #search-row-card .input-group-text iconify-icon {
+    font-size: 0.7rem !important;
   }
 
   /* === CALENDAR POPOVER === */
@@ -623,9 +278,28 @@ body {
     left: 50% !important;
     transform: translateX(-50%) !important;
     top: 110% !important;
+    padding: 0.75rem !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+  }
+
+  #calendar-popover .btn-sm {
+    font-size: 0.55rem !important;
+    padding: 0.1rem 0.3rem !important;
+  }
+
+  #calendar-popover .fw-bold {
+    font-size: 0.7rem !important;
   }
 
   #calendar-popover .row.g-0 .col {
+    font-size: 0.55rem !important;
+    padding: 2px 0 !important;
+  }
+
+  #calendar-popover .row.g-0 .col div {
+    width: 22px !important;
+    height: 22px !important;
     font-size: 0.6rem !important;
   }
 
@@ -635,6 +309,25 @@ body {
     left: 50% !important;
     transform: translateX(-50%) !important;
     top: 110% !important;
+    padding: 0.5rem !important;
+  }
+
+  #time-popover .time-option-item {
+    font-size: 0.6rem !important;
+    padding: 0.15rem 0.3rem !important;
+  }
+
+  /* === LOCATION POPOVER === */
+  #location-popover {
+    width: calc(100vw - 32px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: 110% !important;
+  }
+
+  #location-popover .location-option {
+    font-size: 0.7rem !important;
+    padding: 0.3rem 0.5rem !important;
   }
 
   /* === DETAIL CAR === */
@@ -643,48 +336,102 @@ body {
     height: auto !important;
     max-height: none !important;
     overflow-y: auto !important;
+    padding-top: 0 !important;
   }
 
   #detail-car-container .col-lg-6 {
     width: 100% !important;
     border-right: none !important;
-    padding: 0 0.5rem !important;
+    padding: 0 0.25rem !important;
     height: auto !important;
     max-height: none !important;
   }
 
   #detail-car-container .col-lg-6:first-child {
     border-bottom: 1px solid #E2E8F0 !important;
-    padding-bottom: 1rem !important;
-    margin-bottom: 1rem !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
   }
 
   #detail-car-container .col-lg-6:last-child {
     padding-top: 0 !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  #detail-car-container .pe-lg-3 {
+    padding-right: 0 !important;
+  }
+
+  #detail-car-container .ps-lg-3 {
+    padding-left: 0 !important;
   }
 
   .detail-car-img-wrapper {
     height: 100px !important;
   }
 
-  /* === HISTORY TABLE === */
-  #history-table-card {
+  #detail-car-name {
+    font-size: 1rem !important;
+    margin-top: 0 !important;
+  }
+
+  #detail-car-price {
+    font-size: 1rem !important;
+  }
+
+  #detail-car-container .card {
     padding: 0.5rem !important;
   }
 
-  #history-table {
+  #detail-car-container .card h5 {
+    font-size: 0.7rem !important;
+  }
+
+  #detail-car-container .card .text-muted {
     font-size: 0.6rem !important;
+  }
+
+  #detail-car-container .card .fw-bold.text-dark {
+    font-size: 0.65rem !important;
+  }
+
+  #btn-checkout-car {
+    font-size: 0.75rem !important;
+    padding: 0.3rem !important;
+    height: 36px !important;
+  }
+
+  /* === HISTORY TABLE === */
+  #history-table-card {
+    padding: 0.4rem !important;
+    border-radius: 10px !important;
+  }
+
+  #history-table {
+    font-size: 0.55rem !important;
   }
 
   #history-table th,
   #history-table td {
-    padding: 0.2rem 0.3rem !important;
+    padding: 0.15rem 0.2rem !important;
     white-space: nowrap !important;
   }
 
   #history-table .btn-sm {
-    font-size: 0.55rem !important;
-    padding: 0.1rem 0.3rem !important;
+    font-size: 0.5rem !important;
+    padding: 0.05rem 0.25rem !important;
+  }
+
+  #history-empty-state {
+    padding: 1rem 0.5rem !important;
+  }
+
+  #history-empty-state h5 {
+    font-size: 0.9rem !important;
+  }
+
+  #history-empty-state p {
+    font-size: 0.7rem !important;
   }
 
   /* === ADMIN SIDEBAR === */
@@ -693,56 +440,68 @@ body {
     top: 0 !important;
     height: auto !important;
     width: 100% !important;
-    padding: 0.5rem !important;
+    padding: 0.4rem !important;
     border-right: none !important;
     border-bottom: 1px solid #E2E8F0 !important;
     margin-top: 0 !important;
+    border-radius: 0 !important;
   }
 
   .admin-sidebar #admin-nav-links {
     flex-direction: row !important;
     flex-wrap: wrap !important;
-    gap: 0.3rem !important;
+    gap: 0.2rem !important;
     justify-content: center !important;
   }
 
   .admin-sidebar .nav-link {
-    font-size: 0.6rem !important;
-    padding: 0.25rem 0.4rem !important;
+    font-size: 0.55rem !important;
+    padding: 0.2rem 0.35rem !important;
     margin-bottom: 0 !important;
     white-space: nowrap !important;
+    border-radius: 6px !important;
+    gap: 4px !important;
+  }
+
+  .admin-sidebar .nav-link iconify-icon {
+    font-size: 0.7rem !important;
+  }
+
+  .admin-sidebar .sidebar-footer {
+    margin-top: 0.3rem !important;
+    padding-top: 0 !important;
   }
 
   .admin-main-content {
     margin-left: 0 !important;
-    padding: 0.75rem !important;
-    padding-top: 1rem !important;
-  }
-
-  /* === ADMIN DASHBOARD === */
-  .admin-dashboard-cards .col-xl-3 {
-    flex: 0 0 50% !important;
-    max-width: 50% !important;
-  }
-
-  .admin-dashboard-cards .card {
     padding: 0.5rem !important;
-  }
-
-  .admin-dashboard-cards h3 {
-    font-size: 1rem !important;
+    padding-top: 0.5rem !important;
   }
 
   /* === ADMIN HEADER === */
+  header {
+    height: 56px !important;
+  }
+
   header .container {
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+    padding-left: 0.4rem !important;
+    padding-right: 0.4rem !important;
+  }
+
+  #admin-logo iconify-icon {
+    font-size: 2rem !important;
+  }
+
+  #admin-logo span {
+    font-size: 1rem !important;
   }
 
   #admin-profile-box {
     min-width: auto !important;
-    padding: 0.2rem 0.4rem !important;
-    font-size: 0.65rem !important;
+    padding: 0.15rem 0.3rem !important;
+    font-size: 0.6rem !important;
+    height: 30px !important;
+    border-radius: 6px !important;
   }
 
   #admin-profile-box span {
@@ -750,16 +509,98 @@ body {
   }
 
   #admin-profile-box img {
-    width: 20px !important;
-    height: 20px !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  #admin-profile-box .notification-bell {
+    padding: 0.2rem !important;
+  }
+
+  #admin-profile-box .notification-bell iconify-icon {
+    font-size: 0.9rem !important;
+  }
+
+  /* === ADMIN DASHBOARD === */
+  #admin-dashboard-view .row.g-4 {
+    gap: 0 !important;
+  }
+
+  #admin-dashboard-view .col-xl-3 {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    padding: 0.2rem !important;
+  }
+
+  #admin-dashboard-view .card {
+    padding: 0.4rem !important;
+    border-radius: 10px !important;
+  }
+
+  #admin-dashboard-view .card .text-muted {
+    font-size: 0.55rem !important;
+  }
+
+  #admin-dashboard-view .card h3 {
+    font-size: 0.9rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  #admin-dashboard-view .card .p-2 {
+    padding: 0.2rem !important;
+  }
+
+  #admin-dashboard-view .card .fs-5 {
+    font-size: 0.8rem !important;
+  }
+
+  #admin-dashboard-view .card .small {
+    font-size: 0.5rem !important;
+  }
+
+  /* === ADMIN TABLES === */
+  #admin-cars-table,
+  #admin-orders-table,
+  #admin-finance-table {
+    font-size: 0.6rem !important;
+  }
+
+  #admin-cars-table th,
+  #admin-cars-table td,
+  #admin-orders-table th,
+  #admin-orders-table td,
+  #admin-finance-table th,
+  #admin-finance-table td {
+    padding: 0.15rem 0.2rem !important;
+    white-space: nowrap !important;
+  }
+
+  #admin-cars-table .badge,
+  #admin-orders-table .badge {
+    font-size: 0.5rem !important;
+    padding: 0.1rem 0.3rem !important;
+  }
+
+  #admin-cars-table .btn-sm,
+  #admin-orders-table .btn-sm {
+    font-size: 0.5rem !important;
+    padding: 0.05rem 0.2rem !important;
+    height: 22px !important;
+    width: 22px !important;
+  }
+
+  #admin-cars-table .btn-sm iconify-icon,
+  #admin-orders-table .btn-sm iconify-icon {
+    font-size: 0.6rem !important;
   }
 
   /* === MODALS === */
   .custom-modal-content {
-    padding: 0.75rem !important;
+    padding: 0.6rem !important;
     max-width: 95vw !important;
     margin: 0.25rem !important;
     max-height: 95vh !important;
+    border-radius: 12px !important;
   }
 
   .custom-modal-content .row.g-2 {
@@ -769,10 +610,42 @@ body {
   .custom-modal-content .col-6 {
     width: 100% !important;
     flex: 0 0 100% !important;
+    padding: 0.15rem 0 !important;
   }
 
   .custom-modal-content h5 {
-    font-size: 0.9rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .custom-modal-content .form-label {
+    font-size: 0.65rem !important;
+  }
+
+  .custom-modal-content .form-control,
+  .custom-modal-content .form-select {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.4rem !important;
+  }
+
+  .custom-modal-content .btn-sm {
+    font-size: 0.65rem !important;
+    padding: 0.15rem 0.4rem !important;
+  }
+
+  .custom-modal-content .uploaded-doc-box {
+    padding: 0.3rem 0.5rem !important;
+    flex-direction: column !important;
+    gap: 0.3rem !important;
+  }
+
+  .custom-modal-content .uploaded-doc-box .d-flex {
+    flex-direction: column !important;
+    gap: 0.2rem !important;
+    text-align: center !important;
+  }
+
+  .custom-modal-content .uploaded-doc-box .btn {
+    width: 100% !important;
   }
 
   /* === FINANCE CALENDAR === */
@@ -782,9 +655,31 @@ body {
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: calc(100vw - 32px) !important;
-    max-width: 400px !important;
+    max-width: 380px !important;
     max-height: 80vh !important;
     overflow-y: auto !important;
+    margin-top: 0 !important;
+    border-radius: 12px !important;
+    padding: 0.75rem !important;
+  }
+
+  #finance-calendar-popover .btn-sm {
+    font-size: 0.55rem !important;
+    padding: 0.1rem 0.3rem !important;
+  }
+
+  #finance-calendar-popover .fw-bold {
+    font-size: 0.7rem !important;
+  }
+
+  #finance-calendar-popover .col {
+    font-size: 0.55rem !important;
+  }
+
+  #finance-calendar-popover .finance-calendar-day {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 0.6rem !important;
   }
 
   /* === TOAST === */
@@ -792,66 +687,105 @@ body {
     min-width: auto !important;
     width: calc(100vw - 32px) !important;
     margin: 0 16px !important;
+    font-size: 0.7rem !important;
+    padding: 0.3rem 0.5rem !important;
   }
 
-  /* === QUICK FILL === */
-  .quick-fill-group {
+  #liveToast .toast-body {
+    padding: 0.3rem 0.5rem !important;
+  }
+
+  #liveToast .toast-body iconify-icon {
+    font-size: 1rem !important;
+  }
+
+  /* === ADMIN DATA MOBIL HEADER === */
+  #data-mobil-header-row {
     flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  #data-mobil-header-row h2 {
+    font-size: 1.2rem !important;
+  }
+
+  #btn-show-tambah-mobil {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.5rem !important;
+    height: 30px !important;
+  }
+
+  /* === ADMIN PEMESANAN HEADER === */
+  #pemesanan-header-row h2 {
+    font-size: 1.2rem !important;
+  }
+
+  /* === ADMIN LAPORAN KEUANGAN HEADER === */
+  #laporan-keuangan-header-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
     gap: 0.5rem !important;
   }
 
-  .quick-fill-group .btn {
+  #laporan-keuangan-header-row h2 {
+    font-size: 1.2rem !important;
+  }
+
+  #laporan-keuangan-header-row .d-flex {
+    flex-wrap: wrap !important;
+    gap: 0.3rem !important;
     width: 100% !important;
+  }
+
+  #btn-print-finance {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.5rem !important;
+    height: 30px !important;
+  }
+
+  /* === SETTINGS === */
+  #admin-settings-view .card {
+    padding: 0.75rem !important;
+  }
+
+  #admin-settings-view .card h5 {
+    font-size: 0.9rem !important;
+  }
+
+  #admin-settings-view .card .form-label {
+    font-size: 0.65rem !important;
+  }
+
+  #admin-settings-view .card .form-control,
+  #admin-settings-view .card .form-select {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.4rem !important;
+  }
+
+  #btn-save-settings {
+    font-size: 0.75rem !important;
+    padding: 0.3rem 0.8rem !important;
+    height: 32px !important;
   }
 }
 
 /* ========================================
-   RESPONSIVE - TABLET
+   SMALL (Tablet) - 576px - 767px
    ======================================== */
+@media (min-width: 576px) and (max-width: 767.98px) {
 
-@media (min-width: 576px) and (max-width: 991.98px) {
-
-  /* === FILTER SIDEBAR === */
-  #tenant-filter-sidebar {
-    max-height: 250px !important;
-    overflow-y: auto !important;
-    position: relative !important;
-    top: 0 !important;
-    margin-bottom: 1rem !important;
-    padding: 0.75rem !important;
+  /* === LOGIN === */
+  #login-card {
+    padding: 1.5rem !important;
+    max-width: 420px !important;
   }
 
-  #tenant-filter-sidebar .filter-section-title {
-    font-size: 0.7rem !important;
-  }
-
-  #tenant-filter-sidebar .form-check-label {
-    font-size: 0.7rem !important;
-  }
-
-  /* === CATALOG VIEW === */
-  #tenant-catalog-view .row.g-3 {
-    flex-direction: column !important;
-    height: auto !important;
-    overflow-y: auto !important;
-  }
-
-  .col-lg-3 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
-
-  .col-lg-9 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* === CAR GRID === */
+  /* === TENANT === */
   #tenant-cars-grid {
     display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
+    grid-template-columns: 1fr 1fr !important;
     gap: 0.5rem !important;
   }
 
@@ -867,6 +801,42 @@ body {
     font-size: 0.8rem !important;
   }
 
+  /* === FILTER === */
+  #tenant-filter-sidebar {
+    max-height: 220px !important;
+    overflow-y: auto !important;
+    position: relative !important;
+    top: 0 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .col-lg-3 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  .col-lg-9 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* === ADMIN === */
+  .admin-sidebar .nav-link {
+    font-size: 0.7rem !important;
+    padding: 0.3rem 0.5rem !important;
+  }
+
+  .admin-main-content {
+    padding: 0.75rem !important;
+  }
+
+  #admin-dashboard-view .col-xl-3 {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
+
   /* === DETAIL CAR === */
   #detail-car-container .col-lg-6 {
     width: 100% !important;
@@ -875,30 +845,79 @@ body {
 
   #detail-car-container .col-lg-6:first-child {
     border-bottom: 1px solid #E2E8F0 !important;
-    padding-bottom: 1rem !important;
-    margin-bottom: 1rem !important;
+    padding-bottom: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+/* ========================================
+   MEDIUM (Tablet besar) - 768px - 991px
+   ======================================== */
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+  /* === TENANT === */
+  #tenant-cars-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 0.75rem !important;
   }
 
-  /* === ADMIN SIDEBAR === */
+  .car-card-img-wrapper {
+    height: 120px !important;
+  }
+
+  /* === FILTER === */
+  #tenant-filter-sidebar {
+    max-height: 250px !important;
+    overflow-y: auto !important;
+    position: relative !important;
+    top: 0 !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .col-lg-3 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  .col-lg-9 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* === ADMIN === */
   .admin-sidebar {
     width: 200px !important;
   }
 
   .admin-sidebar .nav-link {
-    font-size: 0.7rem !important;
-    padding: 0.35rem 0.5rem !important;
+    font-size: 0.75rem !important;
+    padding: 0.4rem 0.6rem !important;
   }
 
   .admin-main-content {
     margin-left: 200px !important;
     padding: 1rem !important;
-    padding-top: 2rem !important;
+    padding-top: 1.5rem !important;
   }
 
-  /* === ADMIN DASHBOARD === */
-  .admin-dashboard-cards .col-xl-3 {
+  #admin-dashboard-view .col-xl-3 {
     flex: 0 0 50% !important;
     max-width: 50% !important;
+  }
+
+  /* === DETAIL CAR === */
+  #detail-car-container .col-lg-6 {
+    width: 100% !important;
+    border-right: none !important;
+  }
+
+  #detail-car-container .col-lg-6:first-child {
+    border-bottom: 1px solid #E2E8F0 !important;
+    padding-bottom: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
   }
 
   /* === CALENDAR === */
@@ -912,17 +931,68 @@ body {
 }
 
 /* ========================================
-   RESPONSIVE - DESKTOP
+   LARGE (Desktop) - 992px - 1199px
    ======================================== */
+@media (min-width: 992px) and (max-width: 1199.98px) {
 
-@media (min-width: 992px) {
-
-  /* === CATALOG VIEW === */
-  #tenant-catalog-view .row.g-3 {
-    flex-direction: row !important;
-    height: 100% !important;
+  /* === TENANT === */
+  #tenant-cars-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 0.75rem !important;
   }
 
+  .car-card-img-wrapper {
+    height: 140px !important;
+  }
+
+  /* === FILTER === */
+  .col-lg-3 {
+    width: 30% !important;
+    flex: 0 0 30% !important;
+    max-width: 30% !important;
+  }
+
+  .col-lg-9 {
+    width: 70% !important;
+    flex: 0 0 70% !important;
+    max-width: 70% !important;
+  }
+
+  /* === ADMIN === */
+  .admin-sidebar {
+    width: 220px !important;
+  }
+
+  .admin-main-content {
+    margin-left: 220px !important;
+    padding: 1.5rem !important;
+    padding-top: 100px !important;
+  }
+
+  #admin-dashboard-view .col-xl-3 {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
+}
+
+/* ========================================
+   EXTRA LARGE (Desktop besar) - 1200px+
+   ======================================== */
+@media (min-width: 1200px) {
+
+  /* === TENANT === */
+  #tenant-cars-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .car-card-img-wrapper {
+    height: 160px !important;
+  }
+
+  /* === FILTER === */
   .col-lg-3 {
     width: 25% !important;
     flex: 0 0 25% !important;
@@ -935,15 +1005,20 @@ body {
     max-width: 75% !important;
   }
 
-  /* === CAR GRID === */
-  #tenant-cars-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
-    gap: 1rem !important;
+  /* === ADMIN === */
+  .admin-sidebar {
+    width: 240px !important;
   }
 
-  .car-card-img-wrapper {
-    height: 160px !important;
+  .admin-main-content {
+    margin-left: 240px !important;
+    padding: 2.5rem !important;
+    padding-top: 105px !important;
+  }
+
+  #admin-dashboard-view .col-xl-3 {
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
   }
 }
 
@@ -951,14 +1026,16 @@ body {
    UTILITY RESPONSIVE CLASSES
    ======================================== */
 
+/* Text responsif */
 .text-responsive {
-  font-size: clamp(0.75rem, 1.5vw, 1rem) !important;
+  font-size: clamp(0.65rem, 1.5vw, 1rem) !important;
 }
 
 .heading-responsive {
-  font-size: clamp(1.2rem, 3vw, 2.2rem) !important;
+  font-size: clamp(1rem, 3vw, 2.2rem) !important;
 }
 
+/* Hide on mobile */
 .hide-on-mobile {
   display: inherit;
 }
@@ -969,6 +1046,7 @@ body {
   }
 }
 
+/* Show on mobile */
 .show-on-mobile {
   display: none !important;
 }
@@ -979,6 +1057,7 @@ body {
   }
 }
 
+/* Flex responsif */
 .flex-responsive {
   flex-direction: row !important;
 }
@@ -986,75 +1065,103 @@ body {
 @media (max-width: 575.98px) {
   .flex-responsive {
     flex-direction: column !important;
-    gap: 0.5rem !important;
+    gap: 0.4rem !important;
   }
 }
 
+/* Gap responsif */
 .gap-responsive {
   gap: 1rem !important;
 }
 
 @media (max-width: 575.98px) {
   .gap-responsive {
-    gap: 0.5rem !important;
+    gap: 0.4rem !important;
   }
 }
 
+/* Padding responsif */
 .p-responsive {
   padding: 2rem !important;
 }
 
 @media (max-width: 575.98px) {
   .p-responsive {
-    padding: 0.75rem !important;
+    padding: 0.5rem !important;
   }
 }
 
+/* Margin responsif */
 .m-responsive {
   margin: 2rem !important;
 }
 
 @media (max-width: 575.98px) {
   .m-responsive {
-    margin: 0.75rem !important;
+    margin: 0.5rem !important;
+  }
+}
+
+/* Grid responsif */
+.grid-responsive {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 1rem !important;
+}
+
+@media (max-width: 575.98px) {
+  .grid-responsive {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.4rem !important;
   }
 }
 
 /* ========================================
-   TOAST NOTIFICATION
+   FIX: FILTER CARD TIDAK MENUTUPI CATALOG
    ======================================== */
 
-#liveToast {
-  border-radius: 12px !important;
-  padding: 0.5rem 1rem !important;
-  min-width: 350px;
-  animation: slideDown 0.4s ease forwards;
+#tenant-catalog-view {
+  height: 100% !important;
+  overflow: hidden !important;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
+@media (max-width: 991.98px) {
+  #tenant-catalog-view {
+    height: auto !important;
+    overflow-y: auto !important;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  #tenant-catalog-view .row.g-3 {
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  #tenant-filter-sidebar {
+    position: relative !important;
+    top: 0 !important;
+    margin-bottom: 0.75rem !important;
+    max-height: 250px !important;
+    overflow-y: auto !important;
+  }
+
+  #tenant-cars-grid {
+    overflow: visible !important;
   }
 }
 
 /* ========================================
-   GLOBAL BUTTON HOVER
+   FIX: MODAL TIDAK KEPOTONG
    ======================================== */
 
-.btn:hover,
-button:not(:disabled):hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+.custom-modal-content {
+  max-height: 90vh !important;
+  overflow-y: auto !important;
 }
 
-.btn:active,
-button:not(:disabled):active {
-  transform: translateY(1px) scale(0.97) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+@media (max-width: 575.98px) {
+  .custom-modal-content {
+    max-height: 95vh !important;
+    padding: 0.75rem !important;
+  }
 }
