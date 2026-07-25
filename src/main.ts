@@ -82,7 +82,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: '/src/assets/images/toyota_yaris_1784287820376.jpg'
+    image: 'dist/images/yaris.png'
   },
   {
     id: 'car-2',
@@ -94,7 +94,7 @@ let cars: Car[] = [
     capacity: 5,
     luggage: 2,
     status: 'Tersedia',
-    image: '/src/assets/images/honda_brio_1784288042224.jpg'
+    image: 'dist/images/brio.png'
   },
   {
     id: 'car-3',
@@ -106,7 +106,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: '/src/assets/images/toyota_avanza_1784287804405.jpg'
+    image: 'dist/images/avanza.png'
   },
   {
     id: 'car-4',
@@ -118,7 +118,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: '/src/assets/images/toyota_innova_1784288062873.jpg'
+    image: 'dist/images/innova.png'
   },
   {
     id: 'car-5',
@@ -130,7 +130,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: '/src/assets/images/mitsubishi_xpander_1784288080930.jpg'
+    image: 'dist/images/xpender.png'
   },
   {
     id: 'car-6',
@@ -142,7 +142,7 @@ let cars: Car[] = [
     capacity: 7,
     luggage: 2,
     status: 'Tersedia',
-    image: '/src/assets/images/toyota_fortuner_1784288098080.jpg'
+    image: 'dist/images/fortuner.png'
   }
 ];
 
@@ -625,6 +625,18 @@ function initTenantHandlers() {
       // showToast('✅ Filter diterapkan', 'success');
     });
   }
+
+  // ========== NAVIGASI BREADCRUMB ==========
+  // Event listener untuk breadcrumb di detail mobil
+  document.addEventListener('click', function (e) {
+    const target = e.target as HTMLElement;
+    // Cek apakah klik pada breadcrumb "Katalog Mobil"
+    if (target.id === 'breadcrumb-catalog-btn' || target.closest('#breadcrumb-catalog-btn')) {
+      e.preventDefault();
+      console.log('🔙 Kembali ke Katalog Mobil');
+      showTenantSubView('catalog');
+    }
+  });
 }
 
 function resetFilters() {
@@ -1371,10 +1383,10 @@ function openDocZoomModal(docType: 'KTP' | 'SIM A') {
 
   if (imgEl) {
     if (docType === 'KTP') {
-      imgEl.src = '/src/assets/images/indonesia_ktp_mockup_1784629847316.jpg';
+      imgEl.src = '/images/indonesia_ktp_mockup_1784629847316.jpg';
       imgEl.alt = 'Kartu Tanda Penduduk (KTP)';
     } else {
-      imgEl.src = '/src/assets/images/indonesia_sim_mockup_1784629865756.jpg';
+      imgEl.src = '/images/indonesia_sim_mockup_1784629865756.jpg';
       imgEl.alt = 'Surat Izin Mengemudi (SIM A)';
     }
   }
@@ -1465,7 +1477,7 @@ function submitCarForm() {
     return;
   }
 
-  const finalImage = tempCarPhotoUrl || '/src/assets/images/toyota_avanza_1784287804405.jpg';
+  const finalImage = tempCarPhotoUrl || '/images/toyota_avanza_1784287804405.jpg';
   const brand = name.split(' ')[0];
   const validBrands: Car['brand'][] = ['Toyota', 'Honda', 'Mitsubishi', 'Daihatsu', 'Hyundai'];
   const selectedBrand = validBrands.includes(brand as Car['brand']) ? brand as Car['brand'] : 'Toyota';
@@ -2805,6 +2817,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModalHandlers();
   initBookingWidgets();
   initFinanceCalendar();
+  initPasswordToggles();
 
   showSection('login-section');
 });
@@ -2834,4 +2847,47 @@ function showToast(message: string, type: 'success' | 'error' | 'info' = 'succes
     animation: true
   });
   toast.show();
+}
+
+// ==================== TOGGLE PASSWORD VISIBILITY ====================
+function togglePasswordVisibility(inputId: string, iconId: string) {
+  const input = document.getElementById(inputId) as HTMLInputElement;
+  const icon = document.getElementById(iconId) as HTMLElement;
+
+  if (!input || !icon) return;
+
+  if (input.type === 'password') {
+    // Password TERSEMBUNYI -> TAMPILKAN (mata terbuka)
+    input.type = 'text';
+    icon.setAttribute('icon', 'ph:eye'); // Mata terbuka - sedang melihat
+    icon.style.color = '#0084FF';
+  } else {
+    // Password TERLIHAT -> SEMBUNYIKAN (mata tertutup)
+    input.type = 'password';
+    icon.setAttribute('icon', 'ph:eye-closed'); // Mata tertutup - tidak melihat
+    icon.style.color = '#64748B';
+  }
+}
+
+// Inisialisasi toggle password
+function initPasswordToggles() {
+  // Login password toggle
+  const toggleLogin = document.getElementById('toggle-login-password');
+  if (toggleLogin) {
+    toggleLogin.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      togglePasswordVisibility('login-password', 'login-password-icon');
+    });
+  }
+
+  // Register password toggle
+  const toggleRegister = document.getElementById('toggle-register-password');
+  if (toggleRegister) {
+    toggleRegister.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      togglePasswordVisibility('register-password', 'register-password-icon');
+    });
+  }
 }

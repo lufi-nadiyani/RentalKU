@@ -95,6 +95,7 @@
           </div>
         </div>
 
+        <!-- Login Password -->
         <div class="mb-4">
           <div class="d-flex justify-content-between align-items-center mb-1">
             <label for="login-password" class="form-label small fw-semibold text-secondary mb-0">Kata Sandi</label>
@@ -102,10 +103,17 @@
               Password?</a>
           </div>
           <div class="input-group">
-            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;"><iconify-icon
-                icon="ph:lock" class="text-muted"></iconify-icon></span>
-            <input type="password" id="login-password" class="form-control bg-white border-start-0"
+            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;">
+              <iconify-icon icon="ph:lock" class="text-muted"></iconify-icon>
+            </span>
+            <input type="password" id="login-password" class="form-control bg-white border-start-0 border-end-0"
               style="border-color: #CBD5E1; font-size: 0.9rem;" placeholder="••••••••" value="password123">
+            <span class="input-group-text bg-light border-start-0 cursor-pointer" id="toggle-login-password"
+              style="border-color: #CBD5E1; cursor: pointer; transition: all 0.2s ease;"
+              onmouseover="this.style.backgroundColor='#EFF6FF'" onmouseout="this.style.backgroundColor='#F8FAFC'">
+              <iconify-icon icon="ph:eye-closed" id="login-password-icon" class="text-muted"
+                style="font-size: 1.1rem;"></iconify-icon>
+            </span>
           </div>
         </div>
 
@@ -195,13 +203,21 @@
           </div>
         </div>
 
+        <!-- Register Password -->
         <div class="mb-4">
           <label for="register-password" class="form-label small fw-semibold text-secondary">Kata Sandi</label>
           <div class="input-group">
-            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;"><iconify-icon
-                icon="ph:lock" class="text-muted"></iconify-icon></span>
-            <input type="password" id="register-password" class="form-control bg-white border-start-0"
+            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;">
+              <iconify-icon icon="ph:lock" class="text-muted"></iconify-icon>
+            </span>
+            <input type="password" id="register-password" class="form-control bg-white border-start-0 border-end-0"
               style="border-color: #CBD5E1; font-size: 0.9rem;" placeholder="Min. 6 karakter" value="password123">
+            <span class="input-group-text bg-light border-start-0 cursor-pointer" id="toggle-register-password"
+              style="border-color: #CBD5E1; cursor: pointer; transition: all 0.2s ease;"
+              onmouseover="this.style.backgroundColor='#EFF6FF'" onmouseout="this.style.backgroundColor='#F8FAFC'">
+              <iconify-icon icon="ph:eye-closed" id="register-password-icon" class="text-muted"
+                style="font-size: 1.1rem;"></iconify-icon>
+            </span>
           </div>
         </div>
 
@@ -294,7 +310,7 @@
                   <iconify-icon icon="ph:arrow-counter-clockwise"></iconify-icon> Reset
                 </button>
               </div>
-          
+
               <div class="mb-3">
                 <h6 class="filter-section-title" id="filter-passenger-title"
                   style="font-size: 0.8rem; margin-bottom: 0.5rem; color: #475569; font-weight: 600;">
@@ -317,49 +333,55 @@
                   <label class="form-check-label small" for="cap-6" style="font-size: 0.78rem;">&gt; 6 Orang</label>
                 </div>
               </div>
-          
+
               <div class="mb-3">
                 <h6 class="filter-section-title" id="filter-brand-title"
                   style="font-size: 0.8rem; margin-bottom: 0.5rem; color: #475569; font-weight: 600;">
-                   Tipe Mobil
+                  Tipe Mobil
                 </h6>
                 <div class="form-check mb-1">
                   <input class="form-check-input brand-checkbox" type="checkbox" id="brand-toyota" value="Toyota">
                   <label class="form-check-label small" for="brand-toyota" style="font-size: 0.78rem;">Toyota</label>
                 </div>
                 <div class="form-check mb-1">
-                  <input class="form-check-input brand-checkbox" type="checkbox" id="brand-mitsubishi" value="Mitsubishi">
-                  <label class="form-check-label small" for="brand-mitsubishi" style="font-size: 0.78rem;">Mitsubishi</label>
+                  <input class="form-check-input brand-checkbox" type="checkbox" id="brand-mitsubishi"
+                    value="Mitsubishi">
+                  <label class="form-check-label small" for="brand-mitsubishi"
+                    style="font-size: 0.78rem;">Mitsubishi</label>
                 </div>
                 <div class="form-check mb-1">
                   <input class="form-check-input brand-checkbox" type="checkbox" id="brand-daihatsu" value="Daihatsu">
-                  <label class="form-check-label small" for="brand-daihatsu" style="font-size: 0.78rem;">Daihatsu</label>
+                  <label class="form-check-label small" for="brand-daihatsu"
+                    style="font-size: 0.78rem;">Daihatsu</label>
                 </div>
                 <div class="form-check mb-1">
                   <input class="form-check-input brand-checkbox" type="checkbox" id="brand-hyundai" value="Hyundai">
                   <label class="form-check-label small" for="brand-hyundai" style="font-size: 0.78rem;">Hyundai</label>
                 </div>
               </div>
-          
+
               <div class="mb-3">
                 <h6 class="filter-section-title" id="filter-trans-title"
                   style="font-size: 0.8rem; margin-bottom: 0.5rem; color: #475569; font-weight: 600;">
                   Transmisi
                 </h6>
                 <div class="form-check mb-1">
-                  <input class="form-check-input transmission-checkbox" type="checkbox" id="trans-all" value="all" checked>
+                  <input class="form-check-input transmission-checkbox" type="checkbox" id="trans-all" value="all"
+                    checked>
                   <label class="form-check-label small" for="trans-all" style="font-size: 0.78rem;">Semua</label>
                 </div>
                 <div class="form-check mb-1">
-                  <input class="form-check-input transmission-checkbox" type="checkbox" id="trans-manual" value="Manual">
+                  <input class="form-check-input transmission-checkbox" type="checkbox" id="trans-manual"
+                    value="Manual">
                   <label class="form-check-label small" for="trans-manual" style="font-size: 0.78rem;">Manual</label>
                 </div>
                 <div class="form-check mb-1">
-                  <input class="form-check-input transmission-checkbox" type="checkbox" id="trans-matic" value="Automatic">
+                  <input class="form-check-input transmission-checkbox" type="checkbox" id="trans-matic"
+                    value="Automatic">
                   <label class="form-check-label small" for="trans-matic" style="font-size: 0.78rem;">Automatic</label>
                 </div>
               </div>
-          
+
               <div class="filter-actions"
                 style="position: sticky; bottom: 0; background: white; padding-top: 0.75rem; border-top: 1px solid #E2E8F0; margin-top: 0.5rem;">
                 <button class="btn btn-primary w-100 fw-semibold py-2" id="btn-apply-filters"
@@ -655,7 +677,6 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
           <div>
             <h2 class="fw-bold m-0" id="history-header-title">Riwayat Transaksi</h2>
-            <p class="text-muted mb-0 small">Pantau status pemesanan dan bukti pembayaran Anda</p>
           </div>
         </div>
         <div class="card shadow-sm border-0 p-4" style="border-radius: 12px;" id="history-table-card">
@@ -705,22 +726,22 @@
         </div>
 
         <!-- Right Side: Profile & Notification -->
-      <div class="d-flex align-items-center gap-2">
-        <div class="d-flex align-items-center gap-2.5 border px-4 py-2 bg-white shadow-sm fw-semibold cursor-pointer"
-          id="admin-profile-box"
-          style="border-color: #E2E8F0 !important; border-radius: 8px; font-size: 0.92rem; height: 42px; min-width: 170px; white-space: nowrap;">
-          <img
-            src="https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?"
-            alt="Rifqy Profile" class="rounded-circle border"
-            style="width: 28px; height: 28px; object-fit: cover; object-position: center; border-color: #E2E8F0 !important; flex-shrink: 0;"
-            id="admin-profile-img">
-          <span class="fw-semibold text-dark" id="admin-profile-name"
-            style="font-family: 'Plus Jakarta Sans', sans-serif;">Rifqy Affandi</span>
+        <div class="d-flex align-items-center gap-2">
+          <div class="d-flex align-items-center gap-2.5 border px-4 py-2 bg-white shadow-sm fw-semibold cursor-pointer"
+            id="admin-profile-box"
+            style="border-color: #E2E8F0 !important; border-radius: 8px; font-size: 0.92rem; height: 42px; min-width: 170px; white-space: nowrap;">
+            <img
+              src="https://images.unsplash.com/photo-1615109398623-88346a601842?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?"
+              alt="Rifqy Profile" class="rounded-circle border"
+              style="width: 28px; height: 28px; object-fit: cover; object-position: center; border-color: #E2E8F0 !important; flex-shrink: 0;"
+              id="admin-profile-img">
+            <span class="fw-semibold text-dark" id="admin-profile-name"
+              style="font-family: 'Plus Jakarta Sans', sans-serif;">Rifqy Affandi</span>
+          </div>
+          <div class="position-relative cursor-pointer ms-1 me-1" style="padding: 6px;">
+            <iconify-icon icon="ph:bell" class="fs-4 text-dark" style="color: #475569 !important;"></iconify-icon>
+          </div>
         </div>
-        <div class="position-relative cursor-pointer ms-1 me-1" style="padding: 6px;">
-          <iconify-icon icon="ph:bell" class="fs-4 text-dark" style="color: #475569 !important;"></iconify-icon>
-        </div>
-      </div>
 
       </div>
     </header>
@@ -1391,7 +1412,7 @@
               id="btn-zoom-ktp"
               style="border-radius: 10px !important; border-color: #CBD5E1 !important; overflow: hidden; transition: all 0.2s;"
               title="Klik untuk memperbesar foto KTP">
-              <img src="/src/assets/images/indonesia_ktp_mockup_1784629847316.jpg" id="verif-ktp-img" alt="KTP"
+              <img src="/images/indonesia_ktp_mockup_1784629847316.jpg" id="verif-ktp-img" alt="KTP"
                 class="img-fluid rounded" style="border-radius: 6px; max-height: 85px; width: 100%; object-fit: cover;"
                 referrerPolicy="no-referrer">
               <div class="mt-1.5 d-flex align-items-center justify-content-center gap-1 text-primary fw-bold"
@@ -1405,7 +1426,7 @@
               id="btn-zoom-sim"
               style="border-radius: 10px !important; border-color: #CBD5E1 !important; overflow: hidden; transition: all 0.2s;"
               title="Klik untuk memperbesar foto SIM">
-              <img src="/src/assets/images/indonesia_sim_mockup_1784629865756.jpg" id="verif-sim-img" alt="SIM A"
+              <img src="/images/indonesia_sim_mockup_1784629865756.jpg" id="verif-sim-img" alt="SIM A"
                 class="img-fluid rounded" style="border-radius: 6px; max-height: 85px; width: 100%; object-fit: cover;"
                 referrerPolicy="no-referrer">
               <div class="mt-1.5 d-flex align-items-center justify-content-center gap-1 text-primary fw-bold"
@@ -1477,7 +1498,7 @@
       </div>
       <div class="text-center p-2 bg-light rounded-3 border mb-3"
         style="border-color: #CBD5E1 !important; background-color: #F8FAFC !important;">
-        <img src="/src/assets/images/indonesia_ktp_mockup_1784629847316.jpg" id="doc-zoom-img" alt="Dokumen Verifikasi"
+        <img src="/images/indonesia_ktp_mockup_1784629847316.jpg" id="doc-zoom-img" alt="Dokumen Verifikasi"
           class="img-fluid rounded shadow-sm"
           style="max-height: 70vh; width: 100%; object-fit: contain; border-radius: 8px;" referrerPolicy="no-referrer">
       </div>
@@ -1491,20 +1512,20 @@
     </div>
   </div>
 
-<!-- Toast Notification -->
-<div class="position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 9999; min-width: 350px;">
-  <div id="liveToast" class="toast align-items-center text-white border-0 hide" role="alert" aria-live="assertive"
-    aria-atomic="true" style="background-color: #059669; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
-    <div class="d-flex">
-      <div class="toast-body d-flex align-items-center gap-2">
-        <iconify-icon icon="ph:check-circle-fill" style="font-size: 1.4rem;"></iconify-icon>
-        <span class="fw-semibold" id="toast-notif-message">Mobil berhasil ditambahkan!</span>
+  <!-- Toast Notification -->
+  <div class="position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 9999; min-width: 350px;">
+    <div id="liveToast" class="toast align-items-center text-white border-0 hide" role="alert" aria-live="assertive"
+      aria-atomic="true" style="background-color: #059669; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
+      <div class="d-flex">
+        <div class="toast-body d-flex align-items-center gap-2">
+          <iconify-icon icon="ph:check-circle-fill" style="font-size: 1.4rem;"></iconify-icon>
+          <span class="fw-semibold" id="toast-notif-message">Mobil berhasil ditambahkan!</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Close"></button>
       </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-        aria-label="Close"></button>
     </div>
   </div>
-</div>
 
   <!-- Bootstrap 5.3.3 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
