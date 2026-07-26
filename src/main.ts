@@ -14,7 +14,7 @@ interface Car {
   price: number;
   capacity: number;
   luggage: number;
-  status: 'Tersedia' | 'Disewa';
+  status: 'Tersedia' | 'Diperbaiki' | 'Disewa';
   image: string;
 }
 
@@ -29,7 +29,7 @@ interface Order {
   total: number;
   ktpUploaded: boolean;
   simUploaded: boolean;
-  status: 'Menunggu Pembayaran' | 'Menunggu Konfirmasi' | 'Disetujui' | 'Ditolak' | 'Selesai' | 'Disewa' | 'Konfirmasi';
+  status: 'Menunggu Pembayaran' | 'Menunggu Konfirmasi' | 'Disetujui' | 'Selesai' | 'Disewa' | 'Konfirmasi';
   paymentMethod: string;
   timestamp: string;
   dateRangeStr?: string;
@@ -231,6 +231,7 @@ let currentUser: 'guest' | 'tenant' | 'admin' = 'guest';
 let selectedCarIndex: number | null = null;
 let editingCarId: string | null = null;
 let verifOrderId: string | null = null;
+let pendingCarId: string | null = null;
 
 let settings = {
   rentalName: 'RentalKu',
@@ -280,12 +281,66 @@ function applySettingsToDOM() {
   if (tzInput) tzInput.value = settings.timezone;
 }
 
-// ==================== VIEW TOGGLE FUNCTIONS ====================
-function showSection(sectionId: 'login-section' | 'tenant-section' | 'admin-section') {
-  document.getElementById('login-section')?.classList.add('d-none');
+// ==================== VIEW TOGGLE & NAVBAR FUNCTIONS ====================
+function updateNavbarState() {
+  const landingGuest = document.getElementById('landing-guest-controls');
+  const landingTenant = document.getElementById('landing-tenant-controls');
+  const historyItem = document.getElementById('landing-nav-history-item');
+  const landingProfName = document.getElementById('landing-profile-name');
+  const tenantProfName = document.getElementById('tenant-profile-name');
+
+  if (currentUser === 'tenant') {
+    landingGuest?.classList.add('d-none');
+    landingTenant?.classList.remove('d-none');
+    historyItem?.classList.remove('d-none');
+    if (landingProfName && tenantProfName && tenantProfName.textContent) {
+      landingProfName.textContent = tenantProfName.textContent;
+    }
+  } else {
+    landingGuest?.classList.remove('d-none');
+    landingTenant?.classList.add('d-none');
+    historyItem?.classList.add('d-none');
+  }
+}
+
+function selectLocation(val: string) {
+  const landingLoc = document.getElementById('landing-rent-location') as HTMLInputElement;
+  const tenantLoc = document.getElementById('rent-location') as HTMLInputElement;
+  if (landingLoc) landingLoc.value = val;
+  if (tenantLoc) tenantLoc.value = val;
+
+  document.querySelectorAll('.landing-location-option, .location-option').forEach((el) => {
+    const optVal = el.getAttribute('data-val');
+    const checkIcon = el.querySelector('.location-check');
+    if (optVal === val) {
+      el.classList.add('bg-primary-subtle', 'fw-bold');
+      checkIcon?.classList.remove('d-none');
+    } else {
+      el.classList.remove('bg-primary-subtle', 'fw-bold');
+      checkIcon?.classList.add('d-none');
+    }
+  });
+
+  document.getElementById('landing-location-popover')?.classList.add('d-none');
+  document.getElementById('location-popover')?.classList.add('d-none');
+
+  renderTenantCatalog();
+}
+
+function showSection(sectionId: 'landing-section' | 'tenant-section' | 'admin-section') {
+  document.getElementById('landing-section')?.classList.add('d-none');
   document.getElementById('tenant-section')?.classList.add('d-none');
   document.getElementById('admin-section')?.classList.add('d-none');
   document.getElementById(sectionId)?.classList.remove('d-none');
+
+  if (sectionId === 'landing-section') {
+    updateNavbarState();
+    if (currentUser === 'tenant') {
+      document.getElementById('landing-catalog-section')?.classList.add('d-none');
+    } else {
+      document.getElementById('landing-catalog-section')?.classList.remove('d-none');
+    }
+  }
 }
 
 function showTenantSubView(viewId: 'catalog' | 'detail' | 'history') {
@@ -409,54 +464,588 @@ function saveUser(user: AppUser) {
   return true;
 }
 
-// ==================== 1. LOGIN CONTROLLER ====================
-function initLoginHandlers() {
-  const tabLogin = document.getElementById('tab-login') as HTMLButtonElement;
-  const tabRegister = document.getElementById('tab-register') as HTMLButtonElement;
+// ==================== LOGIN MODAL CONTROLLER ====================
+function setAuthView(view: 'login' | 'register') {
   const loginForm = document.getElementById('login-form-container');
   const registerForm = document.getElementById('register-form-container');
+  if (view === 'login') {
+    loginForm?.classList.remove('d-none');
+    registerForm?.classList.add('d-none');
+  } else {
+    registerForm?.classList.remove('d-none');
+    loginForm?.classList.add('d-none');
+  }
+}
+
+function openLoginModal(view: 'login' | 'register' = 'login') {
+  setAuthView(view);
+  document.getElementById('login-modal')?.classList.add('show');
+}
+
+function closeLoginModal() {
+  document.getElementById('login-modal')?.classList.remove('show');
+}
+
+function goToTenantAfterAuth() {
+  closeLoginModal();
+  updateNavbarState();
+  showSection('tenant-section');
+  if (pendingCarId) {
+    const idx = cars.findIndex(c => c.id === pendingCarId);
+    pendingCarId = null;
+    if (idx !== -1) {
+      selectedCarIndex = idx;
+      showTenantSubView('detail');
+      return;
+    }
+  }
+  showTenantSubView('catalog');
+}
+
+function goToAdminAfterAuth() {
+  pendingCarId = null;
+  closeLoginModal();
+  showSection('admin-section');
+  showAdminSubView('cars');
+}
+
+// ==================== 0. LANDING PAGE CONTROLLER (PUBLIC / GUEST) ====================
+function renderLandingCatalog() {
+  const grid = document.getElementById('landing-cars-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  cars.forEach((car) => {
+    const cardCol = document.createElement('div');
+    cardCol.className = 'col';
+    cardCol.innerHTML = `
+      <div class="car-card shadow-sm landing-car-card" data-id="${car.id}" role="button" tabindex="0" style="cursor: pointer;">
+        <div class="car-card-img-wrapper">
+          <img src="${car.image}" class="car-card-img" alt="${car.name}">
+        </div>
+        <div class="pt-3 px-1 flex-grow-1 d-flex flex-column justify-content-between">
+          <div>
+            <h5 class="fw-bold text-dark mb-1">${car.name}</h5>
+            <div class="d-flex align-items-center gap-2 mb-3 text-muted small" style="font-size: 0.85rem;">
+              <span>${car.transmission}</span>
+              <span class="d-flex align-items-center gap-1 ms-1"><iconify-icon icon="ph:user" class="align-middle"></iconify-icon> ${car.capacity}</span>
+              <span class="d-flex align-items-center gap-1 ms-1"><iconify-icon icon="ph:briefcase" class="align-middle"></iconify-icon> ${car.luggage}</span>
+            </div>
+          </div>
+          <div>
+            <div class="fw-bold fs-5 mb-2" style="color: #FF5C00;">${formatRupiah(car.price)}<span class="fs-6 text-muted fw-normal"> /hari</span></div>
+            
+          </div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(cardCol);
+  });
+
+  grid.querySelectorAll('.landing-car-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const carId = (card as HTMLElement).getAttribute('data-id') || '';
+      if (currentUser === 'tenant') {
+        const idx = cars.findIndex(c => c.id === carId);
+        if (idx !== -1) {
+          selectedCarIndex = idx;
+          showSection('tenant-section');
+          showTenantSubView('detail');
+          return;
+        }
+      }
+      pendingCarId = carId;
+      openLoginModal('login');
+    });
+  });
+}
+
+// ==================== LANDING SEARCH WIDGET (Lokasi / Tanggal / Jam - klik untuk pilih) ====================
+let landingCalendarYear = 0;
+let landingCalendarMonth = 0;
+let landingSelectedStartDate = '';
+let landingSelectedEndDate = '';
+
+function drawLandingCalendar() {
+  const titleText = document.getElementById('landing-calendar-title-text');
+  const daysContainer = document.getElementById('landing-calendar-days');
+  if (!daysContainer) return;
+
+  const monthsIndo = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
+  if (titleText) {
+    titleText.textContent = `${monthsIndo[landingCalendarMonth]} ${landingCalendarYear}`;
+  }
+
+  daysContainer.innerHTML = '';
+
+  const firstDayIndex = new Date(landingCalendarYear, landingCalendarMonth, 1).getDay();
+  const startOffset = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+
+  const totalDays = new Date(landingCalendarYear, landingCalendarMonth + 1, 0).getDate();
+  const prevTotalDays = new Date(landingCalendarYear, landingCalendarMonth, 0).getDate();
+
+  for (let i = startOffset - 1; i >= 0; i--) {
+    const dayNum = prevTotalDays - i;
+    const col = document.createElement('div');
+    col.className = 'col text-muted py-1';
+    col.style.cssText = 'width: 14.28%; opacity: 0.3; font-size: 0.8rem; cursor: default; text-align: center;';
+    col.textContent = dayNum.toString();
+    daysContainer.appendChild(col);
+  }
+
+  const startD = landingSelectedStartDate ? new Date(landingSelectedStartDate) : null;
+  const endD = landingSelectedEndDate ? new Date(landingSelectedEndDate) : null;
+
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+  const syncDateFields = () => {
+    const datesInput = document.getElementById('landing-rent-dates') as HTMLInputElement;
+    if (datesInput) {
+      if (landingSelectedStartDate && landingSelectedEndDate) {
+        const p1 = landingSelectedStartDate.split('-');
+        const p2 = landingSelectedEndDate.split('-');
+        datesInput.value = `${p1[2]}-${p1[1]}-${p1[0]} -> ${p2[2]}-${p2[1]}-${p2[0]}`;
+      } else if (landingSelectedStartDate) {
+        const p1 = landingSelectedStartDate.split('-');
+        datesInput.value = `${p1[2]}-${p1[1]}-${p1[0]} -> ...`;
+      }
+    }
+  };
+
+  for (let d = 1; d <= totalDays; d++) {
+    const col = document.createElement('div');
+    col.className = 'col py-1 d-flex justify-content-center align-items-center position-relative';
+    col.style.cssText = 'width: 14.28%; cursor: pointer; display: flex; justify-content: center; align-items: center;';
+
+    const dayBtn = document.createElement('div');
+    dayBtn.style.cssText = `
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      user-select: none;
+    `;
+    dayBtn.textContent = d.toString();
+
+    const currDate = new Date(landingCalendarYear, landingCalendarMonth, d);
+    const currStr = `${landingCalendarYear}-${String(landingCalendarMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+    const isSelectedStart = landingSelectedStartDate === currStr;
+    const isSelectedEnd = landingSelectedEndDate === currStr;
+    const isBetween = startD && endD && currDate.getTime() > startD.getTime() && currDate.getTime() < endD.getTime();
+    const isToday = currStr === todayStr;
+
+    if (isToday && !isSelectedStart && !isSelectedEnd) {
+      dayBtn.style.backgroundColor = '#0084FF';
+      dayBtn.style.color = '#FFFFFF';
+      dayBtn.style.fontWeight = 'bold';
+      dayBtn.style.border = 'none';
+    } else if (isSelectedStart) {
+      dayBtn.style.backgroundColor = 'transparent';
+      dayBtn.style.color = '#0084FF';
+      dayBtn.style.fontWeight = 'bold';
+      dayBtn.style.border = '2px solid #0084FF';
+    } else if (isSelectedEnd) {
+      dayBtn.style.backgroundColor = 'transparent';
+      dayBtn.style.color = '#0084ff';
+      dayBtn.style.fontWeight = 'bold';
+      dayBtn.style.border = '2px solid #0084ff';
+    } else if (isBetween) {
+      dayBtn.style.backgroundColor = '#E0F2FE';
+      dayBtn.style.color = '#0084FF';
+      dayBtn.style.border = 'none';
+    } else {
+      dayBtn.style.backgroundColor = 'transparent';
+      dayBtn.style.color = '#1E293B';
+      dayBtn.style.border = 'none';
+    }
+
+    col.appendChild(dayBtn);
+
+    col.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const clickedStr = currStr;
+      const clickedDate = new Date(clickedStr);
+
+      if (!landingSelectedStartDate) {
+        landingSelectedStartDate = clickedStr;
+        landingSelectedEndDate = '';
+      } else if (landingSelectedStartDate && !landingSelectedEndDate) {
+        const start = new Date(landingSelectedStartDate);
+        if (clickedDate < start) {
+          landingSelectedStartDate = clickedStr;
+          landingSelectedEndDate = '';
+        } else if (clickedDate.getTime() === start.getTime()) {
+          landingSelectedStartDate = '';
+          landingSelectedEndDate = '';
+        } else {
+          landingSelectedEndDate = clickedStr;
+          setTimeout(() => {
+            document.getElementById('landing-calendar-popover')?.classList.add('d-none');
+          }, 250);
+        }
+      } else {
+        landingSelectedStartDate = clickedStr;
+        landingSelectedEndDate = '';
+      }
+
+      syncDateFields();
+      drawLandingCalendar();
+    });
+
+    daysContainer.appendChild(col);
+  }
+
+  const renderedCount = startOffset + totalDays;
+  const remainingCells = 42 - renderedCount;
+  for (let i = 1; i <= remainingCells; i++) {
+    const col = document.createElement('div');
+    col.className = 'col text-muted py-1';
+    col.style.cssText = 'width: 14.28%; opacity: 0.3; font-size: 0.8rem; cursor: default; text-align: center;';
+    col.textContent = i.toString();
+    daysContainer.appendChild(col);
+  }
+
+  syncDateFields();
+}
+
+function initLandingTimePicker() {
+  const startTimeContainer = document.querySelector('.landing-start-time-list');
+  const endTimeContainer = document.querySelector('.landing-end-time-list');
+  if (!startTimeContainer || !endTimeContainer) return;
+
+  startTimeContainer.innerHTML = '';
+  endTimeContainer.innerHTML = '';
+
+  const timeInput = document.getElementById('landing-rent-time') as HTMLInputElement;
+  let tempStartTime = '08:00';
+  let tempEndTime = '10:00';
+
+  if (timeInput && timeInput.value.includes('->')) {
+    const parts = timeInput.value.split('->').map(s => s.trim());
+    if (parts[0]) tempStartTime = parts[0];
+    if (parts[1]) tempEndTime = parts[1];
+  }
+
+  for (let h = 0; h < 24; h++) {
+    const hh = String(h).padStart(2, '0') + ':00';
+
+    const sOpt = document.createElement('div');
+    sOpt.className = 'py-1 px-2 cursor-pointer text-center small time-option-item';
+    sOpt.style.borderRadius = '4px';
+    sOpt.textContent = hh;
+    if (hh === tempStartTime) {
+      sOpt.style.backgroundColor = '#0084FF';
+      sOpt.style.color = '#FFFFFF';
+      sOpt.style.fontWeight = 'bold';
+    }
+    sOpt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tempStartTime = hh;
+      startTimeContainer.querySelectorAll('.time-option-item').forEach((el: any) => {
+        el.style.backgroundColor = '';
+        el.style.color = '';
+        el.style.fontWeight = '';
+      });
+      sOpt.style.backgroundColor = '#0084FF';
+      sOpt.style.color = '#FFFFFF';
+      sOpt.style.fontWeight = 'bold';
+    });
+    startTimeContainer.appendChild(sOpt);
+
+    const eOpt = document.createElement('div');
+    eOpt.className = 'py-1 px-2 cursor-pointer text-center small time-option-item';
+    eOpt.style.borderRadius = '4px';
+    eOpt.textContent = hh;
+    if (hh === tempEndTime) {
+      eOpt.style.backgroundColor = '#0084FF';
+      eOpt.style.color = '#FFFFFF';
+      eOpt.style.fontWeight = 'bold';
+    }
+    eOpt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tempEndTime = hh;
+      endTimeContainer.querySelectorAll('.time-option-item').forEach((el: any) => {
+        el.style.backgroundColor = '';
+        el.style.color = '';
+        el.style.fontWeight = '';
+      });
+      eOpt.style.backgroundColor = '#0084FF';
+      eOpt.style.color = '#FFFFFF';
+      eOpt.style.fontWeight = 'bold';
+    });
+    endTimeContainer.appendChild(eOpt);
+  }
+
+  const confirmBtn = document.querySelector('.landing-btn-confirm-time');
+  if (confirmBtn) {
+    confirmBtn.replaceWith(confirmBtn.cloneNode(true));
+  }
+  document.querySelector('.landing-btn-confirm-time')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (timeInput) timeInput.value = `${tempStartTime} -> ${tempEndTime}`;
+    document.getElementById('landing-time-popover')?.classList.add('d-none');
+  });
+}
+
+function initLandingBookingWidgets() {
+  const locationTrigger = document.getElementById('landing-location-trigger');
+  const locationPopover = document.getElementById('landing-location-popover');
+  const datesTrigger = document.getElementById('landing-dates-trigger');
+  const calendarPopover = document.getElementById('landing-calendar-popover');
+  const timeTrigger = document.getElementById('landing-time-trigger');
+  const timePopover = document.getElementById('landing-time-popover');
+
+  function closeAllLandingPopovers() {
+    locationPopover?.classList.add('d-none');
+    calendarPopover?.classList.add('d-none');
+    timePopover?.classList.add('d-none');
+  }
+
+  locationTrigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isHidden = locationPopover?.classList.contains('d-none');
+    closeAllLandingPopovers();
+    if (isHidden) locationPopover?.classList.remove('d-none');
+  });
+
+  datesTrigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isHidden = calendarPopover?.classList.contains('d-none');
+    closeAllLandingPopovers();
+    if (isHidden) {
+      calendarPopover?.classList.remove('d-none');
+      drawLandingCalendar();
+    }
+  });
+
+  timeTrigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isHidden = timePopover?.classList.contains('d-none');
+    closeAllLandingPopovers();
+    if (isHidden) {
+      timePopover?.classList.remove('d-none');
+      initLandingTimePicker();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (!locationPopover?.contains(target) && !locationTrigger?.contains(target)) {
+      locationPopover?.classList.add('d-none');
+    }
+    if (!calendarPopover?.contains(target) && !datesTrigger?.contains(target)) {
+      calendarPopover?.classList.add('d-none');
+    }
+    if (!timePopover?.contains(target) && !timeTrigger?.contains(target)) {
+      timePopover?.classList.add('d-none');
+    }
+  });
+
+  document.querySelectorAll('.landing-location-option').forEach((opt) => {
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const val = (e.currentTarget as HTMLElement).getAttribute('data-val') || 'Yogyakarta';
+      selectLocation(val);
+    });
+  });
+
+  document.querySelector('.landing-btn-prev-year')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    landingCalendarYear--;
+    drawLandingCalendar();
+  });
+  document.querySelector('.landing-btn-prev-month')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    landingCalendarMonth--;
+    if (landingCalendarMonth < 0) {
+      landingCalendarMonth = 11;
+      landingCalendarYear--;
+    }
+    drawLandingCalendar();
+  });
+  document.querySelector('.landing-btn-next-month')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    landingCalendarMonth++;
+    if (landingCalendarMonth > 11) {
+      landingCalendarMonth = 0;
+      landingCalendarYear++;
+    }
+    drawLandingCalendar();
+  });
+  document.querySelector('.landing-btn-next-year')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    landingCalendarYear++;
+    drawLandingCalendar();
+  });
+
+  // Default values: hari ini -> besok, jam 08:00 -> 10:00, lokasi Yogyakarta
+  const today = new Date();
+  landingCalendarYear = today.getFullYear();
+  landingCalendarMonth = today.getMonth();
+
+  const todayStr = getTodayDateString();
+  const tomorrowStr = getTomorrowDateString();
+  const todayParts = todayStr.split('-');
+  const tomorrowParts = tomorrowStr.split('-');
+  if (todayParts.length === 3) landingSelectedStartDate = `${todayParts[2]}-${todayParts[1]}-${todayParts[0]}`;
+  if (tomorrowParts.length === 3) landingSelectedEndDate = `${tomorrowParts[2]}-${tomorrowParts[1]}-${tomorrowParts[0]}`;
+
+  const rentDates = document.getElementById('landing-rent-dates') as HTMLInputElement;
+  const rentTime = document.getElementById('landing-rent-time') as HTMLInputElement;
+  if (rentDates && landingSelectedStartDate && landingSelectedEndDate) {
+    const p1 = landingSelectedStartDate.split('-');
+    const p2 = landingSelectedEndDate.split('-');
+    rentDates.value = `${p1[2]}-${p1[1]}-${p1[0]} -> ${p2[2]}-${p2[1]}-${p2[0]}`;
+  }
+  if (rentTime) rentTime.value = '08:00 -> 10:00';
+
+  drawLandingCalendar();
+}
+
+function setLandingNavActive(which: 'home' | 'catalog') {
+  const navHome = document.getElementById('landing-nav-home');
+  const navCatalog = document.getElementById('landing-nav-catalog');
+  if (which === 'home') {
+    navHome?.classList.add('active');
+    navCatalog?.classList.remove('active');
+  } else {
+    navCatalog?.classList.add('active');
+    navHome?.classList.remove('active');
+  }
+}
+
+function initLandingHandlers() {
+  renderLandingCatalog();
+  initLandingBookingWidgets();
+
+  document.getElementById('landing-btn-masuk')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    openLoginModal('login');
+  });
+  document.getElementById('landing-btn-daftar')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    openLoginModal('register');
+  });
+
+  document.getElementById('landing-nav-home')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    setLandingNavActive('home');
+    showSection('landing-section');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  document.getElementById('landing-logo')?.addEventListener('click', () => {
+    setLandingNavActive('home');
+    showSection('landing-section');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  document.getElementById('landing-nav-catalog')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    setLandingNavActive('catalog');
+    if (currentUser === 'tenant') {
+      showSection('tenant-section');
+      showTenantSubView('catalog');
+    } else {
+      document.getElementById('landing-catalog-section')?.classList.remove('d-none');
+      document.getElementById('landing-catalog-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  document.getElementById('landing-nav-history')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (currentUser === 'tenant') {
+      showSection('tenant-section');
+      showTenantSubView('history');
+    }
+  });
+
+  document.getElementById('landing-btn-logout')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    currentUser = 'guest';
+    updateNavbarState();
+    showSection('landing-section');
+  });
+
+  document.getElementById('landing-search-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const landingLoc = (document.getElementById('landing-rent-location') as HTMLInputElement)?.value;
+    const landingDates = (document.getElementById('landing-rent-dates') as HTMLInputElement)?.value;
+    const landingTime = (document.getElementById('landing-rent-time') as HTMLInputElement)?.value;
+
+    const tenantLoc = document.getElementById('rent-location') as HTMLInputElement;
+    const tenantDates = document.getElementById('rent-dates') as HTMLInputElement;
+    const tenantTime = document.getElementById('rent-time') as HTMLInputElement;
+
+    if (tenantLoc && landingLoc) tenantLoc.value = landingLoc;
+    if (tenantDates && landingDates) tenantDates.value = landingDates;
+    if (tenantTime && landingTime) tenantTime.value = landingTime;
+
+    if (currentUser === 'tenant') {
+      showSection('tenant-section');
+      showTenantSubView('catalog');
+    } else {
+      setLandingNavActive('catalog');
+      document.getElementById('landing-catalog-section')?.classList.remove('d-none');
+      document.getElementById('landing-catalog-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  // Auto-close mobile collapse menu on click
+  document.querySelectorAll('#landingNavContent .nav-link, #landingNavContent .btn, #tenantNavContent .nav-link, #tenantNavContent .btn').forEach((item) => {
+    item.addEventListener('click', () => {
+      const landingCollapse = document.getElementById('landingNavContent');
+      const tenantCollapse = document.getElementById('tenantNavContent');
+      if (landingCollapse?.classList.contains('show')) {
+        landingCollapse.classList.remove('show');
+      }
+      if (tenantCollapse?.classList.contains('show')) {
+        tenantCollapse.classList.remove('show');
+      }
+    });
+  });
+}
+
+// ==================== 1. LOGIN CONTROLLER ====================
+function initLoginHandlers() {
+  const tabLogin = document.getElementById('tab-login') as HTMLButtonElement | null;
+  const tabRegister = document.getElementById('tab-register') as HTMLButtonElement | null;
   const linkToRegister = document.getElementById('link-to-register');
   const linkToLogin = document.getElementById('link-to-login');
-  const registerRoleTenant = document.getElementById('register-role-tenant') as HTMLButtonElement;
-  const registerRoleAdmin = document.getElementById('register-role-admin') as HTMLButtonElement;
   const btnLoginSubmit = document.getElementById('btn-login-submit') as HTMLButtonElement;
   const btnRegisterSubmit = document.getElementById('btn-register-submit') as HTMLButtonElement;
 
-  let selectedRegisterRole: 'tenant' | 'admin' = 'tenant';
-
-  function setRegisterRole(role: 'tenant' | 'admin') {
-    selectedRegisterRole = role;
-    if (role === 'tenant') {
-      registerRoleTenant.className = "btn w-50 py-2 d-flex align-items-center justify-content-center gap-2 border fw-semibold text-primary border-primary";
-      registerRoleTenant.style.backgroundColor = "rgba(13, 110, 253, 0.05)";
-      registerRoleAdmin.className = "btn w-50 py-2 d-flex align-items-center justify-content-center gap-2 border fw-semibold text-muted";
-      registerRoleAdmin.style.backgroundColor = "transparent";
-      registerRoleAdmin.style.borderColor = "#dee2e6";
-    } else {
-      registerRoleAdmin.className = "btn w-50 py-2 d-flex align-items-center justify-content-center gap-2 border fw-semibold text-dark border-dark";
-      registerRoleAdmin.style.backgroundColor = "rgba(33, 37, 41, 0.05)";
-      registerRoleTenant.className = "btn w-50 py-2 d-flex align-items-center justify-content-center gap-2 border fw-semibold text-muted";
-      registerRoleTenant.style.backgroundColor = "transparent";
-      registerRoleTenant.style.borderColor = "#dee2e6";
-    }
-  }
-
   function showTab(view: 'login' | 'register') {
-    if (view === 'login') {
-      tabLogin.className = "btn w-50 py-2 fw-bold rounded-2 bg-white text-primary shadow-sm border-0";
-      tabRegister.className = "btn w-50 py-2 fw-semibold rounded-2 text-muted border-0 bg-transparent";
-      loginForm?.classList.remove('d-none');
-      registerForm?.classList.add('d-none');
-    } else {
-      tabRegister.className = "btn w-50 py-2 fw-bold rounded-2 bg-white text-primary shadow-sm border-0";
-      tabLogin.className = "btn w-50 py-2 fw-semibold rounded-2 text-muted border-0 bg-transparent";
-      registerForm?.classList.remove('d-none');
-      loginForm?.classList.add('d-none');
+    if (tabLogin && tabRegister) {
+      if (view === 'login') {
+        tabLogin.className = "btn w-50 py-2 fw-bold rounded-2 bg-white text-primary shadow-sm border-0";
+        tabRegister.className = "btn w-50 py-2 fw-semibold rounded-2 text-muted border-0 bg-transparent";
+      } else {
+        tabRegister.className = "btn w-50 py-2 fw-bold rounded-2 bg-white text-primary shadow-sm border-0";
+        tabLogin.className = "btn w-50 py-2 fw-semibold rounded-2 text-muted border-0 bg-transparent";
+      }
     }
+    setAuthView(view);
   }
 
-  registerRoleTenant?.addEventListener('click', () => setRegisterRole('tenant'));
-  registerRoleAdmin?.addEventListener('click', () => setRegisterRole('admin'));
+  document.getElementById('btn-close-login-modal')?.addEventListener('click', () => {
+    closeLoginModal();
+    pendingCarId = null;
+  });
+  document.getElementById('login-modal')?.addEventListener('click', (e) => {
+    if (e.target === document.getElementById('login-modal')) {
+      closeLoginModal();
+      pendingCarId = null;
+    }
+  });
+
   tabLogin?.addEventListener('click', () => showTab('login'));
   tabRegister?.addEventListener('click', () => showTab('register'));
   linkToRegister?.addEventListener('click', (e) => { e.preventDefault(); showTab('register'); });
@@ -525,12 +1114,10 @@ function initLoginHandlers() {
       currentUser = 'tenant';
       const profNameEl = document.getElementById('tenant-profile-name');
       if (profNameEl) profNameEl.textContent = matchedUser.name;
-      showSection('tenant-section');
-      showTenantSubView('catalog');
+      goToTenantAfterAuth();
     } else {
       currentUser = 'admin';
-      showSection('admin-section');
-      showAdminSubView('cars');
+      goToAdminAfterAuth();
     }
   };
 
@@ -559,36 +1146,36 @@ function initLoginHandlers() {
       return;
     }
 
-    const newUser: AppUser = { name, email, phone, password, role: selectedRegisterRole };
+    const newUser: AppUser = { name, email, phone, password, role: 'tenant' };
     const isSaved = saveUser(newUser);
     if (!isSaved) {
       alert('Email sudah terdaftar. Silakan gunakan email lain atau silakan masuk.');
       return;
     }
 
-    alert(`Pendaftaran Berhasil sebagai ${selectedRegisterRole === 'tenant' ? 'Penyewa' : 'Admin/Pemilik'}! Anda akan otomatis masuk.`);
+    alert('Pendaftaran Berhasil sebagai Penyewa! Anda akan otomatis masuk.');
 
-    if (selectedRegisterRole === 'tenant') {
-      currentUser = 'tenant';
-      const profNameEl = document.getElementById('tenant-profile-name');
-      if (profNameEl) profNameEl.textContent = name;
-      showSection('tenant-section');
-      showTenantSubView('catalog');
-    } else {
-      currentUser = 'admin';
-      showSection('admin-section');
-      showAdminSubView('cars');
-    }
+    currentUser = 'tenant';
+    const profNameEl = document.getElementById('tenant-profile-name');
+    if (profNameEl) profNameEl.textContent = name;
+    goToTenantAfterAuth();
   });
 }
 
 // ==================== 2. TENANT CONTROLLER ====================
 function initTenantHandlers() {
   // Navigation actions
-  document.getElementById('tenant-nav-home')?.addEventListener('click', (e) => {
+  const goHome = (e: Event) => {
     e.preventDefault();
-    showTenantSubView('catalog');
-  });
+    showSection('landing-section');
+    setLandingNavActive('home');
+    updateNavbarState();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  document.getElementById('tenant-nav-home')?.addEventListener('click', goHome);
+  document.getElementById('penyewa-logo')?.addEventListener('click', goHome);
+
   document.getElementById('tenant-nav-catalog')?.addEventListener('click', (e) => {
     e.preventDefault();
     showTenantSubView('catalog');
@@ -605,7 +1192,8 @@ function initTenantHandlers() {
       e.preventDefault();
       console.log('🔴 Logout tenant');
       currentUser = 'guest';
-      showSection('login-section');
+      updateNavbarState();
+      showSection('landing-section');
     };
   }
 
@@ -962,11 +1550,11 @@ function initAdminHandlers() {
   });
   document.getElementById('admin-btn-logout')?.addEventListener('click', () => {
     currentUser = 'guest';
-    showSection('login-section');
+    showSection('landing-section');
   });
   document.getElementById('admin-header-btn-logout')?.addEventListener('click', () => {
     currentUser = 'guest';
-    showSection('login-section');
+    showSection('landing-section');
   });
   document.getElementById('btn-dash-view-all-orders')?.addEventListener('click', (e) => {
     e.preventDefault();
@@ -997,7 +1585,7 @@ function showToast(message: string, type: 'success' | 'error' | 'info' = 'succes
   }
 
   // Show toast
-  const toast = new bootstrap.Toast(toastEl, {
+  const toast = new (window as any).bootstrap.Toast(toastEl, {
     delay: 3500,
     animation: true
   });
@@ -1105,10 +1693,15 @@ function renderAdminCarsTable() {
   tbody.innerHTML = '';
 
   cars.forEach((car, index) => {
-    const isAvailable = car.status === 'Tersedia';
-    const statusHTML = isAvailable
-      ? '<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; font-size: 0.8rem;">Tersedia</span>'
-      : '<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; font-size: 0.8rem;">Disewa</span>';
+    let statusHTML = '';
+
+    if (car.status === 'Tersedia') {
+      statusHTML = '<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; font-size: 0.8rem;">Tersedia</span>';
+    } else if (car.status === 'Diperbaiki') {
+      statusHTML = '<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; font-size: 0.8rem;">Diperbaiki</span>';
+    } else if (car.status === 'Disewa') {
+      statusHTML = '<span class="badge rounded-pill px-3 py-1.5 fw-bold" style="background-color: #FEE2E2; color: #DC2626; border: 1px solid #FCA5A5; font-size: 0.8rem;">Disewa</span>';
+    }
 
     const tr = document.createElement('tr');
     tr.id = `admin-car-row-${car.id}`;
@@ -1153,7 +1746,7 @@ function renderAdminOrdersTable() {
   console.log('🔧 renderAdminOrdersTable dipanggil');
   const tbody = document.getElementById('admin-orders-tbody');
   if (!tbody) {
-    console.error('❌ admin-orders-tbody tidak ditemukan!');
+    console.error('admin-orders-tbody tidak ditemukan!');
     return;
   }
 
@@ -1527,7 +2120,7 @@ function submitCarForm() {
     const carIndex = cars.findIndex(c => c.id === editingCarId);
     if (carIndex !== -1) {
       cars[carIndex] = carData;
-      showToast('✏️ Data mobil berhasil diperbarui!', 'success');
+      showToast('Data mobil berhasil diperbarui!', 'success');
     }
   }
 
@@ -2019,8 +2612,7 @@ function initBookingWidgets() {
     locationPopover?.classList.add('d-none');
   }
 
-  const dateIcon = datesTrigger?.querySelector('.input-group-text');
-  dateIcon?.addEventListener('click', (e) => {
+  datesTrigger?.addEventListener('click', (e) => {
     e.stopPropagation();
     if (calendarPopover?.classList.contains('d-none')) {
       closeAllPopovers();
@@ -2031,8 +2623,7 @@ function initBookingWidgets() {
     }
   });
 
-  const timeIcon = timeTrigger?.querySelector('.input-group-text');
-  timeIcon?.addEventListener('click', (e) => {
+  timeTrigger?.addEventListener('click', (e) => {
     e.stopPropagation();
     if (timePopover?.classList.contains('d-none')) {
       closeAllPopovers();
@@ -2043,8 +2634,7 @@ function initBookingWidgets() {
     }
   });
 
-  const locationIcon = locationTrigger?.querySelector('.input-group-text');
-  locationIcon?.addEventListener('click', (e) => {
+  locationTrigger?.addEventListener('click', (e) => {
     e.stopPropagation();
     if (locationPopover?.classList.contains('d-none')) {
       closeAllPopovers();
@@ -2070,13 +2660,9 @@ function initBookingWidgets() {
   const locOptions = document.querySelectorAll('.location-option');
   locOptions.forEach(opt => {
     opt.addEventListener('click', (e) => {
+      e.stopPropagation();
       const val = (e.currentTarget as HTMLElement).getAttribute('data-val') || 'Yogyakarta';
-      const locInput = document.getElementById('rent-location') as HTMLInputElement;
-      if (locInput) {
-        locInput.value = val;
-      }
-      locationPopover?.classList.add('d-none');
-      renderTenantCatalog();
+      selectLocation(val);
     });
   });
 
@@ -2831,6 +3417,7 @@ function initModalHandlers() {
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', () => {
   applySettingsToDOM();
+  initLandingHandlers();
   initLoginHandlers();
   initTenantHandlers();
   initAdminHandlers();
@@ -2839,7 +3426,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFinanceCalendar();
   initPasswordToggles();
 
-  showSection('login-section');
+  showSection('landing-section');
 });
 
 
@@ -2884,4 +3471,90 @@ function initPasswordToggles() {
       togglePasswordVisibility('register-password', 'register-password-icon');
     });
   }
+}
+
+// Script untuk efek shadow navbar saat scroll
+document.addEventListener('DOMContentLoaded', function () {
+  const navbars = document.querySelectorAll('#landing-navbar, #tenant-navbar, #admin-section header');
+  navbars.forEach(navbar => {
+    if (navbar) {
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 10) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+    }
+  });
+});
+
+// ==================== LANDING NAVIGATION HANDLERS ====================
+function initLandingNavHandlers() {
+  // ===== NAVIGASI LANDING PAGE =====
+  // Beranda - scroll ke atas
+  document.getElementById('landing-nav-home')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Aktifkan link Beranda, nonaktifkan Katalog
+    const homeLink = document.getElementById('landing-nav-home');
+    const catalogLink = document.getElementById('landing-nav-catalog');
+    if (homeLink) {
+      homeLink.style.color = '#0084FF';
+      homeLink.style.fontWeight = '600';
+      homeLink.classList.add('active');
+    }
+    if (catalogLink) {
+      catalogLink.style.color = '#64748B';
+      catalogLink.style.fontWeight = '500';
+      catalogLink.classList.remove('active');
+    }
+  });
+
+  // Katalog Mobil - scroll ke section katalog & aktifkan link
+  document.getElementById('landing-nav-catalog')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const catalogSection = document.getElementById('landing-catalog-section');
+    if (catalogSection) {
+      catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Aktifkan link Katalog, nonaktifkan Beranda
+    const homeLink = document.getElementById('landing-nav-home');
+    const catalogLink = document.getElementById('landing-nav-catalog');
+    if (homeLink) {
+      homeLink.style.color = '#64748B';
+      homeLink.style.fontWeight = '500';
+      homeLink.classList.remove('active');
+    }
+    if (catalogLink) {
+      catalogLink.style.color = '#0084FF';
+      catalogLink.style.fontWeight = '600';
+      catalogLink.classList.add('active');
+    }
+  });
+
+  // Tombol Cari Mobil - scroll ke katalog
+  document.getElementById('landing-search-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const catalogSection = document.getElementById('landing-catalog-section');
+    if (catalogSection) {
+      catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Aktifkan link Katalog
+    const homeLink = document.getElementById('landing-nav-home');
+    const catalogLink = document.getElementById('landing-nav-catalog');
+    if (homeLink) {
+      homeLink.style.color = '#64748B';
+      homeLink.style.fontWeight = '500';
+      homeLink.classList.remove('active');
+    }
+    if (catalogLink) {
+      catalogLink.style.color = '#0084FF';
+      catalogLink.style.fontWeight = '600';
+      catalogLink.classList.add('active');
+    }
+  });
 }

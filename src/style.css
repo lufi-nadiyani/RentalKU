@@ -1,5 +1,5 @@
-/* Plus Jakarta Sans Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+/* Google Font - Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
   --primary-navy: #1F294C;
@@ -10,8 +10,23 @@
   --price-orange: #EA580C;
 }
 
+*,
+body,
+html,
+button,
+input,
+select,
+textarea,
+.nav-link,
+.card,
+.modal-content,
+.btn,
+.form-control {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   background-color: #F8FAFC;
   color: #1E293B;
   overflow-x: hidden;
@@ -194,11 +209,22 @@ body {
   border-radius: 3px 3px 0 0;
 }
 
+/* Seamless Responsive Filter Sidebar */
+.filter-card,
+.filter-sidebar-flat {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0.25rem 0.5rem !important;
+  width: 100% !important;
+}
+
 .filter-section-title {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #1E293B;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -949,73 +975,63 @@ button:not(:disabled):active,
   line-height: 1 !important;
 }
 
-/* ==================== FINANCE CALENDAR POPOVER ==================== */
+/* ========================================
+   FINANCE CALENDAR - POSISI AGAR TIDAK KEPOTONG
+   ======================================== */
+#finance-calendar-popover {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0 !important;
+  left: auto !important;
+  margin-top: 5px;
+  z-index: 99999;
+  background: white;
+  border: 2px solid #E2E8F0;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  width: 320px;
+  max-width: 90vw;
+  min-height: 200px;
+}
 
+#finance-calendar-popover:not([style*="display: none"]) {
+  display: block !important;
+}
+
+/* Tambahan untuk posisi lebih ke kiri agar tidak terpotong */
 #laporan-keuangan-header-row .d-flex.align-items-center.border.bg-white {
   position: relative !important;
 }
 
-#finance-calendar-popover {
-  position: absolute !important;
-  top: 100% !important;
-  left: 0 !important;
-  margin-top: 5px !important;
-  width: 320px !important;
-  max-width: 90vw !important;
-  background: #FFFFFF !important;
-  border: 1px solid #E2E8F0 !important;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
-  padding: 16px !important;
+#finance-trigger-container {
+  position: relative !important;
 }
 
-#finance-calendar-days .col {
-  cursor: pointer !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  padding: 4px 0 !important;
-  flex: 0 0 14.28% !important;
-  max-width: 14.28% !important;
+/* Responsive untuk finance calendar */
+@media (max-width: 991px) {
+  #finance-calendar-popover {
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
 }
 
-#finance-calendar-days .finance-calendar-day {
-  width: 28px !important;
-  height: 28px !important;
-  border-radius: 50% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 0.8rem !important;
-  cursor: pointer !important;
-  transition: all 0.15s ease !important;
-}
-
-#finance-calendar-days .finance-calendar-day:hover {
-  background-color: #F1F5F9 !important;
-}
-
-#finance-calendar-days .finance-calendar-day.today {
-  border: 2px solid #0084FF !important;
-  color: #0084FF !important;
-  font-weight: 700 !important;
-}
-
-#finance-calendar-days .finance-calendar-day.selected {
-  background-color: #0084FF !important;
-  color: #FFFFFF !important;
-  font-weight: 700 !important;
-}
-
-#btn-finance-reset-filter {
-  background-color: #0084FF !important;
-  border-color: #0084FF !important;
-  padding: 4px 12px !important;
-  font-size: 0.75rem !important;
-}
-
-#btn-finance-reset-filter:hover {
-  background-color: #0076E5 !important;
+@media (max-width: 575px) {
+  #finance-calendar-popover {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translate(-50%, -50%) !important;
+    width: calc(100vw - 32px) !important;
+    max-width: 400px !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    margin-top: 0 !important;
+    border-radius: 16px !important;
+  }
 }
 
 /* ==================== UNIFORM BUTTON STYLES ==================== */
@@ -2043,4 +2059,195 @@ img {
     min-width: 1.05rem !important;
     min-height: 1.05rem !important;
   }
+}
+
+/* ========================================
+   NAVBAR STICKY & RESPONSIVE MOBILE STYLING
+   ======================================== */
+#landing-navbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1030 !important;
+  background-color: #FFFFFF !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+  min-height: 72px;
+}
+
+#landing-navbar.scrolled {
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+#tenant-navbar {
+  min-height: 72px;
+}
+
+@media (max-width: 991.98px) {
+
+  #landing-navbar .navbar-collapse,
+  #tenant-navbar .navbar-collapse {
+    background-color: #ffffff;
+    padding: 1rem 0.75rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid #F1F5F9;
+    box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.08);
+    border-radius: 0 0 12px 12px;
+  }
+
+  #landing-navbar .navbar-nav,
+  #tenant-navbar .navbar-nav {
+    gap: 0.35rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #landing-navbar .nav-link,
+  #tenant-navbar .nav-link {
+    padding: 0.65rem 1rem !important;
+    border-radius: 8px;
+  }
+
+  #landing-navbar .nav-link.active::after,
+  #tenant-navbar .nav-link.active::after {
+    display: none !important;
+  }
+
+  #landing-navbar .nav-link.active,
+  #tenant-navbar .nav-link.active {
+    background-color: #EFF6FF !important;
+    color: #0084FF !important;
+    font-weight: 600 !important;
+  }
+
+  #landing-guest-controls,
+  #landing-tenant-controls,
+  #tenant-navbar .d-flex.align-items-center.gap-2 {
+    flex-wrap: wrap;
+    gap: 0.65rem !important;
+    padding-top: 0.85rem;
+    border-top: 1px solid #F1F5F9;
+    width: 100%;
+  }
+
+  #landing-guest-controls .btn,
+  #landing-tenant-controls .btn,
+  #tenant-navbar .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  #landing-profile-box,
+  #tenant-profile-box {
+    width: 100%;
+    justify-content: flex-start;
+    background-color: #F8FAFC !important;
+  }
+}
+
+/* ========================================
+   LANDING HERO - DIBERI PADDING TOP AGAR TIDAK TERTUTUP NAVBAR
+   ======================================== */
+.landing-hero {
+  background: linear-gradient(135deg, #D9ECFF 0%, #E8F4FD 100%);
+  padding: 1.5rem 0 2.5rem;
+  padding-top: calc(1rem + 72px) !important;
+  /* Tambahan padding untuk navbar - dipersempit */
+  position: relative;
+  overflow: hidden;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  margin-top: 0;
+}
+
+/* ========================================
+   LANDING SEARCH WIDGET - POPOVER (Lokasi / Tanggal / Jam)
+   ======================================== */
+.landing-search-card .location-input-group {
+  position: relative;
+}
+
+.landing-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+  z-index: 1055;
+  padding: 10px;
+  font-family: 'Inter', sans-serif;
+}
+
+.landing-popover.d-none {
+  display: none !important;
+}
+
+#landing-location-popover {
+  width: 200px;
+}
+
+#landing-calendar-popover {
+  width: 290px;
+}
+
+#landing-time-popover {
+  width: 280px;
+}
+
+.landing-location-option {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #1E293B;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.landing-location-option:hover {
+  background-color: #EFF6FF;
+  color: #0084FF;
+}
+
+#landing-calendar-popover button:hover {
+  background-color: #F1F5F9;
+  border-radius: 6px;
+}
+
+#landing-calendar-days .col {
+  cursor: pointer;
+}
+
+#landing-calendar-days .col.text-muted {
+  cursor: default;
+}
+
+.landing-start-time-list .time-option-item,
+.landing-end-time-list .time-option-item {
+  border-radius: 6px;
+}
+
+/* Trigger fields for date/time - cursor + hover feedback */
+.landing-search-card #landing-start-date-trigger,
+.landing-search-card #landing-end-date-trigger,
+.landing-search-card #landing-start-time-trigger,
+.landing-search-card #landing-end-time-trigger,
+.landing-search-card #landing-location-trigger {
+  cursor: pointer;
+}
+
+/* Untuk tenant section - sudah memiliki padding top dari container */
+#tenant-section {
+  padding-top: 0 !important;
+}
+
+/* Untuk admin section - sudah memiliki padding top dari admin-main-content */
+.admin-main-content {
+  padding-top: 105px !important;
+  /* 75px header + 30px spacing */
 }
